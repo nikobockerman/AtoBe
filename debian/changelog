@@ -1,0 +1,6 @@
+hildon-timeout-home-widget-example (0.1-1) unstable; urgency=low
+
+  * Autotoolized and debianized
+
+ -- Maemo Team <xxxx@maemo.org>  Wed, 24 Jun 2009 16:22:18 +0300
+

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=TimeOut Widget
+Comment=Execute an action at a given time
+Type=default
+X-Path=lib-timeout-home-widget.so
