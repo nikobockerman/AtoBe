@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script type="text/javascript" src="basic.js">
+        </script>
+    </head>
+    <body onload="init()">
+        <table border="1">
+        <tr>
+            <th align="left">
+                arrivaltime
+            </th>
+            <td>
+                <div id="arrivaltime">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th align="left">
+                linecode
+            </th>
+            <td>
+                <div id="linecode">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th align="left">
+                debug
+            </th>
+            <td>
+                <div id="debug">
+                </div>
+            </td>
+        </tr>
+        <th align="left">
+            debug2
+        </th>
+        <td>
+            <div id="debug2">
+            </div>
+        </td>
+        </tr>
+    </table>
+    </body>
+</html>

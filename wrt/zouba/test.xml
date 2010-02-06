@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MTRXML version="1.0">
+	<ROUTE from="start" to="dest">
+		<LENGTH time="13.444" dist="2429.651"/>
+		<POINT uid="start" x="2549183.0" y="6672570.0">
+			<ARRIVAL date="20091022" time="1847"/>
+			<DEPARTURE date="20091022" time="1847"/>
+		</POINT>
+		<WALK>
+			<LENGTH time="6.127" dist="492.346"/>
+			<POINT uid="start" x="2549183.0" y="6672570.0">
+				<ARRIVAL date="20091022" time="1847"/>
+				<DEPARTURE date="20091022" time="1847"/>
+			</POINT>
+			<MAPLOC x="2549376.8" y="6672603.7" type="0">
+				<ARRIVAL date="20091022" time="1851"/>
+				<DEPARTURE date="20091022" time="1851"/>
+				<NAME lang="1" val="Koillisväylä"/>
+			</MAPLOC>
+			<MAPLOC x="2549326.7" y="6672446.7" type="0">
+				<ARRIVAL date="20091022" time="1853"/>
+				<DEPARTURE date="20091022" time="1853"/>
+				<NAME lang="1" val="Lauttasaarentie"/>
+			</MAPLOC>
+			<STOP code="6:1310104" x="2549390.0" y="6672438.0" id="1359">
+				<ARRIVAL date="20091022" time="1854"/>
+				<DEPARTURE date="20091022" time="1854"/>
+				<NAME lang="1" val="Koillisväylä"/>
+				<NAME lang="2" val="Nordostpassagen"/>
+			</STOP>
+		</WALK>
+		<LINE id="120" code="1020  2" type="1" mobility="3">
+			<LENGTH time="5.000" dist="1731.461"/>
+			<STOP code="6:1310104" x="2549390.0" y="6672438.0" id="1359" ord="10">
+				<ARRIVAL date="20091022" time="1854"/>
+				<DEPARTURE date="20091022" time="1854"/>
+				<NAME lang="1" val="Koillisväylä"/>
+				<NAME lang="2" val="Nordostpassagen"/>
+			</STOP>
+			<STOP code="6:1310102" x="2549667.0" y="6672491.0" id="1357">
+				<ARRIVAL date="20091022" time="1855"/>
+				<DEPARTURE date="20091022" time="1855"/>
+				<NAME lang="1" val="Lauttasaaren silta"/>
+				<NAME lang="2" val="Drumsö bro"/>
+			</STOP>
+			<STOP code="6:1201132" x="2550475.0" y="6672792.0" id="748">
+				<ARRIVAL date="20091022" time="1857"/>
+				<DEPARTURE date="20091022" time="1857"/>
+				<NAME lang="1" val="Salmisaari"/>
+				<NAME lang="2" val="Sundholmen"/>
+			</STOP>
+			<STOP code="6:1201130" x="2550894.0" y="6672861.0" id="746" ord="13">
+				<ARRIVAL date="20091022" time="1859"/>
+				<DEPARTURE date="20091022" time="1859"/>
+				<NAME lang="1" val="Länsiväylä"/>
+				<NAME lang="2" val="Västerleden"/>
+			</STOP>
+		</LINE>
+		<WALK>
+			<LENGTH time="2.317" dist="205.844"/>
+			<STOP code="6:1201130" x="2550894.0" y="6672861.0" id="746">
+				<ARRIVAL date="20091022" time="1859"/>
+				<DEPARTURE date="20091022" time="1859"/>
+				<NAME lang="1" val="Länsiväylä"/>
+				<NAME lang="2" val="Västerleden"/>
+			</STOP>
+			<MAPLOC x="2550949.3" y="6672867.5" type="15">
+				<ARRIVAL date="20091022" time="1859"/>
+				<DEPARTURE date="20091022" time="1859"/>
+			</MAPLOC>
+			<MAPLOC x="2550977.7" y="6672869.1" type="7">
+				<ARRIVAL date="20091022" time="1900"/>
+				<DEPARTURE date="20091022" time="1900"/>
+				<NAME lang="1" val="Porkkalankatu"/>
+			</MAPLOC>
+			<MAPLOC x="2551034.9" y="6672875.6" type="7">
+				<ARRIVAL date="20091022" time="1901"/>
+				<DEPARTURE date="20091022" time="1901"/>
+			</MAPLOC>
+			<POINT uid="dest" x="2551042.0" y="6672829.0">
+				<ARRIVAL date="20091022" time="1901"/>
+				<DEPARTURE date="20091022" time="1901"/>
+			</POINT>
+		</WALK>
+		<POINT uid="dest" x="2551042.0" y="6672829.0">
+			<ARRIVAL date="20091022" time="1901"/>
+			<DEPARTURE date="20091022" time="1901"/>
+		</POINT>
+	</ROUTE>
+	<ROUTE from="start" to="dest">
+		<LENGTH time="13.459" dist="2431.106"/>
+		<POINT uid="start" x="2549183.0" y="6672570.0">
+			<ARRIVAL date="20091022" time="1849"/>
+			<DEPARTURE date="20091022" time="1849"/>
+		</POINT>
+		<WALK>
+			<LENGTH time="6.155" dist="495.850"/>
+			<POINT uid="start" x="2549183.0" y="6672570.0">
+				<ARRIVAL date="20091022" time="1849"/>
+				<DEPARTURE date="20091022" time="1849"/>
+			</POINT>
+			<MAPLOC x="2549376.8" y="6672603.7" type="0">
+				<ARRIVAL date="20091022" time="1853"/>
+				<DEPARTURE date="20091022" time="1853"/>
+				<NAME lang="1" val="Koillisväylä"/>
+			</MAPLOC>
+			<MAPLOC x="2549326.7" y="6672446.7" type="0">
+				<ARRIVAL date="20091022" time="1855"/>
+				<DEPARTURE date="20091022" time="1855"/>
+				<NAME lang="1" val="Lauttasaarentie"/>
+			</MAPLOC>
+			<STOP code="6:1310204" x="2549393.0" y="6672438.0" id="1405">
+				<ARRIVAL date="20091022" time="1856"/>
+				<DEPARTURE date="20091022" time="1856"/>
+				<NAME lang="1" val="Koillisväylä"/>
+				<NAME lang="2" val="Nordostpassagen"/>
+			</STOP>
+		</WALK>
+		<LINE id="586" code="2106T 2" type="5" mobility="3">
+			<LENGTH time="5.000" dist="1731.231"/>
+			<STOP code="6:1310204" x="2549393.0" y="6672438.0" id="1405" ord="37">
+				<ARRIVAL date="20091022" time="1856"/>
+				<DEPARTURE date="20091022" time="1856"/>
+				<NAME lang="1" val="Koillisväylä"/>
+				<NAME lang="2" val="Nordostpassagen"/>
+			</STOP>
+			<STOP code="6:1310202" x="2549670.0" y="6672492.0" id="1403">
+				<ARRIVAL date="20091022" time="1858"/>
+				<DEPARTURE date="20091022" time="1858"/>
+				<NAME lang="1" val="Lauttasaaren silta"/>
+				<NAME lang="2" val="Drumsö bro"/>
+			</STOP>
+			<STOP code="6:1201232" x="2550473.0" y="6672790.0" id="760">
+				<ARRIVAL date="20091022" time="1859"/>
+				<DEPARTURE date="20091022" time="1859"/>
+				<NAME lang="1" val="Salmisaari"/>
+				<NAME lang="2" val="Sundholmen"/>
+			</STOP>
+			<STOP code="6:1201228" x="2550896.0" y="6672861.0" id="756" ord="40">
+				<ARRIVAL date="20091022" time="1901"/>
+				<DEPARTURE date="20091022" time="1901"/>
+				<NAME lang="1" val="Länsiväylä"/>
+				<NAME lang="2" val="Västerleden"/>
+			</STOP>
+		</LINE>
+		<WALK>
+			<LENGTH time="2.303" dist="204.026"/>
+			<STOP code="6:1201228" x="2550896.0" y="6672861.0" id="756">
+				<ARRIVAL date="20091022" time="1901"/>
+				<DEPARTURE date="20091022" time="1901"/>
+				<NAME lang="1" val="Länsiväylä"/>
+				<NAME lang="2" val="Västerleden"/>
+			</STOP>
+			<MAPLOC x="2550949.3" y="6672867.5" type="15">
+				<ARRIVAL date="20091022" time="1901"/>
+				<DEPARTURE date="20091022" time="1901"/>
+			</MAPLOC>
+			<MAPLOC x="2550977.7" y="6672869.1" type="7">
+				<ARRIVAL date="20091022" time="1902"/>
+				<DEPARTURE date="20091022" time="1902"/>
+				<NAME lang="1" val="Porkkalankatu"/>
+			</MAPLOC>
+			<MAPLOC x="2551034.9" y="6672875.6" type="7">
+				<ARRIVAL date="20091022" time="1903"/>
+				<DEPARTURE date="20091022" time="1903"/>
+			</MAPLOC>
+			<POINT uid="dest" x="2551042.0" y="6672829.0">
+				<ARRIVAL date="20091022" time="1903"/>
+				<DEPARTURE date="20091022" time="1903"/>
+			</POINT>
+		</WALK>
+		<POINT uid="dest" x="2551042.0" y="6672829.0">
+			<ARRIVAL date="20091022" time="1903"/>
+			<DEPARTURE date="20091022" time="1903"/>
+		</POINT>
+	</ROUTE>
+	<ROUTE from="start" to="dest">
+		<LENGTH time="12.459" dist="2431.106"/>
+		<POINT uid="start" x="2549183.0" y="6672570.0">
+			<ARRIVAL date="20091022" time="1859"/>
+			<DEPARTURE date="20091022" time="1859"/>
+		</POINT>
+		<WALK>
+			<LENGTH time="6.155" dist="495.850"/>
+			<POINT uid="start" x="2549183.0" y="6672570.0">
+				<ARRIVAL date="20091022" time="1859"/>
+				<DEPARTURE date="20091022" time="1859"/>
+			</POINT>
+			<MAPLOC x="2549376.8" y="6672603.7" type="0">
+				<ARRIVAL date="20091022" time="1903"/>
+				<DEPARTURE date="20091022" time="1903"/>
+				<NAME lang="1" val="Koillisväylä"/>
+			</MAPLOC>
+			<MAPLOC x="2549326.7" y="6672446.7" type="0">
+				<ARRIVAL date="20091022" time="1905"/>
+				<DEPARTURE date="20091022" time="1905"/>
+				<NAME lang="1" val="Lauttasaarentie"/>
+			</MAPLOC>
+			<STOP code="6:1310204" x="2549393.0" y="6672438.0" id="1405">
+				<ARRIVAL date="20091022" time="1906"/>
+				<DEPARTURE date="20091022" time="1906"/>
+				<NAME lang="1" val="Koillisväylä"/>
+				<NAME lang="2" val="Nordostpassagen"/>
+			</STOP>
+		</WALK>
+		<LINE id="596" code="2110T 2" type="5" mobility="3">
+			<LENGTH time="4.000" dist="1731.231"/>
+			<STOP code="6:1310204" x="2549393.0" y="6672438.0" id="1405" ord="33">
+				<ARRIVAL date="20091022" time="1906"/>
+				<DEPARTURE date="20091022" time="1906"/>
+				<NAME lang="1" val="Koillisväylä"/>
+				<NAME lang="2" val="Nordostpassagen"/>
+			</STOP>
+			<STOP code="6:1310202" x="2549670.0" y="6672492.0" id="1403">
+				<ARRIVAL date="20091022" time="1907"/>
+				<DEPARTURE date="20091022" time="1907"/>
+				<NAME lang="1" val="Lauttasaaren silta"/>
+				<NAME lang="2" val="Drumsö bro"/>
+			</STOP>
+			<STOP code="6:1201232" x="2550473.0" y="6672790.0" id="760">
+				<ARRIVAL date="20091022" time="1909"/>
+				<DEPARTURE date="20091022" time="1909"/>
+				<NAME lang="1" val="Salmisaari"/>
+				<NAME lang="2" val="Sundholmen"/>
+			</STOP>
+			<STOP code="6:1201228" x="2550896.0" y="6672861.0" id="756" ord="36">
+				<ARRIVAL date="20091022" time="1910"/>
+				<DEPARTURE date="20091022" time="1910"/>
+				<NAME lang="1" val="Länsiväylä"/>
+				<NAME lang="2" val="Västerleden"/>
+			</STOP>
+		</LINE>
+		<WALK>
+			<LENGTH time="2.303" dist="204.026"/>
+			<STOP code="6:1201228" x="2550896.0" y="6672861.0" id="756">
+				<ARRIVAL date="20091022" time="1910"/>
+				<DEPARTURE date="20091022" time="1910"/>
+				<NAME lang="1" val="Länsiväylä"/>
+				<NAME lang="2" val="Västerleden"/>
+			</STOP>
+			<MAPLOC x="2550949.3" y="6672867.5" type="15">
+				<ARRIVAL date="20091022" time="1910"/>
+				<DEPARTURE date="20091022" time="1910"/>
+			</MAPLOC>
+			<MAPLOC x="2550977.7" y="6672869.1" type="7">
+				<ARRIVAL date="20091022" time="1911"/>
+				<DEPARTURE date="20091022" time="1911"/>
+				<NAME lang="1" val="Porkkalankatu"/>
+			</MAPLOC>
+			<MAPLOC x="2551034.9" y="6672875.6" type="7">
+				<ARRIVAL date="20091022" time="1912"/>
+				<DEPARTURE date="20091022" time="1912"/>
+			</MAPLOC>
+			<POINT uid="dest" x="2551042.0" y="6672829.0">
+				<ARRIVAL date="20091022" time="1912"/>
+				<DEPARTURE date="20091022" time="1912"/>
+			</POINT>
+		</WALK>
+		<POINT uid="dest" x="2551042.0" y="6672829.0">
+			<ARRIVAL date="20091022" time="1912"/>
+			<DEPARTURE date="20091022" time="1912"/>
+		</POINT>
+	</ROUTE>
+</MTRXML>
