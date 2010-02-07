@@ -1,6 +1,5 @@
 .deps
 .libs
-Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache
@@ -21,3 +20,4 @@ ltmain.sh
 missing
 stamp-h1
 *.desktop
+*~
