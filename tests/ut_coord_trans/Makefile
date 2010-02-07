@@ -1,6 +1,6 @@
 CC=gcc
 RM=rm -f
-INCDIR=../../
+INCDIR=../../getmehome/
 CFLAGS=-I$(INCDIR)
 LDFLAGS=-lm
 DEPS=$(INCDIR)coordinate-system.h
