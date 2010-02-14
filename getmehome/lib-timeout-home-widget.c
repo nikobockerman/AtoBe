@@ -39,6 +39,8 @@ char debugStr[1024];
 void start_location_tracking();
 void stop_location_tracking();
 
+KKJ destinationX = 2552414;
+KKJ destinationY = 6673664;
 
 #define IDLE 0
 #define SEARCHING_LOCATION 1
@@ -53,6 +55,9 @@ void get_me_home(KKJ x, KKJ y)
 
     char hour[4];
     char minute[4];
+    char day[4];
+    char month[4];
+    char year[6];
 
     // Get the current time
     t = time(NULL);
@@ -64,15 +69,20 @@ void get_me_home(KKJ x, KKJ y)
     // Format needed parts from the current time
     strftime(hour, sizeof(hour), "%H", tmp);
     strftime(minute, sizeof(minute), "%M", tmp);
+    strftime(day, sizeof(day), "%d", tmp);
+    strftime(month, sizeof(month), "%m", tmp);
+    strftime(year, sizeof(year), "%Y", tmp);
 
     debug("Hour %s minute %s", hour, minute);
 
     // Format the URL
-
+    char url[1024];
+    // http://www.reittiopas.fi/?from=poi*Current+location*2552414*6673664&to=poi*Home*2544607*6683661&hour=12&minute=18&timetype=departure&day=14&month=02&year=2010
+    sprintf(url, "http://www.reittiopas.fi/?from=poi*Current+location*%u*%u&to=poi*Home*%u*%u&hour=%s&minute=%s&timetype=departure&day=%s&month=%s&year=%s", x, y, destinationX, destinationY, hour, minute, day, month, year);
 
     // Open the browser
     char command[1024];
-    sprintf(command, "browser_dbuscmd.sh load_url http://www.reittiopas.fi");
+    sprintf(command, "browser_dbuscmd.sh load_url %s", url);
     system(command);
 }
 
