@@ -35,6 +35,11 @@ char debugStr[1024];
 #define debug(...) sprintf(debugStr, __VA_ARGS__); printDebug(debugStr)
 
 
+
+void start_location_tracking();
+void stop_location_tracking();
+
+
 #define IDLE 0
 #define SEARCHING_LOCATION 1
 #define LOCATION_RECEIVED 2
@@ -69,8 +74,6 @@ void get_me_home(KKJ x, KKJ y)
     char command[1024];
     sprintf(command, "browser_dbuscmd.sh load_url http://www.reittiopas.fi");
     system(command);
-
-    widget_state = IDLE;
 }
 
 static void location_listener(double latitude, double longitude)
@@ -85,14 +88,14 @@ static void location_listener(double latitude, double longitude)
         WGS84lola_to_KKJxy(longitude, latitude, &x, &y);
 
         get_me_home(x, y);
+
+        stop_location_tracking();
+        widget_state = IDLE;
     }
 }
 
 int locationTrackingOn = 0;
-void search_button_clicked(GtkButton *button, gpointer user_data)
-{
-    widget_state = SEARCHING_LOCATION;
-
+void start_location_tracking() {
     if (!locationTrackingOn) {
         // Setup location tracking
         setup_location_provider();
@@ -101,12 +104,24 @@ void search_button_clicked(GtkButton *button, gpointer user_data)
 
         locationTrackingOn = 1;
         debug("Location tracking started");
-    } else {
-        stop_location_provider();
-        cleanup_location_provider();
+    }
+}
 
-        locationTrackingOn = 0;
-        debug("Location tracking stopped");
+void stop_location_tracking() {
+   if (locationTrackingOn)  {
+       stop_location_provider();
+       cleanup_location_provider();
+
+       locationTrackingOn = 0;
+       debug("Location tracking stopped");
+   }
+}
+
+void search_button_clicked(GtkButton *button, gpointer user_data)
+{
+    if (widget_state == IDLE) {
+        widget_state = SEARCHING_LOCATION;
+        start_location_tracking();
     }
 }
 
