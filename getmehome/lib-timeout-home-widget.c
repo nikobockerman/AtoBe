@@ -82,7 +82,7 @@ void get_me_home(KKJ x, KKJ y)
 
     // Open the browser
     char command[1024];
-    sprintf(command, "browser_dbuscmd.sh load_url %s", url);
+    sprintf(command, "browser_dbuscmd.sh load_url \"%s\"", url);
     system(command);
 }
 
