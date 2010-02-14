@@ -39,8 +39,12 @@ char debugStr[1024];
 void start_location_tracking();
 void stop_location_tracking();
 
-KKJ destinationX = 2552414;
-KKJ destinationY = 6673664;
+// Railway station
+//KKJ destinationX = 2552414;
+//KKJ destinationY = 6673664;
+// Home
+KKJ destinationX = 2544607;
+KKJ destinationY = 6683661;
 
 #define IDLE 0
 #define SEARCHING_LOCATION 1
