@@ -7,6 +7,8 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 
+class HttpClientPrivate;
+
 class HttpClient: public QObject
 {
   Q_OBJECT
@@ -21,7 +23,9 @@ public Q_SLOTS:
   void replyFinished(QNetworkReply*);
 
 private:
+  HttpClientPrivate *q;
   QNetworkAccessManager *manager;
   Ui::MainWindow *ui;
+
 };
 #endif // HTTPCLIENT_H

@@ -1,4 +1,7 @@
+#include "httpclient_p.h"
 #include "httpclient.h"
+
+#include "routedata.h"
 
 #include "ui_zouba.h"
 
@@ -26,6 +29,7 @@ namespace {
 }
   
 HttpClient::HttpClient( Ui::MainWindow *ui ) :
+  q( new HttpClientPrivate( this ) ),
   manager( new QNetworkAccessManager(this) ),
   ui( ui )
 {
@@ -57,41 +61,8 @@ void HttpClient::get()
 
 void HttpClient::replyFinished( QNetworkReply * reply )
 {
-  QXmlStreamReader xml( reply->readAll() );
+  RouteData routeData = q->parseReply( reply->readAll() );
 
-  bool inLine = false;
-  bool inStop = false;
-  while ( !xml.atEnd() ) {
-    xml.readNext();
-    //qDebug() << xml.name();
-    if ( xml.isStartElement() && xml.name() == "LINE" ) {
-      QString lineCode( xml.attributes().value("code").toString() );
-
-      qDebug() << "line code" << lineCode;
-      ui->BusNoDisplay->setText( lineCode );
-
-      inLine = true;
-    } else
-    if ( inLine && xml.name() == "STOP" ) {
-      inStop = true;
-    } else
-    if ( inLine && inStop && xml.name() == "ARRIVAL" ) {
-      QString arrivalTime( xml.attributes().value("time").toString() );
-
-      qDebug() << "arrival time" << arrivalTime;
-      ui->TimeDisplay->setText( arrivalTime );
-
-      inLine = false;
-    } else
-    if ( xml.isEndElement() && xml.name() == "STOP" ) {
-      inStop = false;
-    } else
-    if ( xml.isEndElement() && xml.name() == "LINE" ) {
-      inLine = false;
-    }
-  }
-
-  if ( xml.hasError() ) {
-    qDebug() << "xml error";
-  }
+  ui->BusNoDisplay->setText( routeData.lineCode );
+  ui->TimeDisplay->setText( routeData.arrivalTime );
 }
