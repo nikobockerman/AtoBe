@@ -1,9 +1,12 @@
 #include "httpclient_p.h"
+#include "location.h"
 
 #include <QXmlStreamReader>
 #include <QDebug>
 
-HttpClientPrivate::HttpClientPrivate( QObject *parent )
+HttpClientPrivate::HttpClientPrivate( QObject *parent ) :
+    m_fromLocation(0,0),
+    m_toLocation(0,0)
 {
 }
 
@@ -51,4 +54,25 @@ RouteData HttpClientPrivate::parseReply( const QByteArray &reply )
   }
 
   return retVal;
+}
+
+void HttpClientPrivate::setFromLocation( Location fromLocation )
+{
+  m_fromLocation = fromLocation;
+}
+
+Location HttpClientPrivate::fromLocation()
+{
+  return m_fromLocation;
+}
+
+void HttpClientPrivate::setToLocation( Location toLocation )
+{
+  m_toLocation = toLocation;
+}
+
+Location HttpClientPrivate::toLocation()
+
+{
+  return m_toLocation;
 }

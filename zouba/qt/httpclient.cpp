@@ -2,6 +2,7 @@
 #include "httpclient.h"
 
 #include "routedata.h"
+#include "location.h"
 
 #include "ui_zouba.h"
 
@@ -22,10 +23,6 @@ namespace {
   QString homeKey( "taivaanvuohentie%207%2Chelsinki" );
   QString workKey( "it%E4merenkatu%2011%2Chelsinki" );
 
-  QString workX( "2551042" );
-  QString workY( "6672829" );
-  QString homeX( "2549183" );
-  QString homeY( "6672570" );
 }
   
 HttpClient::HttpClient( Ui::MainWindow *ui ) :
@@ -47,9 +44,9 @@ void HttpClient::get()
   QUrl fullUrl( ytv );
 
   QStringList a;
-  a << workX << workY;
+  a << q->fromLocation().x << q->fromLocation().y;
   QStringList b;
-  b << homeX << homeY;
+  b << q->toLocation().x << q->toLocation().y;
 
   fullUrl.addQueryItem( "a", a.join(",") );
   fullUrl.addQueryItem( "b", b.join(",") );
@@ -66,3 +63,24 @@ void HttpClient::replyFinished( QNetworkReply * reply )
   ui->BusNoDisplay->setText( routeData.lineCode );
   ui->TimeDisplay->setText( routeData.arrivalTime );
 }
+
+void HttpClient::setFromLocation( Location fromLocation )
+{
+  q->setFromLocation( fromLocation );
+}
+
+Location HttpClient::fromLocation()
+{
+  return q->fromLocation();
+}
+
+void HttpClient::setToLocation( Location toLocation )
+{
+  q->setToLocation( toLocation );
+}
+
+Location HttpClient::toLocation()
+{
+  return q->toLocation();
+}
+

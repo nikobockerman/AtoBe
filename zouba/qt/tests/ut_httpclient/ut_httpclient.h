@@ -20,6 +20,8 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void testParseReply();
+    void testSetFromLocation();
+    void testSetToLocation();
 
 private:
     HttpClientPrivate *m_subject;
