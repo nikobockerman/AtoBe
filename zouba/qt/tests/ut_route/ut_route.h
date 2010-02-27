@@ -4,11 +4,11 @@
 #include <QtTest/QtTest>
 #include <QObject>
 
-#include <httpclient_p.h>
+#include <route_p.h>
 
-Q_DECLARE_METATYPE(HttpClientPrivate*);
+Q_DECLARE_METATYPE(RoutePrivate*);
 
-class Ut_HttpClient : public QObject
+class Ut_Route : public QObject
 {
     Q_OBJECT
 
@@ -24,6 +24,6 @@ private slots:
     void testSetToLocation();
 
 private:
-    HttpClientPrivate *m_subject;
+    RoutePrivate *m_subject;
 };
 #endif // UT_HTTPCLIENT_H

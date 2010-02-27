@@ -11,10 +11,10 @@ INCLUDEPATH += \
 TEMPLATE = app
 
 SOURCES  = \
-  ut_httpclient.cpp \
-  ../../httpclient_p.cpp \
+  ut_route.cpp \
+  ../../route_p.cpp \
 
 HEADERS += \
-  ut_httpclient.h \
-  ../../httpclient_p.h \
+  ut_route.h \
+  ../../route_p.h \
 

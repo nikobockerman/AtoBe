@@ -1,5 +1,5 @@
-#ifndef HTTPCLIENT_H
-#define HTTPCLIENT_H
+#ifndef ROUTE_H
+#define ROUTE_H
 
 #include "ui_zouba.h"
 
@@ -9,15 +9,15 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 
-class HttpClientPrivate;
+class RoutePrivate;
 
-class HttpClient: public QObject
+class Route: public QObject
 {
   Q_OBJECT
 
 public:
-  HttpClient( Ui::MainWindow *ui );
-  ~HttpClient();
+  Route( Ui::MainWindow *ui );
+  ~Route();
 
   Q_PROPERTY(Location fromLocation READ fromLocation WRITE setFromLocation);
   Q_PROPERTY(Location toLocation READ toLocation WRITE setFromLocation);
@@ -55,8 +55,8 @@ public Q_SLOTS:
   void replyFinished(QNetworkReply*);
 
 private:
-  HttpClientPrivate *q;
+  RoutePrivate *q;
   QNetworkAccessManager *manager;
   Ui::MainWindow *ui;
 };
-#endif // HTTPCLIENT_H
+#endif // ROUTE_H

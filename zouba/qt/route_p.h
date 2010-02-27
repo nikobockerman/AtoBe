@@ -1,5 +1,5 @@
-#ifndef HTTPCLIENT_P_H
-#define HTTPCLIENT_P_H
+#ifndef ROUTE_P_H
+#define ROUTE_P_H
 
 #include "routedata.h"
 
@@ -7,13 +7,13 @@
 
 #include <QObject>
 
-class HttpClientPrivate: public QObject
+class RoutePrivate: public QObject
 {
   Q_OBJECT
 
 public:
-  HttpClientPrivate( QObject *parent=0 );
-  ~HttpClientPrivate();
+  RoutePrivate( QObject *parent=0 );
+  ~RoutePrivate();
 
   Q_PROPERTY(Location fromLocation READ fromLocation WRITE setFromLocation);
   Q_PROPERTY(Location toLocation READ toLocation WRITE setFromLocation);
@@ -48,4 +48,4 @@ private:
   Location m_fromLocation;
   Location m_toLocation;
 };
-#endif // HTTPCLIENT_P_H
+#endif // ROUTE_P_H

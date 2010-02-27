@@ -1,7 +1,7 @@
 #include <QObject>
 #include <QtDebug>
 #include <QByteArray>
-#include "ut_httpclient.h"
+#include "ut_route.h"
 
 QByteArray sampleInput(
 "\
@@ -339,26 +339,26 @@ QByteArray sampleInput(
 
 );
 
-void Ut_HttpClient::init()
+void Ut_Route::init()
 {
-    m_subject = new HttpClientPrivate();
+    m_subject = new RoutePrivate();
 }
 
-void Ut_HttpClient::cleanup()
+void Ut_Route::cleanup()
 {
     delete m_subject;
     m_subject = 0;
 }
 
-void Ut_HttpClient::initTestCase()
+void Ut_Route::initTestCase()
 {
 }
 
-void Ut_HttpClient::cleanupTestCase()
+void Ut_Route::cleanupTestCase()
 {
 }
 
-void Ut_HttpClient::testParseReply()
+void Ut_Route::testParseReply()
 {
   RouteData routeData = m_subject->parseReply( sampleInput );
 
@@ -366,7 +366,7 @@ void Ut_HttpClient::testParseReply()
   QCOMPARE( routeData.arrivalTime, QString( "1834" ) );
 }
 
-void Ut_HttpClient::testSetFromLocation()
+void Ut_Route::testSetFromLocation()
 {
   Location work( "2551042", "6672829" );
   m_subject->setFromLocation( work );
@@ -374,7 +374,7 @@ void Ut_HttpClient::testSetFromLocation()
   QCOMPARE( work.y, m_subject->fromLocation().y );
 }
 
-void Ut_HttpClient::testSetToLocation()
+void Ut_Route::testSetToLocation()
 {
   Location work( "2551042", "6672829" );
   m_subject->setToLocation( work );
@@ -382,4 +382,4 @@ void Ut_HttpClient::testSetToLocation()
   QCOMPARE( work.y, m_subject->toLocation().y );
 }
 
-QTEST_MAIN(Ut_HttpClient)
+QTEST_MAIN(Ut_Route)

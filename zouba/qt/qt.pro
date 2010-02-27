@@ -9,10 +9,10 @@ FORMS    = zouba.ui
 
 SOURCES  = \
   main.cpp \
-  httpclient.cpp \
-  httpclient_p.cpp \
+  route.cpp \
+  route_p.cpp \
 
 HEADERS += \
-  httpclient.h \
-  httpclient_p.h \
+  route.h \
+  route_p.h \
 

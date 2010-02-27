@@ -1,5 +1,5 @@
-#include "httpclient_p.h"
-#include "httpclient.h"
+#include "route_p.h"
+#include "route.h"
 
 #include "routedata.h"
 #include "location.h"
@@ -25,21 +25,21 @@ namespace {
 
 }
   
-HttpClient::HttpClient( Ui::MainWindow *ui ) :
-  q( new HttpClientPrivate( this ) ),
+Route::Route( Ui::MainWindow *ui ) :
+  q( new RoutePrivate( this ) ),
   manager( new QNetworkAccessManager(this) ),
   ui( ui )
 {
   connect( manager, SIGNAL( finished(QNetworkReply*) ), this, SLOT( replyFinished(QNetworkReply*) ) );
 }
 
-HttpClient::~HttpClient()
+Route::~Route()
 {
   delete manager;
   manager = 0;
 }
 
-void HttpClient::get()
+void Route::get()
 {
   QUrl fullUrl( ytv );
 
@@ -56,7 +56,7 @@ void HttpClient::get()
   manager->get( QNetworkRequest( fullUrl ) );
 }
 
-void HttpClient::replyFinished( QNetworkReply * reply )
+void Route::replyFinished( QNetworkReply * reply )
 {
   RouteData routeData = q->parseReply( reply->readAll() );
 
@@ -64,22 +64,22 @@ void HttpClient::replyFinished( QNetworkReply * reply )
   ui->TimeDisplay->setText( routeData.arrivalTime );
 }
 
-void HttpClient::setFromLocation( Location fromLocation )
+void Route::setFromLocation( Location fromLocation )
 {
   q->setFromLocation( fromLocation );
 }
 
-Location HttpClient::fromLocation()
+Location Route::fromLocation()
 {
   return q->fromLocation();
 }
 
-void HttpClient::setToLocation( Location toLocation )
+void Route::setToLocation( Location toLocation )
 {
   q->setToLocation( toLocation );
 }
 
-Location HttpClient::toLocation()
+Location Route::toLocation()
 {
   return q->toLocation();
 }

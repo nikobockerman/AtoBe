@@ -1,4 +1,4 @@
-#include "httpclient.h"
+#include "route.h"
 #include "ui_zouba.h"
 
 #include "location.h"
@@ -17,12 +17,12 @@ int main(int argc, char *argv[] )
   Ui::MainWindow ui;
   ui.setupUi(widget);
 
-  HttpClient httpClient( &ui );
+  Route route( &ui );
 
-  httpClient.setFromLocation( work );
-  httpClient.setToLocation( home );
+  route.setFromLocation( work );
+  route.setToLocation( home );
 
-  httpClient.get();
+  route.get();
 
   ui.TimeDisplay->setText( "HELLO" );
 
