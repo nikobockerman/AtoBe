@@ -60,19 +60,8 @@ void Route::replyFinished( QNetworkReply * reply )
 {
   RouteData routeData = q->parseReply( reply->readAll() );
 
-  ui->BusNoDisplay->setText( parseJOREcode( routeData.lineCode ) );
+  ui->BusNoDisplay->setText( q->parseJOREcode( routeData.lineCode ) );
   ui->TimeDisplay->setText( routeData.arrivalTime );
-}
-
-QString Route::parseJOREcode( const QString &joreCode ) const
-{
-    QString areaTransportTypeCode( joreCode.mid(0,1) );
-    QString lineCode( joreCode.mid(1,4) );
-    QString letterVariant( joreCode.mid(5,1) );
-    QString letterNumberVariant( joreCode.mid(6,1) );
-    QString direction( joreCode.mid(7,1) );
-    
-    return lineCode+letterVariant;
 }
 
 void Route::setFromLocation( Location fromLocation )

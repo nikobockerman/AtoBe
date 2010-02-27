@@ -72,8 +72,18 @@ void RoutePrivate::setToLocation( Location toLocation )
   m_toLocation = toLocation;
 }
 
-Location RoutePrivate::toLocation()
+QString RoutePrivate::parseJOREcode( const QString &joreCode ) const
+{
+    QString areaTransportTypeCode( joreCode.mid(0,1) );
+    QString lineCode( joreCode.mid(1,4) );
+    QString letterVariant( joreCode.mid(5,1) );
+    QString letterNumberVariant( joreCode.mid(6,1) );
+    QString direction( joreCode.mid(7,1) );
+    
+    return lineCode+letterVariant;
+}
 
+Location RoutePrivate::toLocation()
 {
   return m_toLocation;
 }
