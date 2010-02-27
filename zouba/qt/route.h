@@ -55,6 +55,8 @@ public Q_SLOTS:
   void replyFinished(QNetworkReply*);
 
 private:
+  QString parseJOREcode( const QString &joreCode ) const;
+
   RoutePrivate *q;
   QNetworkAccessManager *manager;
   Ui::MainWindow *ui;
