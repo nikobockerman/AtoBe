@@ -362,7 +362,7 @@ void Ut_Route::testParseReply()
 {
   RouteData routeData = m_subject->parseReply( sampleInput );
 
-  QCOMPARE( routeData.lineCode, QString( "2110T 1" ) );
+  QCOMPARE( routeData.lineCode, QString( "110T" ) );
   QCOMPARE( routeData.arrivalTime, QString( "1834" ) );
 }
 

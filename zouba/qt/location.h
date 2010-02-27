@@ -10,6 +10,11 @@ public:
   {
   };
 
+  Location( QString address )
+  {
+    Q_UNUSED( address );
+  };
+
   QString x;
   QString y;
 };

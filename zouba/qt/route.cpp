@@ -60,7 +60,7 @@ void Route::replyFinished( QNetworkReply * reply )
 {
   RouteData routeData = q->parseReply( reply->readAll() );
 
-  ui->BusNoDisplay->setText( q->parseJOREcode( routeData.lineCode ) );
+  ui->BusNoDisplay->setText( routeData.lineCode );
   ui->TimeDisplay->setText( routeData.arrivalTime );
 }
 

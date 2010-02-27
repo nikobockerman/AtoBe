@@ -28,9 +28,10 @@ public:
 
   Location toLocation();
 
-  QString parseJOREcode( const QString &joreCode ) const;
 private:
   Location m_fromLocation;
   Location m_toLocation;
+
+  QString parseJORECode( const QString &joreCode ) const;
 };
 #endif // ROUTE_P_H

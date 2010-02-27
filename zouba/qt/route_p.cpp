@@ -28,7 +28,7 @@ RouteData RoutePrivate::parseReply( const QByteArray &reply )
     if ( xml.isStartElement() && xml.name() == "LINE" ) {
       QString lineCode( xml.attributes().value("code").toString() );
 
-      retVal.lineCode = lineCode;
+      retVal.lineCode = parseJORECode( lineCode );
 
       inLine = true;
     } else
@@ -72,13 +72,15 @@ void RoutePrivate::setToLocation( Location toLocation )
   m_toLocation = toLocation;
 }
 
-QString RoutePrivate::parseJOREcode( const QString &joreCode ) const
+QString RoutePrivate::parseJORECode( const QString &joreCode ) const
 {
     QString areaTransportTypeCode( joreCode.mid(0,1) );
-    QString lineCode( joreCode.mid(1,4) );
-    QString letterVariant( joreCode.mid(5,1) );
-    QString letterNumberVariant( joreCode.mid(6,1) );
-    QString direction( joreCode.mid(7,1) );
+    QString lineCode( joreCode.mid(1,3) );
+    QString letterVariant( joreCode.mid(4,1) );
+    QString letterNumberVariant( joreCode.mid(5,1) );
+    QString direction( joreCode.mid(6,1) );
+
+    lineCode.setNum( lineCode.toInt() );
     
     return lineCode+letterVariant;
 }
