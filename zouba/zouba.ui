@@ -6,79 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>231</width>
-    <height>167</height>
+    <width>386</width>
+    <height>265</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ZuoBa</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>230</width>
-      <height>106</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="0" column="0" colspan="2">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="route">
-           <property name="text">
-            <string>Work-&gt;Home</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="timedisplay">
-         <property name="text">
-          <string>TimeDisplay</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="busnolabel">
-         <property name="text">
-          <string>BusNo</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="timelabel">
-         <property name="text">
-          <string>Time</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="busnodisplay">
-         <property name="text">
-          <string>BusNoDisplay</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QPushButton" name="sethomeaddress">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>90</y>
-      <width>92</width>
-      <height>28</height>
+      <x>220</x>
+      <y>120</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -88,10 +30,10 @@
    <widget class="QPushButton" name="setworkaddress">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>130</y>
-      <width>92</width>
-      <height>28</height>
+      <x>220</x>
+      <y>190</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -102,9 +44,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
-      <width>113</width>
-      <height>26</height>
+      <y>110</y>
+      <width>201</width>
+      <height>61</height>
      </rect>
     </property>
    </widget>
@@ -112,10 +54,75 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
-      <width>113</width>
-      <height>26</height>
+      <y>180</y>
+      <width>201</width>
+      <height>61</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="busnolabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>BusNo</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="busnodisplay">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>80</y>
+      <width>187</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>BusNoDisplay</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="timedisplay">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>50</y>
+      <width>187</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TimeDisplay</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="timelabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="route">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>0</y>
+      <width>224</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Home-&gt;Work</string>
     </property>
    </widget>
   </widget>
