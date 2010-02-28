@@ -92,3 +92,11 @@ const Location &Route::toLocation()
   return q->toLocation();
 }
 
+void Route::toggleDirection()
+{
+  Location oldFromLocation = fromLocation();
+  setFromLocation( toLocation() );
+  setToLocation( oldFromLocation );
+
+  getRoute();
+}

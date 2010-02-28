@@ -20,13 +20,14 @@ public:
 
   ~Location();
 
-  void resolveAddress( QString address );
-
   QString x() const;
 
   QString y() const;
 
   bool isValid() const;
+
+public Q_SLOTS:
+  void resolveAddress( QString address );
 
 Q_SIGNALS:
   void becomeValid();

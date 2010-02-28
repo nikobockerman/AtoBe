@@ -63,7 +63,7 @@ void Location::resolveAddress( QString address )
 {
   QUrl fullUrl( ytv );
 
-  fullUrl.addEncodedQueryItem( "key", address.toAscii() );
+  fullUrl.addEncodedQueryItem( "key", address.toUtf8() );
   fullUrl.addQueryItem( "user", username );
   fullUrl.addQueryItem( "pass", password );
 

@@ -3,11 +3,13 @@
 #include <QString>
 
 namespace {
-  QUrl ytv( "http://api.reittiopas.fi/public-ytv/fi/api/" );
-  QString username( "zouba" );
-  QString password( "caf9r3ee" );
+  const QUrl ytv( "http://api.reittiopas.fi/public-ytv/fi/api/" );
+  const QString username( "zouba" );
+  const QString password( "caf9r3ee" );
 
-  QString homeKey( "taivaanvuohentie%207%2Chelsinki" );
-  QString workKey( "it%E4merenkatu%2011%2Chelsinki" );
+  //const QString home( "Taivaanvuohentie 7, Helsinki" );
+  //const QString work( "Itämerenkatu 11, Helsinki" );
+  const QString home( "Taivaanvuohentie%207%2CHelsinki" );
+  const QString work( "It%E4merenkatu%2011%2CHelsinki" );
 }
 

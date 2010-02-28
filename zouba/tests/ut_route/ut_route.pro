@@ -9,6 +9,8 @@ QT += \
 INCLUDEPATH += \
   ../.. \
 
+DEPENDPATH += $INCLUDEPATH
+
 TEMPLATE = app
 
 SOURCES  = \

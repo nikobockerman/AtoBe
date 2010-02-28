@@ -4,15 +4,10 @@
 #include "uicontroller.h"
 #include "location.h"
 
+#include "ytv.h"
+
 #include <QDebug>
 #include <QObject>
-
-namespace {
-  Location home( "2549183", "6672570" );
-  Location work( "2551042", "6672829" );
-  QString homeKey( "taivaanvuohentie%207%2Chelsinki" );
-  QString workKey( "it%E4merenkatu%2011%2Chelsinki" );
-}
 
 int main(int argc, char *argv[] )
 {
@@ -42,8 +37,28 @@ int main(int argc, char *argv[] )
       route, SLOT( setToLocation() )
       );
 
-  from->resolveAddress( homeKey );
-  to->resolveAddress( workKey );
+  ui.homeaddress->setText( home );
+  ui.workaddress->setText( work );
+
+  from->resolveAddress( home );
+  to->resolveAddress( work );
+
+  QObject::connect(
+      uiController, SIGNAL( homeAddressChanged( QString ) ),
+      from, SLOT( resolveAddress( QString ) )
+    );
+
+  QObject::connect(
+      uiController, SIGNAL( workAddressChanged( QString ) ),
+      to, SLOT( resolveAddress( QString ) )
+    );
+
+  /* toggle doesn't work yet because 'from' is connected to 'homeAddressChanged'
+  QObject::connect(
+      uiController, SIGNAL( directionChanged() ),
+      route, SLOT( toggleDirection() )
+    );
+    */
 
   widget->show();
   return app.exec();

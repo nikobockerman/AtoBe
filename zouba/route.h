@@ -52,6 +52,11 @@ public Q_SLOTS:
     */
   void setToLocation( const Location &location=Location() );
 
+  /*!
+    * \brief Toggles the route direction.
+    */
+  void toggleDirection();
+
 Q_SIGNALS:
   void routeReady( RouteData );
 
