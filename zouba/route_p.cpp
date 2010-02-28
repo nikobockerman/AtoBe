@@ -5,6 +5,8 @@
 #include <QDebug>
 
 RoutePrivate::RoutePrivate( QObject *parent ) :
+    m_fromValid(false),
+    m_toValid(false),
     m_fromLocation(0,0),
     m_toLocation(0,0)
 {
@@ -57,19 +59,21 @@ RouteData RoutePrivate::parseReply( const QByteArray &reply )
   return retVal;
 }
 
-void RoutePrivate::setFromLocation( Location fromLocation )
+void RoutePrivate::setFromLocation( const Location &location )
 {
-  m_fromLocation = fromLocation;
+  m_fromLocation = location;
+  m_fromValid = true;
 }
 
-Location RoutePrivate::fromLocation()
+const Location &RoutePrivate::fromLocation()
 {
   return m_fromLocation;
 }
 
-void RoutePrivate::setToLocation( Location toLocation )
+void RoutePrivate::setToLocation( const Location &toLocation )
 {
   m_toLocation = toLocation;
+  m_toValid = true;
 }
 
 QString RoutePrivate::parseJORECode( const QString &joreCode ) const
@@ -85,7 +89,17 @@ QString RoutePrivate::parseJORECode( const QString &joreCode ) const
     return lineCode+letterVariant;
 }
 
-Location RoutePrivate::toLocation()
+const Location &RoutePrivate::toLocation()
 {
   return m_toLocation;
+}
+
+bool RoutePrivate::fromValid()
+{
+  return m_fromValid;
+}
+
+bool RoutePrivate::toValid()
+{
+  return m_toValid;
 }

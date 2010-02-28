@@ -1,5 +1,5 @@
-#ifndef UT_HTTPCLIENT_H
-#define UT_HTTPCLIENT_H
+#ifndef UT_ROUTE_H
+#define UT_ROUTE_H
 
 #include <QtTest/QtTest>
 #include <QObject>
@@ -26,4 +26,4 @@ private slots:
 private:
     RoutePrivate *m_subject;
 };
-#endif // UT_HTTPCLIENT_H
+#endif // UT_ROUTE_H

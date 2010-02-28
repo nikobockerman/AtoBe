@@ -1,0 +1,7 @@
+Makefile
+moc_location.cpp
+moc_location_p.cpp
+moc_route.cpp
+moc_route_p.cpp
+moc_uicontroller.cpp
+ui_zouba.h

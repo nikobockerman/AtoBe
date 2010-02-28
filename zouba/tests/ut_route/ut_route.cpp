@@ -370,16 +370,16 @@ void Ut_Route::testSetFromLocation()
 {
   Location work( "2551042", "6672829" );
   m_subject->setFromLocation( work );
-  QCOMPARE( work.x, m_subject->fromLocation().x );
-  QCOMPARE( work.y, m_subject->fromLocation().y );
+  QCOMPARE( work.x(), m_subject->fromLocation().x() );
+  QCOMPARE( work.y(), m_subject->fromLocation().y() );
 }
 
 void Ut_Route::testSetToLocation()
 {
   Location work( "2551042", "6672829" );
   m_subject->setToLocation( work );
-  QCOMPARE( work.x, m_subject->toLocation().x );
-  QCOMPARE( work.y, m_subject->toLocation().y );
+  QCOMPARE( work.x(), m_subject->toLocation().x() );
+  QCOMPARE( work.y(), m_subject->toLocation().y() );
 }
 
 QTEST_MAIN(Ut_Route)

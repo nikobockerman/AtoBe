@@ -20,15 +20,20 @@ public:
 
   RouteData parseReply( const QByteArray &reply );
 
-  void setFromLocation( Location fromLocation );
+  void setFromLocation( const Location &fromLocation );
 
-  Location fromLocation();
+  const Location &fromLocation();
 
-  void setToLocation( Location toLocation );
+  void setToLocation( const Location &toLocation );
 
-  Location toLocation();
+  const Location &toLocation();
+
+  bool toValid();
+  bool fromValid();
 
 private:
+  bool     m_fromValid;
+  bool     m_toValid;
   Location m_fromLocation;
   Location m_toLocation;
 
