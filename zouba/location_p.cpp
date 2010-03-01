@@ -38,6 +38,7 @@ void LocationPrivate::parseReply( const QByteArray &reply )
 
   if ( xml.hasError() ) {
     qDebug() << "xml error";
+    m_valid = false;
   } else {
     m_valid = true;
   }

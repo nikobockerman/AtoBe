@@ -63,7 +63,7 @@ void Location::resolveAddress( QString address )
 {
   QUrl fullUrl( ytv );
 
-  fullUrl.addEncodedQueryItem( "key", address.toUtf8() );
+  fullUrl.addEncodedQueryItem( "key", address.toAscii().toPercentEncoding() );
   fullUrl.addQueryItem( "user", username );
   fullUrl.addQueryItem( "pass", password );
 
@@ -74,7 +74,7 @@ void Location::replyFinished( QNetworkReply * reply )
 {
   q->parseReply( reply->readAll() );
 
-  if ( q->isValid() ) {
+  if ( isValid() ) {
     emit( becomeValid() );
   }
 }
