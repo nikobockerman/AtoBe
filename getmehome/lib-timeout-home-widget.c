@@ -11,10 +11,13 @@
 
 #include <gtk/gtk.h>
 #include <hildon/hildon.h>
+#include <time.h>
+#include <stdlib.h>
 
 #include "lib-timeout-home-widget.h"
 
 #include "location-provider.h"
+#include "coordinate-system.h"
 
 HD_DEFINE_PLUGIN_MODULE (TimeOutPlugin, time_out_plugin, HD_TYPE_HOME_PLUGIN_ITEM)
 
@@ -31,14 +34,82 @@ static void printDebug(const char *msg)
 char debugStr[1024];
 #define debug(...) sprintf(debugStr, __VA_ARGS__); printDebug(debugStr)
 
+
+
+void start_location_tracking();
+void stop_location_tracking();
+
+// Railway station
+//KKJ destinationX = 2552414;
+//KKJ destinationY = 6673664;
+// Home
+KKJ destinationX = 2544607;
+KKJ destinationY = 6683661;
+
+#define IDLE 0
+#define SEARCHING_LOCATION 1
+#define LOCATION_RECEIVED 2
+
+static int widget_state = IDLE;
+
+void get_me_home(KKJ x, KKJ y)
+{
+    time_t t;
+    struct tm *tmp;
+
+    char hour[4];
+    char minute[4];
+    char day[4];
+    char month[4];
+    char year[6];
+
+    // Get the current time
+    t = time(NULL);
+    tmp = localtime(&t);
+    if (tmp == NULL) {
+        return;
+    }
+
+    // Format needed parts from the current time
+    strftime(hour, sizeof(hour), "%H", tmp);
+    strftime(minute, sizeof(minute), "%M", tmp);
+    strftime(day, sizeof(day), "%d", tmp);
+    strftime(month, sizeof(month), "%m", tmp);
+    strftime(year, sizeof(year), "%Y", tmp);
+
+    debug("Hour %s minute %s", hour, minute);
+
+    // Format the URL
+    char url[1024];
+    // http://www.reittiopas.fi/?from=poi*Current+location*2552414*6673664&to=poi*Home*2544607*6683661&hour=12&minute=18&timetype=departure&day=14&month=02&year=2010
+    sprintf(url, "http://www.reittiopas.fi/?from=poi*Current+location*%u*%u&to=poi*Home*%u*%u&hour=%s&minute=%s&timetype=departure&day=%s&month=%s&year=%s", x, y, destinationX, destinationY, hour, minute, day, month, year);
+
+    // Open the browser
+    char command[1024];
+    sprintf(command, "browser_dbuscmd.sh load_url \"%s\"", url);
+    system(command);
+}
+
 static void location_listener(double latitude, double longitude)
 {
-    debug("got location: %f, %f", latitude, longitude);
+    KKJ x, y;
+
+//    debug("got location: %f, %f", latitude, longitude);
+
+    if (widget_state == SEARCHING_LOCATION) {
+        widget_state = LOCATION_RECEIVED;
+
+        WGS84lola_to_KKJxy(longitude, latitude, &x, &y);
+
+        get_me_home(x, y);
+
+        stop_location_tracking();
+        widget_state = IDLE;
+    }
 }
 
 int locationTrackingOn = 0;
-void search_button_clicked(GtkButton *button, gpointer user_data)
-{
+void start_location_tracking() {
     if (!locationTrackingOn) {
         // Setup location tracking
         setup_location_provider();
@@ -47,12 +118,24 @@ void search_button_clicked(GtkButton *button, gpointer user_data)
 
         locationTrackingOn = 1;
         debug("Location tracking started");
-    } else {
-        stop_location_provider();
-        cleanup_location_provider();
+    }
+}
 
-        locationTrackingOn = 0;
-        debug("Location tracking stopped");
+void stop_location_tracking() {
+   if (locationTrackingOn)  {
+       stop_location_provider();
+       cleanup_location_provider();
+
+       locationTrackingOn = 0;
+       debug("Location tracking stopped");
+   }
+}
+
+void search_button_clicked(GtkButton *button, gpointer user_data)
+{
+    if (widget_state == IDLE) {
+        widget_state = SEARCHING_LOCATION;
+        start_location_tracking();
     }
 }
 
@@ -73,7 +156,7 @@ static GtkWidget *build_ui(void)
 //     hildon_picker_button_set_active (action, 0);
 
     GtkWidget* getmehomeButton = hildon_gtk_button_new(HILDON_SIZE_AUTO);
-    gtk_button_set_label(GTK_BUTTON(getmehomeButton), "Search");
+    gtk_button_set_label(GTK_BUTTON(getmehomeButton), "Get Me Home");
 
     g_signal_connect(getmehomeButton, "clicked", G_CALLBACK(search_button_clicked), NULL);
 
@@ -99,6 +182,14 @@ static GtkWidget *build_ui(void)
     gtk_widget_show_all(GTK_WIDGET(contents));
 
     return GTK_WIDGET(contents);
+
+    /*GtkWidget* getmehomeButton = hildon_gtk_button_new(HILDON_SIZE_AUTO);
+    gtk_button_set_label(GTK_BUTTON(getmehomeButton), "Get Me Home");
+    g_signal_connect(getmehomeButton, "clicked", G_CALLBACK(search_button_clicked), NULL);
+
+    gtk_widget_show_all(GTK_WIDGET(getmehomeButton));
+
+    return GTK_WIDGET(getmehomeButton);*/
 }
 
 static void

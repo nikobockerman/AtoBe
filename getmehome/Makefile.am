@@ -3,7 +3,7 @@
 desktoplib_LTLIBRARIES =  lib-timeout-home-widget.la
 desktoplibdir = $(HILDON_DESKTOP_LIB_DIR)
 
-lib_timeout_home_widget_la_SOURCES = lib-timeout-home-widget.c lib-timeout-home-widget.h location-provider.h location-provider.c
+lib_timeout_home_widget_la_SOURCES = lib-timeout-home-widget.c lib-timeout-home-widget.h location-provider.c location-provider.h coordinate-system.c coordinate-system.h
 lib_timeout_home_widget_la_LIBADD = $(EXAMPLE_LIBS)
 
 AM_CFLAGS = -Wall $(EXAMPLE_CFLAGS)
