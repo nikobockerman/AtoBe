@@ -10,13 +10,19 @@ class LocationPrivate : public QObject
     Q_OBJECT
 
 public:
+  QString m_x;
+  QString m_y;
+  bool    m_valid;
   LocationPrivate( QString x, QString y );
 
   LocationPrivate();
+  virtual ~LocationPrivate();
 
+  void setX( uint x );
   void setX( QString x );
   QString x() const;
 
+  void setY( uint y );
   void setY( QString y );
   QString y() const;
 
@@ -25,10 +31,6 @@ public:
 
   void parseReply( const QByteArray &reply );
 
-private:
-  QString m_x;
-  QString m_y;
-  bool    m_valid;
 };
 
 #endif // LOCATION_P_H

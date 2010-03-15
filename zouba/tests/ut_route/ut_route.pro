@@ -1,6 +1,11 @@
 CONFIG += \
   qt \
   debug \
+  mobility \
+
+MOBILITY = \
+   location \
+   bearer \
 
 QT += \
   testlib \
@@ -12,6 +17,9 @@ INCLUDEPATH += \
 DEPENDPATH += $INCLUDEPATH
 
 TEMPLATE = app
+
+LIBS += \
+   /usr/lib/libQtLocation.so \
 
 SOURCES  = \
   ut_route.cpp \

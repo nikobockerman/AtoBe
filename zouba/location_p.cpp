@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "location_p.h"
 
 #include <QXmlStreamReader>
@@ -15,6 +16,10 @@ LocationPrivate::LocationPrivate() :
   m_x(0),
   m_y(0),
   m_valid(false)
+{
+}
+
+LocationPrivate::~LocationPrivate()
 {
 }
 
@@ -44,6 +49,11 @@ void LocationPrivate::parseReply( const QByteArray &reply )
   }
 }
 
+void LocationPrivate::setX( uint x )
+{
+  m_x = QString( "%1" ).arg( x );
+}
+
 void LocationPrivate::setX( QString x )
 {
   m_x = x;
@@ -52,6 +62,11 @@ void LocationPrivate::setX( QString x )
 QString LocationPrivate::x() const
 {
   return m_x;
+}
+
+void LocationPrivate::setY( uint y )
+{
+  m_y = QString( "%1" ).arg( y );
 }
 
 void LocationPrivate::setY( QString y )

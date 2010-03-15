@@ -3,6 +3,7 @@
 #include "ui_zouba.h"
 #include "uicontroller.h"
 #include "location.h"
+#include "gpscontroller.h"
 
 #include "ytv.h"
 
@@ -25,40 +26,28 @@ int main(int argc, char *argv[] )
       uiController, SLOT( displayRoute( RouteData ) )
       );
 
-  Location *from = new Location();
+  GpsController *gpsController = new GpsController();
   Location *to   = new Location();
 
   QObject::connect(
-      from, SIGNAL( becomeValid() ),
-      route, SLOT( setFromLocation() )
+      gpsController, SIGNAL( locationChanged( Location ) ),
+      route, SLOT( setFromLocation( Location ) )
       );
   QObject::connect(
       to, SIGNAL( becomeValid() ),
       route, SLOT( setToLocation() )
       );
 
-  ui.homeaddress->setText( home );
+  ui.homeaddress->setText( "GPS" );
   ui.workaddress->setText( work );
 
-  from->resolveAddress( home );
+  gpsController->startGps();
   to->resolveAddress( work );
-
-  QObject::connect(
-      uiController, SIGNAL( homeAddressChanged( QString ) ),
-      from, SLOT( resolveAddress( QString ) )
-    );
 
   QObject::connect(
       uiController, SIGNAL( workAddressChanged( QString ) ),
       to, SLOT( resolveAddress( QString ) )
     );
-
-  /* toggle doesn't work yet because 'from' is connected to 'homeAddressChanged'
-  QObject::connect(
-      uiController, SIGNAL( directionChanged() ),
-      route, SLOT( toggleDirection() )
-    );
-    */
 
   widget->show();
   return app.exec();

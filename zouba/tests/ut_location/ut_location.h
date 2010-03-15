@@ -10,19 +10,20 @@ Q_DECLARE_METATYPE(LocationPrivate*);
 
 class Ut_Location : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
 
 private slots:
-    void init();
-    void cleanup();
-    void initTestCase();
-    void cleanupTestCase();
-    void testParseReply();
-    void testSet();
+  void init();
+  void cleanup();
+  void initTestCase();
+  void cleanupTestCase();
+  void testParseReply();
+  void testSet();
+  void testConstructorQGeoPositionInfo();
 
 private:
-    LocationPrivate *m_subject;
+  LocationPrivate *m_subject;
 };
 #endif // UT_LOCATION_H
