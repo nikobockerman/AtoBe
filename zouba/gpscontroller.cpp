@@ -34,6 +34,7 @@ void GpsController::updateLocation( QGeoPositionInfo positionInfo )
   Location newLocation( positionInfo );
 
   emit locationChanged( newLocation );
+  m_location->stopUpdates();
 }
 
 void GpsController::startGps()

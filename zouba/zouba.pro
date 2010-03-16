@@ -17,7 +17,7 @@ QT += \
 
 TEMPLATE = app
 
-FORMS = zouba.ui
+#FORMS = zouba.ui
 
 SOURCES += \
     main.cpp \
@@ -27,6 +27,7 @@ SOURCES += \
     location.cpp \
     location_p.cpp \
     gpscontroller.cpp \
+    ui.cpp \
 
 HEADERS += \
     route.h \
@@ -36,4 +37,5 @@ HEADERS += \
     location_p.h \
     ytv.h \
     gpscontroller.h \
+    ui.h \
 

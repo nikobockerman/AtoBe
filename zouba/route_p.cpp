@@ -19,28 +19,36 @@ RoutePrivate::~RoutePrivate()
 
 RouteData RoutePrivate::parseReply( const QByteArray &reply )
 {
+  qDebug() << __PRETTY_FUNCTION__;
   RouteData retVal;
 
   QXmlStreamReader xml( reply );
 
+  bool haveLine = false;
+  bool haveTime = false;
+
   bool inLine = false;
   bool inStop = false;
-  while ( !xml.atEnd() ) {
+  while ( !(haveLine && haveTime) && !xml.atEnd() ) {
     xml.readNext();
-    if ( xml.isStartElement() && xml.name() == "LINE" ) {
+    if ( !haveLine && xml.isStartElement() && xml.name() == "LINE" ) {
       QString lineCode( xml.attributes().value("code").toString() );
+      qDebug() << "lineCode" << lineCode;
 
       retVal.lineCode = parseJORECode( lineCode );
+      haveLine = true;
 
       inLine = true;
     } else
     if ( inLine && xml.name() == "STOP" ) {
       inStop = true;
     } else
-    if ( inLine && inStop && xml.name() == "ARRIVAL" ) {
+    if ( !haveTime && inLine && inStop && xml.name() == "ARRIVAL" ) {
       QString arrivalTime( xml.attributes().value("time").toString() );
+      qDebug() << "arrivalTime" << arrivalTime;
 
-      retVal.arrivalTime = arrivalTime;
+      retVal.arrivalTime = arrivalTime.rightJustified(4).insert(2,":");
+      haveTime = true;
 
       inLine = false;
     } else

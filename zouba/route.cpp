@@ -30,6 +30,7 @@ Route::~Route()
 
 void Route::getRoute()
 {
+  qDebug() << __PRETTY_FUNCTION__;
   QUrl fullUrl( ytv );
 
   QStringList a;
@@ -39,6 +40,8 @@ void Route::getRoute()
 
   fullUrl.addQueryItem( "a", a.join(",") );
   fullUrl.addQueryItem( "b", b.join(",") );
+  fullUrl.addQueryItem( "show", "1" );
+  fullUrl.addQueryItem( "walkspeed", "3" );
   fullUrl.addQueryItem( "user", username );
   fullUrl.addQueryItem( "pass", password );
 
@@ -47,6 +50,7 @@ void Route::getRoute()
 
 void Route::replyFinished( QNetworkReply * reply )
 {
+  qDebug() << __PRETTY_FUNCTION__;
   RouteData routeData = q->parseReply( reply->readAll() );
 
   emit( routeReady( routeData ) );

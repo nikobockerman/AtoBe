@@ -14,15 +14,15 @@ class GpsController : public QObject
   Q_OBJECT
 
 public:
-    GpsController();
+  GpsController();
 
-    ~GpsController();
+  ~GpsController();
 
-    void startGps();
-    void stopGps();
+  void stopGps();
 
 public Q_SLOTS:
   void updateLocation( QGeoPositionInfo positionInfo );
+  void startGps();
 
 Q_SIGNALS:
   void locationChanged( const Location &newLocation );
