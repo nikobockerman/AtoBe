@@ -31,14 +31,14 @@ public:
 
   bool isValid() const;
 
-  public Q_SLOTS:
-    void resolveAddress( QString address );
+public Q_SLOTS:
+  void resolveAddress( QString address );
 
 Q_SIGNALS:
   void becomeValid();
 
-  private Q_SLOTS:
-    void replyFinished( QNetworkReply * reply );
+private Q_SLOTS:
+  void replyFinished( QNetworkReply * reply );
 
 private:
   LocationPrivate *q;

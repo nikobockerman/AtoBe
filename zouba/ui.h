@@ -3,8 +3,8 @@
 
 class QMainWindow;
 class QWidget;
-class QPushButton;
 class QTableWidget;
+class QButtonGroup;
 
 class Ui
 {
@@ -13,8 +13,13 @@ public:
   ~Ui();
   void setupUi( QMainWindow *mainWindow );
 
+  enum {
+    HomeButtonId=0,
+    WorkButtonId=1
+  };
+
   QWidget *centralWidget;
-  QPushButton *trigger;
+  QButtonGroup *destinationButtons;
   QTableWidget *table;
 };
 #endif //UI_H

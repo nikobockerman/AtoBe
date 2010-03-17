@@ -1,4 +1,3 @@
-
 #include <QUrl>
 #include <QString>
 

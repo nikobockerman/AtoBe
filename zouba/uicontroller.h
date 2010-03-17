@@ -2,6 +2,7 @@
 #define UICONTROLLER_H
 
 #include "routedata.h"
+#include "location.h"
 
 #include <QObject>
 
@@ -19,10 +20,21 @@ public Q_SLOTS:
   void displayRoute( const RouteData &routeData );
 
 Q_SIGNALS:
-  void homePressed();
+  void buttonClicked();
+  void destinationChanged( Location newDestination );
+
+private Q_SLOTS:
+  void changeDestination( int id );
+  void setHomeButtonValid();
+  void setWorkButtonValid();
 
 private:
+  void setButtonValid( int id );
+
+private:
+  QList<Location*> destination;
   Ui *ui;
+  int currentDestination;
 };
 #endif // UICONTROLLER_H
 

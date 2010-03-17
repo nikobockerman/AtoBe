@@ -7,13 +7,6 @@
 
 QTM_USE_NAMESPACE
 
-GpsController::~GpsController()
-{
-  qDebug() << __PRETTY_FUNCTION__;
-  delete m_location;
-  m_location = 0;
-}
-
 GpsController::GpsController() :
   m_location( QGeoPositionInfoSource::createDefaultSource(this) )
 {
@@ -26,6 +19,13 @@ GpsController::GpsController() :
       );
 
   m_location->stopUpdates();
+}
+
+GpsController::~GpsController()
+{
+  qDebug() << __PRETTY_FUNCTION__;
+  delete m_location;
+  m_location = 0;
 }
 
 void GpsController::updateLocation( QGeoPositionInfo positionInfo )

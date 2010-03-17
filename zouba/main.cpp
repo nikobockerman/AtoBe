@@ -22,7 +22,6 @@ int main(int argc, char *argv[] )
   UiController  *uiController  = new UiController( &ui );
   Route         *route         = new Route();
   GpsController *gpsController = new GpsController();
-  Location      *to            = new Location();
 
   QObject::connect(
       route, SIGNAL( routeReady( RouteData ) ),
@@ -35,18 +34,16 @@ int main(int argc, char *argv[] )
       );
 
   QObject::connect(
-      to, SIGNAL( becomeValid() ),
-      route, SLOT( setToLocation() )
-      );
+      uiController, SIGNAL( destinationChanged( Location ) ),
+      route, SLOT( setToLocation( Location ) )
+    );
 
   QObject::connect(
-      uiController, SIGNAL( homePressed() ),
+      uiController, SIGNAL( buttonClicked() ),
       gpsController, SLOT( startGps() )
     );
 
   mainWindow->show();
-
-  to->resolveAddress( work );
 
   return app.exec();
 }
