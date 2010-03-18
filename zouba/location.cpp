@@ -100,11 +100,11 @@ Location &Location::operator=( const Location &from )
 
 void Location::resolveAddress( QString address )
 {
-  QUrl fullUrl( ytv );
+  QUrl fullUrl( Ytv::Url );
 
   fullUrl.addEncodedQueryItem( "key", address.toAscii().toPercentEncoding() );
-  fullUrl.addQueryItem( "user", username );
-  fullUrl.addQueryItem( "pass", password );
+  fullUrl.addQueryItem( "user", Ytv::Username );
+  fullUrl.addQueryItem( "pass", Ytv::Password );
 
   manager->get( QNetworkRequest( fullUrl ) );
 }

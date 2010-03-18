@@ -3,6 +3,7 @@
 
 #include <QXmlStreamReader>
 #include <QDebug>
+#include <QList>
 
 RoutePrivate::RoutePrivate( QObject *parent ) :
     m_fromValid(false),
@@ -17,10 +18,10 @@ RoutePrivate::~RoutePrivate()
 {
 }
 
-RouteData RoutePrivate::parseReply( const QByteArray &reply )
+QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
 {
-  qDebug() << __PRETTY_FUNCTION__;
-  RouteData retVal;
+  QList<RouteData> retVal;
+  RouteData routeData;
 
   QXmlStreamReader xml( reply );
 
@@ -29,13 +30,12 @@ RouteData RoutePrivate::parseReply( const QByteArray &reply )
 
   bool inLine = false;
   bool inStop = false;
-  while ( !(haveLine && haveTime) && !xml.atEnd() ) {
+  while ( !xml.atEnd() ) {
     xml.readNext();
-    if ( !haveLine && xml.isStartElement() && xml.name() == "LINE" ) {
+    if ( xml.isStartElement() && xml.name() == "LINE" ) {
       QString lineCode( xml.attributes().value("code").toString() );
-      qDebug() << "lineCode" << lineCode;
 
-      retVal.lineCode = parseJORECode( lineCode );
+      routeData.lineCode = parseJORECode( lineCode );
       haveLine = true;
 
       inLine = true;
@@ -43,20 +43,29 @@ RouteData RoutePrivate::parseReply( const QByteArray &reply )
     if ( inLine && xml.name() == "STOP" ) {
       inStop = true;
     } else
-    if ( !haveTime && inLine && inStop && xml.name() == "ARRIVAL" ) {
+    if ( inLine && inStop && xml.name() == "ARRIVAL" ) {
       QString arrivalTime( xml.attributes().value("time").toString() );
-      qDebug() << "arrivalTime" << arrivalTime;
 
-      retVal.arrivalTime = arrivalTime.rightJustified(4).insert(2,":");
+      routeData.arrivalTime = arrivalTime.rightJustified(4).insert(2,":");
       haveTime = true;
 
       inLine = false;
     } else
     if ( xml.isEndElement() && xml.name() == "STOP" ) {
       inStop = false;
+      haveTime = false;
     } else
     if ( xml.isEndElement() && xml.name() == "LINE" ) {
       inLine = false;
+      haveLine = false;
+    }
+
+    if ( haveLine && haveTime ) {
+      retVal.append( routeData );
+
+      // only want first STOP per LINE
+      haveTime = false;
+      haveLine = false;
     }
   }
 
@@ -86,15 +95,23 @@ void RoutePrivate::setToLocation( const Location &toLocation )
 
 QString RoutePrivate::parseJORECode( const QString &joreCode ) const
 {
-    QString areaTransportTypeCode( joreCode.mid(0,1) );
-    QString lineCode( joreCode.mid(1,3) );
-    QString letterVariant( joreCode.mid(4,1) );
-    QString letterNumberVariant( joreCode.mid(5,1) );
-    QString direction( joreCode.mid(6,1) );
+  QString retVal;
 
-    lineCode.setNum( lineCode.toInt() );
-    
-    return lineCode+letterVariant;
+  QString areaTransportTypeCode( joreCode.mid(0,1) );
+  QString lineCode( joreCode.mid(1,3) );
+  QString letterVariant( joreCode.mid(4,1) );
+  QString letterNumberVariant( joreCode.mid(5,1) );
+  QString direction( joreCode.mid(6,1) );
+
+  lineCode.setNum( lineCode.toInt() );
+
+  retVal = lineCode;
+  
+  if ( letterVariant != " " ) {
+    retVal += letterVariant;
+  }
+
+  return retVal;
 }
 
 const Location &RoutePrivate::toLocation()

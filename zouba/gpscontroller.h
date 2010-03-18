@@ -29,6 +29,7 @@ Q_SIGNALS:
 
 private:
   QGeoPositionInfoSource *m_location;
+  bool updatesEnabled;
 };
 
 #endif // GPSCONTROLLER_H

@@ -8,37 +8,36 @@
 QTM_USE_NAMESPACE
 
 GpsController::GpsController() :
-  m_location( QGeoPositionInfoSource::createDefaultSource(this) )
+  m_location( QGeoPositionInfoSource::createDefaultSource(this) ),
+  updatesEnabled(false)
 {
-  qDebug() << __PRETTY_FUNCTION__;
   m_location->setUpdateInterval( 1*60*1000 );
 
   connect( 
       m_location, SIGNAL( positionUpdated( QGeoPositionInfo ) ),
       this, SLOT( updateLocation( QGeoPositionInfo ) )
-      );
+  );
 
-  m_location->stopUpdates();
+  m_location->startUpdates();
 }
 
 GpsController::~GpsController()
 {
-  qDebug() << __PRETTY_FUNCTION__;
   delete m_location;
   m_location = 0;
 }
 
 void GpsController::updateLocation( QGeoPositionInfo positionInfo )
 {
-  qDebug() << __PRETTY_FUNCTION__;
   Location newLocation( positionInfo );
 
-  emit locationChanged( newLocation );
-  m_location->stopUpdates();
+  if ( updatesEnabled ) {
+    emit locationChanged( newLocation );
+    updatesEnabled = false;
+  }
 }
 
 void GpsController::startGps()
 {
-  qDebug() << __PRETTY_FUNCTION__;
-  m_location->startUpdates();
+  updatesEnabled = true;
 }

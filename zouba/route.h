@@ -58,7 +58,7 @@ public Q_SLOTS:
   void toggleDirection();
 
 Q_SIGNALS:
-  void routeReady( RouteData );
+  void routeReady( QList<RouteData> );
 
 private Q_SLOTS:
   void replyFinished( QNetworkReply* );

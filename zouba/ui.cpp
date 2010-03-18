@@ -29,13 +29,13 @@ void Ui::setupUi( QMainWindow *mainWindow )
   QPushButton *homeButton = new QPushButton( centralWidget );
   homeButton->setObjectName( QString::fromUtf8("homeButton") );
   homeButton->setText( "HOME" );
-  homeButton->setGeometry( QRect( 0, 0, 150, 40 ) );
+  homeButton->setGeometry( QRect( 0, 0, ButtonWidth, ButtonHeight ) );
   homeButton->setEnabled(false);
 
   QPushButton *workButton = new QPushButton( centralWidget );
   workButton->setObjectName( QString::fromUtf8("workButton") );
   workButton->setText( "WORK" );
-  workButton->setGeometry( QRect( 0, 40, 150, 40 ) );
+  workButton->setGeometry( QRect( 0, ButtonHeight, ButtonWidth, ButtonHeight ) );
   workButton->setEnabled(false);
 
   destinationButtons = new QButtonGroup( centralWidget );
@@ -44,7 +44,7 @@ void Ui::setupUi( QMainWindow *mainWindow )
 
   table = new QTableWidget( 1, 2, centralWidget );
   table->setObjectName( QString::fromUtf8("table") );
-  table->setGeometry( QRect( 151, 0, 650, 480 ) );
+  table->setGeometry( QRect( ButtonWidth+1, 0, ScreenWidth-ButtonWidth, ScreenHeight ) );
   QStringList columnHeaders;
   columnHeaders << "Time" << "Bus";
   table->setHorizontalHeaderLabels( columnHeaders );

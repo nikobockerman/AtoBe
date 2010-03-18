@@ -18,7 +18,7 @@ public:
   Q_PROPERTY(Location fromLocation READ fromLocation WRITE setFromLocation);
   Q_PROPERTY(Location toLocation READ toLocation WRITE setFromLocation);
 
-  RouteData parseReply( const QByteArray &reply );
+  QList<RouteData> parseReply( const QByteArray &reply );
 
   void setFromLocation( const Location &fromLocation );
 

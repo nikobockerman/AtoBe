@@ -18,6 +18,16 @@ public:
     WorkButtonId=1
   };
 
+  enum {
+    ScreenWidth=800,
+    ScreenHeight=480
+  };
+
+  enum {
+    ButtonWidth=300,
+    ButtonHeight=70
+  };
+
   QWidget *centralWidget;
   QButtonGroup *destinationButtons;
   QTableWidget *table;

@@ -24,8 +24,8 @@ int main(int argc, char *argv[] )
   GpsController *gpsController = new GpsController();
 
   QObject::connect(
-      route, SIGNAL( routeReady( RouteData ) ),
-      uiController, SLOT( displayRoute( RouteData ) )
+      route, SIGNAL( routeReady( QList<RouteData> ) ),
+      uiController, SLOT( displayRoute( QList<RouteData> ) )
       );
 
   QObject::connect(

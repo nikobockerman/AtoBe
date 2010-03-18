@@ -17,7 +17,7 @@ public:
   ~UiController();
 
 public Q_SLOTS:
-  void displayRoute( const RouteData &routeData );
+  void displayRoute( const QList<RouteData> &routeData );
 
 Q_SIGNALS:
   void buttonClicked();

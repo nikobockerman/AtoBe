@@ -30,8 +30,7 @@ Route::~Route()
 
 void Route::getRoute()
 {
-  qDebug() << __PRETTY_FUNCTION__;
-  QUrl fullUrl( ytv );
+  QUrl fullUrl( Ytv::Url );
 
   QStringList a;
   a << q->fromLocation().x() << q->fromLocation().y();
@@ -40,42 +39,34 @@ void Route::getRoute()
 
   fullUrl.addQueryItem( "a", a.join(",") );
   fullUrl.addQueryItem( "b", b.join(",") );
-  fullUrl.addQueryItem( "show", "1" );
-  fullUrl.addQueryItem( "walkspeed", "3" );
-  fullUrl.addQueryItem( "user", username );
-  fullUrl.addQueryItem( "pass", password );
+  fullUrl.addQueryItem( "show", QString::number(Ytv::FiveResults) );
+  fullUrl.addQueryItem( "walkspeed", QString::number(Ytv::Fast) );
+  fullUrl.addQueryItem( "user", Ytv::Username );
+  fullUrl.addQueryItem( "pass", Ytv::Password );
 
   manager->get( QNetworkRequest( fullUrl ) );
 }
 
 void Route::replyFinished( QNetworkReply * reply )
 {
-  qDebug() << __PRETTY_FUNCTION__;
-  RouteData routeData = q->parseReply( reply->readAll() );
+  QList<RouteData> routeData = q->parseReply( reply->readAll() );
 
   emit( routeReady( routeData ) );
 }
 
 void Route::setFromLocation( const Location &location )
 {
-  qDebug() << __PRETTY_FUNCTION__;
   if ( location.isValid() ) {
-    qDebug() << "from location is valid";
     q->setFromLocation( location );
     if ( q->toValid() ) {
-        qDebug() << "to is also valid; getting route";
         getRoute();
     }
   } else {
-    qDebug() << "location is NOT valid - obtaining from sender";
     Location *locationPtr = qobject_cast<Location*>(sender());
     if ( locationPtr ) {
       q->setFromLocation( *locationPtr );
       if ( q->toValid() ) {
-        qDebug() << "to is also valid; getting route";
         getRoute();
-      } else {
-        qDebug() << "to is NOT valid";
       }
     } else {
       qDebug() << "locationPtr is zero - cast didn't work";
@@ -90,26 +81,17 @@ const Location &Route::fromLocation()
 
 void Route::setToLocation( const Location &location )
 {
-  qDebug() << __PRETTY_FUNCTION__;
   if ( location.isValid() ) {
-    qDebug() << "to is valid";
     q->setToLocation( location );
     if ( q->fromValid() ) {
-      qDebug() << "from is also valid; getting route";
       getRoute();
-    } else {
-      qDebug() << "from is NOT valid";
     }
   } else {
-    qDebug() << "to is not valid; getting from sender";
     Location *locationPtr = qobject_cast<Location*>(sender());
     if ( locationPtr ) {
       q->setToLocation( *locationPtr );
       if ( q->fromValid() ) {
-        qDebug() << "from is also valid; getting route";
         getRoute();
-      } else {
-        qDebug() << "from is not valid";
       }
     } else {
       qDebug() << "locationPtr is zero; cast failed";

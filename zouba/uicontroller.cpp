@@ -25,8 +25,8 @@ UiController::UiController( Ui *ui ) :
       this, SLOT( setWorkButtonValid() )
   );
 
-  homeLocation->resolveAddress( home );
-  workLocation->resolveAddress( work );
+  homeLocation->resolveAddress( Ytv::Home );
+  workLocation->resolveAddress( Ytv::Work );
 
   destination.append( homeLocation );
   destination.append( workLocation );
@@ -69,15 +69,15 @@ void UiController::changeDestination( int id )
   emit buttonClicked();
 }
 
-void UiController::displayRoute( const RouteData &routeData )
+void UiController::displayRoute( const QList<RouteData> &routeData )
 {
-  qDebug() << __PRETTY_FUNCTION__;
-  qDebug() << "routeData.arrivalTime" << routeData.arrivalTime;
-  qDebug() << "routeData.lineCode" << routeData.lineCode;
+  ui->table->setRowCount( routeData.count() );
 
-  QTableWidgetItem *timeItem = new QTableWidgetItem( routeData.arrivalTime );
-  ui->table->setItem( 0, 0, timeItem );
+  for ( int i=0; i<routeData.count(); i++ ) {
+    QTableWidgetItem *timeItem = new QTableWidgetItem( routeData.at(i).arrivalTime );
+    ui->table->setItem( i, 0, timeItem );
 
-  QTableWidgetItem *lineItem = new QTableWidgetItem( routeData.lineCode );
-  ui->table->setItem( 0, 1, lineItem );
+    QTableWidgetItem *lineItem = new QTableWidgetItem( routeData.at(i).lineCode );
+    ui->table->setItem( i, 1, lineItem );
+  }
 }
