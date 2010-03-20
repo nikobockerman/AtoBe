@@ -29,15 +29,20 @@ GpsController::~GpsController()
 
 void GpsController::updateLocation( QGeoPositionInfo positionInfo )
 {
+  qDebug() << "new GPS position";
+
   Location newLocation( positionInfo );
 
   if ( updatesEnabled ) {
+    qDebug() << "from location changed";
     emit locationChanged( newLocation );
     updatesEnabled = false;
+    m_location->setUpdateInterval( 1*60*1000 );
   }
 }
 
 void GpsController::startGps()
 {
   updatesEnabled = true;
+  m_location->setUpdateInterval( 1 );
 }

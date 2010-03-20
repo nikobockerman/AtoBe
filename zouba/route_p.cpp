@@ -20,6 +20,8 @@ RoutePrivate::~RoutePrivate()
 
 QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
 {
+  qDebug() << "parsing route";
+
   QList<RouteData> retVal;
   RouteData routeData;
 
@@ -71,6 +73,10 @@ QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
 
   if ( xml.hasError() ) {
     qDebug() << "xml error";
+  }
+
+  if ( retVal.isEmpty() ) {
+    qDebug() << "no routes found";
   }
 
   return retVal;

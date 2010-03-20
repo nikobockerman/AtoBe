@@ -1,5 +1,7 @@
 #include "ui.h"
 
+#include "messagetable.h"
+
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTableWidget>
@@ -7,6 +9,13 @@
 #include <QRect>
 #include <QButtonGroup>
 #include <QHeaderView>
+#include <QObject>
+#include <QMenuBar>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QSizePolicy>
+
+MessageTable *Ui::messageTable = 0;
 
 Ui::Ui() :
   centralWidget(0),
@@ -22,31 +31,67 @@ Ui::~Ui()
 void Ui::setupUi( QMainWindow *mainWindow )
 {
   mainWindow->resize(800,480);
+  QMenu *menu = mainWindow->menuBar()->addMenu("Settings");
+
+  QAction *setHomeAddressAction = new QAction("Set home address", this);
+  QAction *setWorkAddressAction = new QAction("Set work address", this);
+  menu->addAction(setHomeAddressAction);
+  menu->addAction(setWorkAddressAction);
+
+  connect(
+      setHomeAddressAction, SIGNAL(triggered()),
+      this, SLOT(setHomeAddress())
+      );
+  connect(
+      setWorkAddressAction, SIGNAL(triggered()),
+      this, SLOT(setWorkAddress())
+      );
 
   centralWidget = new QWidget( mainWindow );
   mainWindow->setCentralWidget(centralWidget);
 
-  QPushButton *homeButton = new QPushButton( centralWidget );
+  QPushButton *homeButton = new QPushButton();
   homeButton->setObjectName( QString::fromUtf8("homeButton") );
   homeButton->setText( "HOME" );
-  homeButton->setGeometry( QRect( 0, 0, ButtonWidth, ButtonHeight ) );
   homeButton->setEnabled(false);
+  homeButton->setFixedSize( QSize( ButtonWidth, ButtonHeight ) );
 
-  QPushButton *workButton = new QPushButton( centralWidget );
+  QPushButton *workButton = new QPushButton();
   workButton->setObjectName( QString::fromUtf8("workButton") );
   workButton->setText( "WORK" );
-  workButton->setGeometry( QRect( 0, ButtonHeight, ButtonWidth, ButtonHeight ) );
   workButton->setEnabled(false);
 
-  destinationButtons = new QButtonGroup( centralWidget );
+  destinationButtons = new QButtonGroup();
   destinationButtons->addButton( homeButton, HomeButtonId );
   destinationButtons->addButton( workButton, WorkButtonId );
 
-  table = new QTableWidget( 1, 2, centralWidget );
-  table->setObjectName( QString::fromUtf8("table") );
-  table->setGeometry( QRect( ButtonWidth+1, 0, ScreenWidth-ButtonWidth, ScreenHeight ) );
+  buttonLayout = new QVBoxLayout();
+  buttonLayout->addWidget( homeButton );
+  buttonLayout->addWidget( workButton );
+  buttonLayout->addStretch();
+
+  table = new QTableWidget( 1, 2 );
   QStringList columnHeaders;
   columnHeaders << "Time" << "Bus";
   table->setHorizontalHeaderLabels( columnHeaders );
   table->verticalHeader()->hide();
+
+  QHBoxLayout *topLayout = new QHBoxLayout();
+  topLayout->addLayout( buttonLayout );
+  topLayout->addWidget( table );
+
+  messageTable = new MessageTable( centralWidget );
+  messageTable->setObjectName( QString::fromUtf8("messageTable") );
+
+  QVBoxLayout *mainLayout = new QVBoxLayout( centralWidget );
+  mainLayout->addLayout( topLayout );
+  mainLayout->addWidget( messageTable );
+}
+
+void Ui::setHomeAddress()
+{
+}
+
+void Ui::setWorkAddress()
+{
 }

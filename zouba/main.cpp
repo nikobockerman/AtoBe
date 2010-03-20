@@ -4,8 +4,9 @@
 #include "uicontroller.h"
 #include "location.h"
 #include "gpscontroller.h"
-
 #include "ytv.h"
+#include "messagehandler.h"
+#include "messagetable.h"
 
 #include <QDebug>
 #include <QObject>
@@ -14,10 +15,15 @@
 
 int main(int argc, char *argv[] )
 {
+  qInstallMsgHandler( messageHandler );
   QApplication app(argc, argv);
   QMainWindow *mainWindow = new QMainWindow;
   Ui ui;
   ui.setupUi(mainWindow);
+
+  qDebug() << "1";
+  qDebug() << "2";
+  qDebug() << "3";
 
   UiController  *uiController  = new UiController( &ui );
   Route         *route         = new Route();

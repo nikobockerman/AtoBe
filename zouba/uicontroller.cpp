@@ -3,6 +3,7 @@
 #include "ui.h"
 #include "ytv.h"
 #include "location.h"
+#include "messagetable.h"
 
 #include <QObject>
 #include <QTableWidgetItem>
@@ -59,6 +60,8 @@ void UiController::setButtonValid( int id )
 
 void UiController::changeDestination( int id )
 {
+  qDebug() << "Button "+QString::number(id)+" clicked";
+
   bool destinationHasChanged = ( currentDestination != id );
   if ( destinationHasChanged ) {
     emit destinationChanged( *(destination[id]) );
@@ -71,6 +74,8 @@ void UiController::changeDestination( int id )
 
 void UiController::displayRoute( const QList<RouteData> &routeData )
 {
+  qDebug() << "displaying route";
+
   ui->table->setRowCount( routeData.count() );
 
   for ( int i=0; i<routeData.count(); i++ ) {
@@ -80,4 +85,6 @@ void UiController::displayRoute( const QList<RouteData> &routeData )
     QTableWidgetItem *lineItem = new QTableWidgetItem( routeData.at(i).lineCode );
     ui->table->setItem( i, 1, lineItem );
   }
+
+  ui->table->resizeColumnsToContents();
 }

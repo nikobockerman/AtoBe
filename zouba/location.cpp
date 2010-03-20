@@ -100,6 +100,9 @@ Location &Location::operator=( const Location &from )
 
 void Location::resolveAddress( QString address )
 {
+  qDebug() << "resolving address";
+  qDebug() << address;
+
   QUrl fullUrl( Ytv::Url );
 
   fullUrl.addEncodedQueryItem( "key", address.toAscii().toPercentEncoding() );
@@ -107,10 +110,12 @@ void Location::resolveAddress( QString address )
   fullUrl.addQueryItem( "pass", Ytv::Password );
 
   manager->get( QNetworkRequest( fullUrl ) );
+  qDebug() << "waiting for reply from Ytv";
 }
 
 void Location::replyFinished( QNetworkReply * reply )
 {
+  qDebug() << "address resolved";
   q->parseReply( reply->readAll() );
 
   if ( isValid() ) {

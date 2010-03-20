@@ -25,6 +25,7 @@ LocationPrivate::~LocationPrivate()
 
 void LocationPrivate::parseReply( const QByteArray &reply )
 {
+  qDebug() << "parsing";
   QXmlStreamReader xml( reply );
 
   while ( !xml.atEnd() ) {
@@ -45,6 +46,7 @@ void LocationPrivate::parseReply( const QByteArray &reply )
     qDebug() << "xml error";
     m_valid = false;
   } else {
+    qDebug() << "(" << m_x << "," << m_y << ")";
     m_valid = true;
   }
 }

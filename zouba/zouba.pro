@@ -17,8 +17,6 @@ QT += \
 
 TEMPLATE = app
 
-#FORMS = zouba.ui
-
 SOURCES += \
     main.cpp \
     route.cpp \
@@ -28,6 +26,8 @@ SOURCES += \
     location_p.cpp \
     gpscontroller.cpp \
     ui.cpp \
+    messagetable.cpp \
+    messagehandler.cpp \
 
 HEADERS += \
     route.h \
@@ -38,4 +38,6 @@ HEADERS += \
     ytv.h \
     gpscontroller.h \
     ui.h \
+    messagetable.h \
+    messagehandler.h \
 

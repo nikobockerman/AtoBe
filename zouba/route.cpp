@@ -30,6 +30,8 @@ Route::~Route()
 
 void Route::getRoute()
 {
+  qDebug() << "getting route from Ytv";
+
   QUrl fullUrl( Ytv::Url );
 
   QStringList a;
@@ -45,10 +47,12 @@ void Route::getRoute()
   fullUrl.addQueryItem( "pass", Ytv::Password );
 
   manager->get( QNetworkRequest( fullUrl ) );
+  qDebug() << "waiting for reply from Ytv";
 }
 
 void Route::replyFinished( QNetworkReply * reply )
 {
+  qDebug() << "have reply from Ytv";
   QList<RouteData> routeData = q->parseReply( reply->readAll() );
 
   emit( routeReady( routeData ) );
@@ -56,6 +60,8 @@ void Route::replyFinished( QNetworkReply * reply )
 
 void Route::setFromLocation( const Location &location )
 {
+  qDebug() << "setting new From location";
+
   if ( location.isValid() ) {
     q->setFromLocation( location );
     if ( q->toValid() ) {
@@ -81,17 +87,28 @@ const Location &Route::fromLocation()
 
 void Route::setToLocation( const Location &location )
 {
+  qDebug() << "setting new To location";
+
   if ( location.isValid() ) {
+    qDebug() << "To is valid";
     q->setToLocation( location );
     if ( q->fromValid() ) {
+      qDebug() << "From is also valid";
       getRoute();
+    } else {
+      qDebug() << "From not valid - waiting";
     }
   } else {
+    qDebug() << "To is not valid";
+    qDebug() << "getting To from signal sender";
     Location *locationPtr = qobject_cast<Location*>(sender());
     if ( locationPtr ) {
       q->setToLocation( *locationPtr );
       if ( q->fromValid() ) {
+        qDebug() << "From is also valid";
         getRoute();
+      } else {
+        qDebug() << "From not valid - waiting";
       }
     } else {
       qDebug() << "locationPtr is zero; cast failed";
