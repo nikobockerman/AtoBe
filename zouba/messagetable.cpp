@@ -10,12 +10,6 @@ MessageTable::MessageTable( QWidget *parent ) :
 {
   setHorizontalHeaderLabels( QStringList() << "Messages" );
   verticalHeader()->hide();
-  //setMinimumSize( 800,0 );
-  //setMaximumSize( 800,480 );
-  //setSizePolicy(
-      //QSizePolicy::Fixed, 
-      //QSizePolicy::Expanding
-      //);
 
   for ( int row=0; row<NumberOfRows; ++row ) {
     QTableWidgetItem *newRow = new QTableWidgetItem();
@@ -24,21 +18,6 @@ MessageTable::MessageTable( QWidget *parent ) :
 
   horizontalHeader()->setStretchLastSection(true);
 }
-
-/*
-QSize MessageTable::minimumSizeHint() const
-{
-	QSize size( QTableWidget::sizeHint() );
-
-	size.setWidth( 800 );
-	return size;
-}
-
-QSize MessageTable::sizeHint() const
-{
-	return minimumSizeHint();
-}
-*/
 
 MessageTable::~MessageTable()
 {

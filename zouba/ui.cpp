@@ -3,7 +3,7 @@
 #include "messagetable.h"
 
 #include <QMainWindow>
-#include <QPushButton>
+#include <QRadioButton>
 #include <QTableWidget>
 #include <QString>
 #include <QRect>
@@ -50,20 +50,21 @@ void Ui::setupUi( QMainWindow *mainWindow )
   centralWidget = new QWidget( mainWindow );
   mainWindow->setCentralWidget(centralWidget);
 
-  QPushButton *homeButton = new QPushButton();
+  QRadioButton *homeButton = new QRadioButton();
   homeButton->setObjectName( QString::fromUtf8("homeButton") );
-  homeButton->setText( "HOME" );
+  homeButton->setText( "GPS->HOME" );
   homeButton->setEnabled(false);
   homeButton->setFixedSize( QSize( ButtonWidth, ButtonHeight ) );
 
-  QPushButton *workButton = new QPushButton();
+  QRadioButton *workButton = new QRadioButton();
   workButton->setObjectName( QString::fromUtf8("workButton") );
-  workButton->setText( "WORK" );
+  workButton->setText( "GPS->WORK" );
   workButton->setEnabled(false);
 
   destinationButtons = new QButtonGroup();
   destinationButtons->addButton( homeButton, HomeButtonId );
   destinationButtons->addButton( workButton, WorkButtonId );
+  destinationButtons->setExclusive( true );
 
   buttonLayout = new QVBoxLayout();
   buttonLayout->addWidget( homeButton );

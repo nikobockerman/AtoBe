@@ -18,10 +18,5 @@ public:
   ~MessageTable();
 
   void displayMessage( const QString &message );
-
-  /*
-  QSize minimumSizeHint() const;
-  QSize sizeHint() const;
-  */
 };
 #endif //MESSAGETABLE_H
