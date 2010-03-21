@@ -1,3 +1,5 @@
 SRCDIR = ../../src
+MOCKSDIR = ../mocks
 INCLUDEPATH += ../util \
-    $$SRCDIR
+    $$SRCDIR \
+    $$MOCKSDIR

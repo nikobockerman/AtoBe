@@ -1,5 +1,6 @@
 TEMPLATE = subdirs
 SUBDIRS = \
+    ut_coordinatesystemtransformer \
     ut_kkj
 
 check.target = check
