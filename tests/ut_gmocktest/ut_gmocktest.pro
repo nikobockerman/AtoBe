@@ -1,3 +1,5 @@
+include(../ut_common.pri)
+
 TARGET = ut_gmocktest
 QT += testlib
 QT -= gui

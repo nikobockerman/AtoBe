@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 
 #include <QSignalSpy>
-#include "../stlhelpers4qt.h"
+#include "stlhelpers4qt.h"
 
 using ::testing::AtLeast;
 

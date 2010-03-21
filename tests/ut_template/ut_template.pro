@@ -1,3 +1,5 @@
+include(../ut_common.pri)
+
 TARGET = ut_template
 QT += testlib
 QT -= gui
