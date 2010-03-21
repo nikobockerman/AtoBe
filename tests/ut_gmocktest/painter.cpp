@@ -11,5 +11,6 @@ Painter::~Painter() {
 
 bool Painter::DrawCircle(int x, int y, int radius) {
     turtle->PenDown();
+    emit DrawCircleCalled(x, y, radius);
     return true;
 }

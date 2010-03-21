@@ -1,4 +1,5 @@
 TARGET = ut_gmocktest
+QT += testlib
 QT -= gui
 CONFIG += console
 CONFIG -= app_bundle
