@@ -76,15 +76,13 @@ void UiController::displayRoute( const QList<RouteData> &routeData )
 {
   qDebug() << "displaying route";
 
-  ui->table->setRowCount( routeData.count() );
+  ui->routeTable->setRowCount( routeData.count() );
 
   for ( int i=0; i<routeData.count(); i++ ) {
     QTableWidgetItem *timeItem = new QTableWidgetItem( routeData.at(i).arrivalTime );
-    ui->table->setItem( i, 0, timeItem );
+    ui->routeTable->setItem( i, 0, timeItem );
 
     QTableWidgetItem *lineItem = new QTableWidgetItem( routeData.at(i).lineCode );
-    ui->table->setItem( i, 1, lineItem );
+    ui->routeTable->setItem( i, 1, lineItem );
   }
-
-  ui->table->resizeColumnsToContents();
 }

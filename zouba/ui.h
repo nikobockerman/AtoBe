@@ -37,7 +37,7 @@ public:
 
   QWidget *centralWidget;
   QButtonGroup *destinationButtons;
-  QTableWidget *table;
+  QTableWidget *routeTable;
   static MessageTable *messageTable;
   QHBoxLayout *mainLayout;
   QVBoxLayout *buttonLayout;

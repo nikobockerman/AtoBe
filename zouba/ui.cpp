@@ -20,7 +20,7 @@ MessageTable *Ui::messageTable = 0;
 Ui::Ui() :
   centralWidget(0),
   destinationButtons(0),
-  table(0)
+  routeTable(0)
 {
 }
 
@@ -70,22 +70,24 @@ void Ui::setupUi( QMainWindow *mainWindow )
   buttonLayout->addWidget( workButton );
   buttonLayout->addStretch();
 
-  table = new QTableWidget( 1, 2 );
+  routeTable = new QTableWidget( 1, 2 );
   QStringList columnHeaders;
   columnHeaders << "Time" << "Bus";
-  table->setHorizontalHeaderLabels( columnHeaders );
-  table->verticalHeader()->hide();
+  routeTable->setHorizontalHeaderLabels( columnHeaders );
+  routeTable->verticalHeader()->hide();
 
   QHBoxLayout *topLayout = new QHBoxLayout();
   topLayout->addLayout( buttonLayout );
-  topLayout->addWidget( table );
+  topLayout->addWidget( routeTable );
 
-  messageTable = new MessageTable( centralWidget );
+  messageTable = new MessageTable();
   messageTable->setObjectName( QString::fromUtf8("messageTable") );
 
-  QVBoxLayout *mainLayout = new QVBoxLayout( centralWidget );
+  QVBoxLayout *mainLayout = new QVBoxLayout();
   mainLayout->addLayout( topLayout );
   mainLayout->addWidget( messageTable );
+
+  centralWidget->setLayout( mainLayout );
 }
 
 void Ui::setHomeAddress()

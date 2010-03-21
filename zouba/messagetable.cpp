@@ -10,18 +10,27 @@ MessageTable::MessageTable( QWidget *parent ) :
 {
   setHorizontalHeaderLabels( QStringList() << "Messages" );
   verticalHeader()->hide();
-  setMinimumSize( 250,0 );
+  //setMinimumSize( 800,0 );
+  //setMaximumSize( 800,480 );
+  //setSizePolicy(
+      //QSizePolicy::Fixed, 
+      //QSizePolicy::Expanding
+      //);
 
   for ( int row=0; row<NumberOfRows; ++row ) {
     QTableWidgetItem *newRow = new QTableWidgetItem();
     setItem( row,0, newRow );
   }
+
+  horizontalHeader()->setStretchLastSection(true);
 }
+
+/*
 QSize MessageTable::minimumSizeHint() const
 {
 	QSize size( QTableWidget::sizeHint() );
 
-	size.setWidth( 250 );
+	size.setWidth( 800 );
 	return size;
 }
 
@@ -29,6 +38,7 @@ QSize MessageTable::sizeHint() const
 {
 	return minimumSizeHint();
 }
+*/
 
 MessageTable::~MessageTable()
 {
@@ -45,6 +55,4 @@ void MessageTable::displayMessage( const QString &message )
   }
 
   itemAt(0,0)->setText( message );
-
-  resizeColumnsToContents();
 }

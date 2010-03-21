@@ -9,17 +9,19 @@ class MessageTable : public QTableWidget
   Q_OBJECT
 
   enum {
-    NumberOfRows=5,
+    NumberOfRows=20,
     OneColumn=1
   };
 
 public:
-  MessageTable( QWidget *parent );
+  MessageTable( QWidget *parent=0 );
   ~MessageTable();
 
   void displayMessage( const QString &message );
 
+  /*
   QSize minimumSizeHint() const;
   QSize sizeHint() const;
+  */
 };
 #endif //MESSAGETABLE_H
