@@ -49,5 +49,8 @@ Q_SIGNALS:
 private Q_SLOTS:
   void setHomeAddress();
   void setWorkAddress();
+
+private:
+  void setAddress( const QString &label );
 };
 #endif //UI_H

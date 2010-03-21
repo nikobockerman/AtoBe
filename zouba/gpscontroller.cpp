@@ -9,7 +9,7 @@ QTM_USE_NAMESPACE
 
 GpsController::GpsController() :
   m_location( QGeoPositionInfoSource::createDefaultSource(this) ),
-  updatesEnabled(false)
+  currentLocation(0)
 {
   m_location->setUpdateInterval( 1*60*1000 );
 
@@ -25,24 +25,24 @@ GpsController::~GpsController()
 {
   delete m_location;
   m_location = 0;
+  delete currentLocation;
+  currentLocation = 0;
 }
 
 void GpsController::updateLocation( QGeoPositionInfo positionInfo )
 {
   qDebug() << "new GPS position";
 
-  Location newLocation( positionInfo );
+  delete currentLocation;
+  currentLocation = new Location( positionInfo );
 
-  if ( updatesEnabled ) {
-    qDebug() << "from location changed";
-    emit locationChanged( newLocation );
-    updatesEnabled = false;
-    m_location->setUpdateInterval( 1*60*1000 );
-  }
+  qDebug() << "from location changed";
+  emit locationChanged( currentLocation );
 }
 
 void GpsController::startGps()
 {
-  updatesEnabled = true;
-  m_location->setUpdateInterval( 1 );
+  if ( currentLocation != 0 ) {
+    emit locationChanged( currentLocation );
+  }
 }

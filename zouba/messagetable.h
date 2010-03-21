@@ -9,7 +9,7 @@ class MessageTable : public QTableWidget
   Q_OBJECT
 
   enum {
-    NumberOfRows=20,
+    NumberOfRows=100,
     OneColumn=1
   };
 

@@ -17,11 +17,11 @@ class Location : public QObject
 Q_OBJECT
 
 public:
-  Location( QString x, QString y );
-  Location( const QGeoPositionInfo &positionInfo );
+  Location( const QString &x, const QString &y, const QString &label=QString() );
+  Location( const QGeoPositionInfo &positionInfo, const QString &label=QString() );
   Location( const Location &from );
   Location &operator=( const Location &from );
-  Location();
+  Location( const QString &label=QString() );
 
   ~Location();
 
@@ -29,10 +29,16 @@ public:
 
   QString y() const;
 
+  void setAddress( const QString &address ) const;
+  QString address() const;
+
+  void setLabel( const QString &label ) const;
+  QString label() const;
+
   bool isValid() const;
 
 public Q_SLOTS:
-  void resolveAddress( QString address );
+  void resolveAddress( const QString &address );
 
 Q_SIGNALS:
   void becomeValid();
@@ -43,10 +49,6 @@ private Q_SLOTS:
 private:
   LocationPrivate *q;
   QNetworkAccessManager *manager;
-
-  QString m_x;
-  QString m_y;
-  QString m_valid;
 
   typedef uint KKJ;
 

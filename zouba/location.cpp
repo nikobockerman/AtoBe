@@ -29,15 +29,18 @@ const double Location::KkjZoneInfo[6][2] = {
 
 QTM_USE_NAMESPACE
 
-Location::Location( QString x, QString y ) :
-  q( new LocationPrivate( x, y ) ),
+Location::Location( const QString &x, const QString &y, const QString &label ) :
+  q( new LocationPrivate( x, y, label ) ),
   manager( new QNetworkAccessManager(this) )
 {
-  connect( manager, SIGNAL( finished(QNetworkReply*) ), this, SLOT( replyFinished(QNetworkReply*) ) );
+  connect(
+      manager, SIGNAL( finished(QNetworkReply*) ),
+      this, SLOT( replyFinished(QNetworkReply*) )
+      );
 }
 
-Location::Location( const QGeoPositionInfo &positionInfo ) :
-  q( new LocationPrivate() ),
+Location::Location( const QGeoPositionInfo &positionInfo, const QString &label ) :
+  q( new LocationPrivate( label ) ),
   manager(0)
 {
   qreal latitude = positionInfo.coordinate().latitude();
@@ -55,9 +58,10 @@ Location::Location( const QGeoPositionInfo &positionInfo ) :
 
 Location::Location( const Location &from ) :
   QObject(0),
-  q( new LocationPrivate() ),
+  q( new LocationPrivate( from.label() ) ),
   manager(0)
 {
+  q->setAddress( from.address() );
   q->setX( from.x() );
   q->setY( from.y() );
   q->setValid( from.isValid() );
@@ -67,8 +71,8 @@ Location::Location( const Location &from ) :
   }
 }
 
-Location::Location() :
-  q( new LocationPrivate() ),
+Location::Location( const QString &label ) :
+  q( new LocationPrivate( label ) ),
   manager( new QNetworkAccessManager(this) )
 {
   connect( manager, SIGNAL( finished(QNetworkReply*) ), this, SLOT( replyFinished(QNetworkReply*) ) );
@@ -84,7 +88,8 @@ Location::~Location()
 
 Location &Location::operator=( const Location &from )
 {
-  q = new LocationPrivate();
+  q = new LocationPrivate( from.label() );
+  q->setAddress( from.address() );
   q->setX( from.x() );
   q->setY( from.y() );
   q->setValid( from.isValid() );
@@ -98,10 +103,12 @@ Location &Location::operator=( const Location &from )
   return *this;
 }
 
-void Location::resolveAddress( QString address )
+void Location::resolveAddress( const QString &address )
 {
   qDebug() << "resolving address";
   qDebug() << address;
+
+  q->setAddress( address );
 
   QUrl fullUrl( Ytv::Url );
 
@@ -131,6 +138,26 @@ QString Location::x() const
 QString Location::y() const
 {
   return q->y();
+}
+
+void Location::setLabel( const QString &label ) const
+{
+  q->setLabel( label );
+}
+
+QString Location::label() const
+{
+  return q->label();
+}
+
+void Location::setAddress( const QString &address ) const
+{
+  q->setAddress( address );
+}
+
+QString Location::address() const
+{
+  return q->address();
 }
 
 bool Location::isValid() const

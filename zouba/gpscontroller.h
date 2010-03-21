@@ -25,11 +25,11 @@ public Q_SLOTS:
   void startGps();
 
 Q_SIGNALS:
-  void locationChanged( const Location &newLocation );
+  void locationChanged( Location *newLocation );
 
 private:
   QGeoPositionInfoSource *m_location;
-  bool updatesEnabled;
+  Location *currentLocation;
 };
 
 #endif // GPSCONTROLLER_H

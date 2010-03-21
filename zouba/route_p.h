@@ -15,18 +15,18 @@ public:
   RoutePrivate( QObject *parent=0 );
   ~RoutePrivate();
 
-  Q_PROPERTY(Location fromLocation READ fromLocation WRITE setFromLocation);
-  Q_PROPERTY(Location toLocation READ toLocation WRITE setFromLocation);
-
   QList<RouteData> parseReply( const QByteArray &reply );
 
-  void setFromLocation( const Location &fromLocation );
+  Q_PROPERTY(Location* fromLocation READ fromLocation WRITE setFromLocation);
+  Q_PROPERTY(Location* toLocation READ toLocation WRITE setToLocation);
 
-  const Location &fromLocation();
+  void setFromLocation( Location *fromLocation );
 
-  void setToLocation( const Location &toLocation );
+  Location *fromLocation() const;
 
-  const Location &toLocation();
+  void setToLocation( Location *toLocation );
+
+  Location *toLocation() const;
 
   bool toValid();
   bool fromValid();
@@ -34,8 +34,8 @@ public:
 private:
   bool     m_fromValid;
   bool     m_toValid;
-  Location m_fromLocation;
-  Location m_toLocation;
+  Location *m_fromLocation;
+  Location *m_toLocation;
 
   QString parseJORECode( const QString &joreCode ) const;
 };

@@ -21,7 +21,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
   void buttonClicked();
-  void destinationChanged( Location newDestination );
+  void destinationChanged( Location *newDestination );
 
 private Q_SLOTS:
   void changeDestination( int id );

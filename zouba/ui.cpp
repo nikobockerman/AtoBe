@@ -1,6 +1,7 @@
 #include "ui.h"
 
 #include "messagetable.h"
+#include "locations.h"
 
 #include <QMainWindow>
 #include <QRadioButton>
@@ -14,6 +15,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QSizePolicy>
+#include <QInputDialog>
+#include <QDebug>
 
 MessageTable *Ui::messageTable = 0;
 
@@ -93,8 +96,35 @@ void Ui::setupUi( QMainWindow *mainWindow )
 
 void Ui::setHomeAddress()
 {
+  setAddress( "home" );
 }
 
 void Ui::setWorkAddress()
 {
+  setAddress( "work" );
+}
+
+void Ui::setAddress( const QString &label )
+{
+  bool ok;
+  QString address = QInputDialog::getText(
+     centralWidget,
+     tr("Enter address for \""+QString(label).toLatin1()+"\""),
+     tr("Address"),
+     QLineEdit::Normal,
+     "",
+     &ok
+     );
+
+  qDebug() << "ok=" << ok;
+
+  if ( ok ) {
+    qDebug() << "new address" << address;
+    Locations locations;
+    Location *location = locations.location( label );
+    qDebug() << "location" << location;
+    if ( location ) {
+      location->resolveAddress( address );
+    }
+  }
 }

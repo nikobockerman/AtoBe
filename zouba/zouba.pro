@@ -23,6 +23,7 @@ SOURCES += \
     route_p.cpp \
     uicontroller.cpp \
     location.cpp \
+    locations.cpp \
     location_p.cpp \
     gpscontroller.cpp \
     ui.cpp \

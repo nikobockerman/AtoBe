@@ -35,9 +35,9 @@ void Route::getRoute()
   QUrl fullUrl( Ytv::Url );
 
   QStringList a;
-  a << q->fromLocation().x() << q->fromLocation().y();
+  a << q->fromLocation()->x() << q->fromLocation()->y();
   QStringList b;
-  b << q->toLocation().x() << q->toLocation().y();
+  b << q->toLocation()->x() << q->toLocation()->y();
 
   fullUrl.addQueryItem( "a", a.join(",") );
   fullUrl.addQueryItem( "b", b.join(",") );
@@ -58,38 +58,47 @@ void Route::replyFinished( QNetworkReply * reply )
   emit( routeReady( routeData ) );
 }
 
-void Route::setFromLocation( const Location &location )
+void Route::setFromLocation( Location *location )
 {
   qDebug() << "setting new From location";
 
-  if ( location.isValid() ) {
+  if ( location && location->isValid() ) {
+    qDebug() << "From is valid";
     q->setFromLocation( location );
     if ( q->toValid() ) {
-        getRoute();
+      qDebug() << "To is also valid";
+      getRoute();
+    } else {
+      qDebug() << "To not valid - waiting";
     }
   } else {
-    Location *locationPtr = qobject_cast<Location*>(sender());
-    if ( locationPtr ) {
-      q->setFromLocation( *locationPtr );
+    qDebug() << "From is not valid";
+    qDebug() << "getting From from signal sender";
+    location = qobject_cast<Location*>(sender());
+    if ( location ) {
+      q->setFromLocation( location );
       if ( q->toValid() ) {
+        qDebug() << "To is also valid";
         getRoute();
+      } else {
+        qDebug() << "To not valid - waiting";
       }
     } else {
-      qDebug() << "locationPtr is zero - cast didn't work";
+      qDebug() << "location is zero - cast didn't work";
     }
   }
 }
 
-const Location &Route::fromLocation()
+Location *Route::fromLocation() const
 {
   return q->fromLocation();
 }
 
-void Route::setToLocation( const Location &location )
+void Route::setToLocation( Location *location )
 {
   qDebug() << "setting new To location";
 
-  if ( location.isValid() ) {
+  if ( location && location->isValid() ) {
     qDebug() << "To is valid";
     q->setToLocation( location );
     if ( q->fromValid() ) {
@@ -101,9 +110,9 @@ void Route::setToLocation( const Location &location )
   } else {
     qDebug() << "To is not valid";
     qDebug() << "getting To from signal sender";
-    Location *locationPtr = qobject_cast<Location*>(sender());
-    if ( locationPtr ) {
-      q->setToLocation( *locationPtr );
+    Location *location = qobject_cast<Location*>(sender());
+    if ( location ) {
+      q->setToLocation( location );
       if ( q->fromValid() ) {
         qDebug() << "From is also valid";
         getRoute();
@@ -111,21 +120,12 @@ void Route::setToLocation( const Location &location )
         qDebug() << "From not valid - waiting";
       }
     } else {
-      qDebug() << "locationPtr is zero; cast failed";
+      qDebug() << "location is zero; cast failed";
     }
   }
 }
 
-const Location &Route::toLocation()
+Location *Route::toLocation() const
 {
   return q->toLocation();
-}
-
-void Route::toggleDirection()
-{
-  Location oldFromLocation = fromLocation();
-  setFromLocation( toLocation() );
-  setToLocation( oldFromLocation );
-
-  getRoute();
 }

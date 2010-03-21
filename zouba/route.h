@@ -18,9 +18,6 @@ public:
   Route();
   ~Route();
 
-  Q_PROPERTY(Location fromLocation READ fromLocation WRITE setFromLocation);
-  Q_PROPERTY(Location toLocation READ toLocation WRITE setToLocation);
-
   /*!
     * \brief Gets the route data from the server
     */
@@ -30,13 +27,13 @@ public:
     \brief Get the from location
     \return The from location
     */
-  const Location &fromLocation();
+  Location *fromLocation() const;
 
   /*!
     \brief Get the to location
     \return The to location
     */
-  const Location &toLocation();
+  Location *toLocation() const;
 
 public Q_SLOTS:
 
@@ -44,18 +41,13 @@ public Q_SLOTS:
     * \brief Sets the from location
     * \param fromLocation The from location
     */
-  void setFromLocation( const Location &location=Location() );
+  void setFromLocation( Location *location=0 );
 
   /*!
     * \brief Sets the to location
     * \param toLocation The to location
     */
-  void setToLocation( const Location &location=Location() );
-
-  /*!
-    * \brief Toggles the route direction.
-    */
-  void toggleDirection();
+  void setToLocation( Location *location=0 );
 
 Q_SIGNALS:
   void routeReady( QList<RouteData> );

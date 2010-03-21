@@ -8,8 +8,8 @@
 RoutePrivate::RoutePrivate( QObject *parent ) :
     m_fromValid(false),
     m_toValid(false),
-    m_fromLocation(0,0),
-    m_toLocation(0,0)
+    m_fromLocation(0),
+    m_toLocation(0)
 {
   Q_UNUSED( parent )
 }
@@ -82,18 +82,18 @@ QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
   return retVal;
 }
 
-void RoutePrivate::setFromLocation( const Location &location )
+void RoutePrivate::setFromLocation( Location *location )
 {
   m_fromLocation = location;
   m_fromValid = true;
 }
 
-const Location &RoutePrivate::fromLocation()
+Location *RoutePrivate::fromLocation() const
 {
   return m_fromLocation;
 }
 
-void RoutePrivate::setToLocation( const Location &toLocation )
+void RoutePrivate::setToLocation( Location *toLocation )
 {
   m_toLocation = toLocation;
   m_toValid = true;
@@ -120,7 +120,7 @@ QString RoutePrivate::parseJORECode( const QString &joreCode ) const
   return retVal;
 }
 
-const Location &RoutePrivate::toLocation()
+Location *RoutePrivate::toLocation() const
 {
   return m_toLocation;
 }

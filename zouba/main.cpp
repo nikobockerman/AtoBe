@@ -21,10 +21,6 @@ int main(int argc, char *argv[] )
   Ui ui;
   ui.setupUi(mainWindow);
 
-  qDebug() << "1";
-  qDebug() << "2";
-  qDebug() << "3";
-
   UiController  *uiController  = new UiController( &ui );
   Route         *route         = new Route();
   GpsController *gpsController = new GpsController();
@@ -35,13 +31,13 @@ int main(int argc, char *argv[] )
       );
 
   QObject::connect(
-      gpsController, SIGNAL( locationChanged( Location ) ),
-      route, SLOT( setFromLocation( Location ) )
+      gpsController, SIGNAL( locationChanged( Location* ) ),
+      route, SLOT( setFromLocation( Location* ) )
       );
 
   QObject::connect(
-      uiController, SIGNAL( destinationChanged( Location ) ),
-      route, SLOT( setToLocation( Location ) )
+      uiController, SIGNAL( destinationChanged( Location* ) ),
+      route, SLOT( setToLocation( Location* ) )
     );
 
   QObject::connect(

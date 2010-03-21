@@ -4,6 +4,7 @@
 #include "ytv.h"
 #include "location.h"
 #include "messagetable.h"
+#include "locations.h"
 
 #include <QObject>
 #include <QTableWidgetItem>
@@ -14,8 +15,12 @@
 UiController::UiController( Ui *ui ) :
   ui(ui)
 {
-  Location *homeLocation = new Location();
-  Location *workLocation = new Location();
+  Location *homeLocation = new Location( "home" );
+  Location *workLocation = new Location( "work" );
+
+  Locations locations;
+  locations.addLocation( homeLocation );
+  locations.addLocation( workLocation );
 
   connect(
       homeLocation, SIGNAL( becomeValid() ),
@@ -36,7 +41,6 @@ UiController::UiController( Ui *ui ) :
       ui->destinationButtons, SIGNAL( buttonClicked( int ) ),
       this, SLOT( changeDestination( int ) )
   );
-
 }
 
 UiController::~UiController()
@@ -64,7 +68,7 @@ void UiController::changeDestination( int id )
 
   bool destinationHasChanged = ( currentDestination != id );
   if ( destinationHasChanged ) {
-    emit destinationChanged( *(destination[id]) );
+    emit destinationChanged( destination[id] );
   }
 
   // always want to emit this so that the gps position is update
