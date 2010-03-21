@@ -16,3 +16,4 @@ HEADERS += \
     painter.h
 
 include(../gmock.pri)
+include(../check.pri)
