@@ -106,13 +106,16 @@ void Ui::setWorkAddress()
 
 void Ui::setAddress( const QString &label )
 {
+  Locations *locations=Locations::instance();
+  Location *location=locations->location( label );
+
   bool ok;
   QString address = QInputDialog::getText(
      centralWidget,
      tr("Enter address for \""+QString(label).toLatin1()+"\""),
      tr("Address"),
      QLineEdit::Normal,
-     "",
+     location->address(),
      &ok
      );
 
@@ -120,8 +123,8 @@ void Ui::setAddress( const QString &label )
 
   if ( ok ) {
     qDebug() << "new address" << address;
-    Locations locations;
-    Location *location = locations.location( label );
+    Locations *locations=Locations::instance();
+    Location *location = locations->location( label );
     qDebug() << "location" << location;
     if ( location ) {
       location->resolveAddress( address );

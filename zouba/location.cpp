@@ -126,6 +126,7 @@ void Location::replyFinished( QNetworkReply * reply )
   q->parseReply( reply->readAll() );
 
   if ( isValid() ) {
+    qDebug() << label() << "becomeValid" << this;
     emit( becomeValid() );
   }
 }

@@ -15,21 +15,27 @@
 UiController::UiController( Ui *ui ) :
   ui(ui)
 {
-  Location *homeLocation = new Location( "home" );
-  Location *workLocation = new Location( "work" );
-
-  Locations locations;
-  locations.addLocation( homeLocation );
-  locations.addLocation( workLocation );
+  Locations *locations = Locations::instance();
+  Location *homeLocation = locations->location( "home" );
+  Location *workLocation = locations->location( "work" );
 
   connect(
       homeLocation, SIGNAL( becomeValid() ),
       this, SLOT( setHomeButtonValid() )
   );
   connect(
+      homeLocation, SIGNAL( becomeValid() ),
+      locations, SLOT( saveLocation() )
+      );
+
+  connect(
       workLocation, SIGNAL( becomeValid() ),
       this, SLOT( setWorkButtonValid() )
   );
+  connect(
+      workLocation, SIGNAL( becomeValid() ),
+      locations, SLOT( saveLocation() )
+      );
 
   homeLocation->resolveAddress( Ytv::Home );
   workLocation->resolveAddress( Ytv::Work );
@@ -49,6 +55,7 @@ UiController::~UiController()
 
 void UiController::setHomeButtonValid()
 {
+  qDebug() << "setting home button valid";
   setButtonValid( Ui::HomeButtonId );
 }
 

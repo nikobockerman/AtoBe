@@ -51,6 +51,7 @@ void LocationPrivate::parseReply( const QByteArray &reply )
     m_valid = false;
   } else {
     qDebug() << "(" << m_x << "," << m_y << ")";
+    qDebug() << "is now valid";
     m_valid = true;
   }
 }

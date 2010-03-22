@@ -23,8 +23,8 @@ SOURCES += \
     route_p.cpp \
     uicontroller.cpp \
     location.cpp \
-    locations.cpp \
     location_p.cpp \
+    locations.cpp \
     gpscontroller.cpp \
     ui.cpp \
     messagetable.cpp \
@@ -36,6 +36,7 @@ HEADERS += \
     uicontroller.h \
     location.h \
     location_p.h \
+    locations.h \
     ytv.h \
     gpscontroller.h \
     ui.h \
