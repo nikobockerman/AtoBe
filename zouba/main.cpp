@@ -42,7 +42,7 @@ int main(int argc, char *argv[] )
 
   QObject::connect(
       uiController, SIGNAL( buttonClicked() ),
-      gpsController, SLOT( startGps() )
+      gpsController, SLOT( getGps() )
     );
 
   mainWindow->show();

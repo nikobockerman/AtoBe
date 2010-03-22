@@ -18,11 +18,9 @@ public:
 
   ~GpsController();
 
-  void stopGps();
-
 public Q_SLOTS:
   void updateLocation( QGeoPositionInfo positionInfo );
-  void startGps();
+  void getGps();
 
 Q_SIGNALS:
   void locationChanged( Location *newLocation );

@@ -11,8 +11,6 @@ GpsController::GpsController() :
   m_location( QGeoPositionInfoSource::createDefaultSource(this) ),
   currentLocation(0)
 {
-  m_location->setUpdateInterval( 1*60*1000 );
-
   connect( 
       m_location, SIGNAL( positionUpdated( QGeoPositionInfo ) ),
       this, SLOT( updateLocation( QGeoPositionInfo ) )
@@ -31,16 +29,11 @@ GpsController::~GpsController()
 
 void GpsController::updateLocation( QGeoPositionInfo positionInfo )
 {
-  qDebug() << "new GPS position";
-
   delete currentLocation;
   currentLocation = new Location( positionInfo );
-
-  qDebug() << "from location changed";
-  emit locationChanged( currentLocation );
 }
 
-void GpsController::startGps()
+void GpsController::getGps()
 {
   if ( currentLocation != 0 ) {
     emit locationChanged( currentLocation );
