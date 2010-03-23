@@ -34,12 +34,15 @@ Ui::~Ui()
 void Ui::setupUi( QMainWindow *mainWindow )
 {
   mainWindow->resize(800,480);
-  QMenu *menu = mainWindow->menuBar()->addMenu("Settings");
+  menu = mainWindow->menuBar()->addMenu("Settings");
 
   QAction *setHomeAddressAction = new QAction("Set home address", this);
   QAction *setWorkAddressAction = new QAction("Set work address", this);
+  hideMessagesAction   = new QAction("Hide messages", this);
+  showMessagesAction   = new QAction("Show messages", this);
   menu->addAction(setHomeAddressAction);
   menu->addAction(setWorkAddressAction);
+  menu->addAction(showMessagesAction);
 
   connect(
       setHomeAddressAction, SIGNAL(triggered()),
@@ -48,6 +51,14 @@ void Ui::setupUi( QMainWindow *mainWindow )
   connect(
       setWorkAddressAction, SIGNAL(triggered()),
       this, SLOT(setWorkAddress())
+      );
+  connect(
+      hideMessagesAction, SIGNAL(triggered()),
+      this, SLOT(hideMessages())
+      );
+  connect(
+      showMessagesAction, SIGNAL(triggered()),
+      this, SLOT(showMessages())
       );
 
   centralWidget = new QWidget( mainWindow );
@@ -86,6 +97,7 @@ void Ui::setupUi( QMainWindow *mainWindow )
 
   messageTable = new MessageTable();
   messageTable->setObjectName( QString::fromUtf8("messageTable") );
+  messageTable->hide();
 
   QVBoxLayout *mainLayout = new QVBoxLayout();
   mainLayout->addLayout( topLayout );
@@ -102,6 +114,20 @@ void Ui::setHomeAddress()
 void Ui::setWorkAddress()
 {
   setAddress( "work" );
+}
+
+void Ui::hideMessages()
+{
+  messageTable->hide();
+  menu->removeAction( hideMessagesAction );
+  menu->addAction( showMessagesAction );
+}
+
+void Ui::showMessages()
+{
+  messageTable->show();
+  menu->removeAction( showMessagesAction );
+  menu->addAction( hideMessagesAction );
 }
 
 void Ui::setAddress( const QString &label )

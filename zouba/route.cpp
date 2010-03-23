@@ -47,6 +47,7 @@ void Route::getRoute()
   fullUrl.addQueryItem( "pass", Ytv::Password );
 
   manager->get( QNetworkRequest( fullUrl ) );
+  qDebug() << "getting url" << fullUrl.toEncoded();
   qDebug() << "waiting for reply from Ytv";
 }
 

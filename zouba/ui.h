@@ -10,6 +10,8 @@ class QButtonGroup;
 class MessageTable;
 class QHBoxLayout;
 class QVBoxLayout;
+class QMenu;
+class QAction;
 
 class Ui : public QObject
 {
@@ -41,6 +43,9 @@ public:
   static MessageTable *messageTable;
   QHBoxLayout *mainLayout;
   QVBoxLayout *buttonLayout;
+  QMenu       *menu;
+  QAction     *hideMessagesAction;
+  QAction     *showMessagesAction;
 
 Q_SIGNALS:
   void homeAddressChanged( QString address );
@@ -49,6 +54,8 @@ Q_SIGNALS:
 private Q_SLOTS:
   void setHomeAddress();
   void setWorkAddress();
+  void hideMessages();
+  void showMessages();
 
 private:
   void setAddress( const QString &label );
