@@ -15,7 +15,7 @@
 
 int main(int argc, char *argv[] )
 {
-  qInstallMsgHandler( messageHandler );
+  //qInstallMsgHandler( messageHandler );
   QApplication app(argc, argv);
 
   QMainWindow *mainWindow = new QMainWindow;

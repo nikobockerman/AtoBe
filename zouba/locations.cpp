@@ -57,16 +57,17 @@ void Locations::restoreLocations()
 
   for( int i=0; i<labels.size(); ++i ) {
     QString label = labels[i];
-    qDebug() << "restoring" << label;
     settings.beginGroup( label );
-    QString x = settings.value( "x" ).toString();
-    QString y = settings.value( "y" ).toString();
+    QString x       = settings.value( "x" ).toString();
+    QString y       = settings.value( "y" ).toString();
+    QString address = settings.value( "address" ).toString();
     settings.endGroup();
 
+    qDebug() << "restoring" << label;
     Location *location = new Location( x, y, label );
-    location->setAddress( settings.value( "address" ).toString() );
+    location->setAddress( address );
 
-    locationHash[ location->label() ] = location;
+    locationHash[ label ] = location;
   }
 
   settings.endGroup();

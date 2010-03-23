@@ -6,8 +6,8 @@ namespace Ytv {
   const QString Username( "zouba" );
   const QString Password( "caf9r3ee" );
 
-  const QString Home( QByteArray::fromPercentEncoding( "Taivaanvuohentie%207%2CHelsinki" ) );
-  const QString Work( QByteArray::fromPercentEncoding( "It%E4merenkatu%2011%2CHelsinki" ) );
+  //const QString Home( QByteArray::fromPercentEncoding( "Taivaanvuohentie%207%2CHelsinki" ) );
+  //const QString Work( QByteArray::fromPercentEncoding( "It%E4merenkatu%2011%2CHelsinki" ) );
 
   enum {
     Slow=1,

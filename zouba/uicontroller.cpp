@@ -19,6 +19,20 @@ UiController::UiController( Ui *ui ) :
   Location *homeLocation = locations->location( "home" );
   Location *workLocation = locations->location( "work" );
 
+  if ( homeLocation==0 ) {
+    homeLocation = new Location( "home" );
+    locations->addLocation( homeLocation );
+  } else if ( homeLocation->isValid() ) {
+    setHomeButtonValid();
+  }
+
+  if ( workLocation==0 ) {
+    workLocation = new Location( "work" );
+    locations->addLocation( workLocation );
+  } else if ( workLocation->isValid() ) {
+    setWorkButtonValid();
+  }
+
   connect(
       homeLocation, SIGNAL( becomeValid() ),
       this, SLOT( setHomeButtonValid() )
@@ -36,9 +50,6 @@ UiController::UiController( Ui *ui ) :
       workLocation, SIGNAL( becomeValid() ),
       locations, SLOT( saveLocation() )
       );
-
-  homeLocation->resolveAddress( Ytv::Home );
-  workLocation->resolveAddress( Ytv::Work );
 
   destination.append( homeLocation );
   destination.append( workLocation );

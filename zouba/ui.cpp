@@ -123,8 +123,8 @@ void Ui::setAddress( const QString &label )
 
   if ( ok ) {
     qDebug() << "new address" << address;
-    Locations *locations=Locations::instance();
-    Location *location = locations->location( label );
+    Locations *locations = Locations::instance();
+    Location  *location  = locations->location( label );
     qDebug() << "location" << location;
     if ( location ) {
       location->resolveAddress( address );

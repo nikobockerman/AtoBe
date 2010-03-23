@@ -33,6 +33,7 @@ Location::Location( const QString &x, const QString &y, const QString &label ) :
   q( new LocationPrivate( x, y, label ) ),
   manager( new QNetworkAccessManager(this) )
 {
+  qDebug() << "Location::Location(" << x << "," << y << "," << label <<")";
   connect(
       manager, SIGNAL( finished(QNetworkReply*) ),
       this, SLOT( replyFinished(QNetworkReply*) )
@@ -109,6 +110,7 @@ void Location::resolveAddress( const QString &address )
   qDebug() << address;
 
   q->setAddress( address );
+  q->setValid( false );
 
   QUrl fullUrl( Ytv::Url );
 
@@ -126,7 +128,7 @@ void Location::replyFinished( QNetworkReply * reply )
   q->parseReply( reply->readAll() );
 
   if ( isValid() ) {
-    qDebug() << label() << "becomeValid" << this;
+    qDebug() << label() << "becomeValid";
     emit( becomeValid() );
   }
 }
@@ -153,6 +155,7 @@ QString Location::label() const
 
 void Location::setAddress( const QString &address ) const
 {
+  qDebug() << "setting address to" << address;
   q->setAddress( address );
 }
 
@@ -165,7 +168,6 @@ bool Location::isValid() const
 {
   return q->isValid();
 }
-
 
 // Degrees to radians
 double Location::radians(double deg)
