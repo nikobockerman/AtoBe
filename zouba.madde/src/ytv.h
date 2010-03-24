@@ -10,18 +10,25 @@ namespace Ytv {
   //const QString Work( QByteArray::fromPercentEncoding( "It%E4merenkatu%2011%2CHelsinki" ) );
 
   enum {
-    Slow=1,
-    Fast=2,
-    Normal=3,
-    Running=4,
-    Cycling=5,
+    WalkSpeedSlow=1,
+    WalkSpeedFast=2,
+    WalkSpeedNormal=3,
+    WalkSpeedRunning=4,
+    WalkSpeedCycling=5,
     NoWalkSpeeds=5
   };
 
   enum {
-    OneResult=1,
-    ThreeResults=3,
-    FiveResults=5
+    ShowOneResult=1,
+    ShowThreeResults=3,
+    ShowFiveResults=5
+  };
+
+  enum {
+    OptimizeDefault=1,
+    OptimizeFastest=2,
+    OptimizeLeastTransfers=3,
+    OptimizeLeastWalking=4
   };
 
 };
