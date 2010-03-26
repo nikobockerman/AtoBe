@@ -72,6 +72,7 @@ void UiController::setHomeButtonValid()
 
 void UiController::setWorkButtonValid()
 {
+  qDebug() << "setting work button valid";
   setButtonValid( Ui::WorkButtonId );
 }
 

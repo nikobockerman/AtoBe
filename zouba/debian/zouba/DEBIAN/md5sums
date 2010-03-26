@@ -1,7 +1,7 @@
 fd259cf3be69375915fdb925257d2233  usr/share/dbus-1/services/zouba.service
-ff174efcc85be1270eb91a671c690feb  usr/share/doc/zouba/changelog.gz
+7582f909f6cf0329729f01e323e6c8a1  usr/share/doc/zouba/changelog.gz
 5a50138045dfccd50e9ec2f5fd769bcf  usr/share/doc/zouba/README.Debian
 b941bd01bcea49cabfc186309d46fb74  usr/share/doc/zouba/copyright
 f327a6f11a43e47223c6bebe5434fd81  usr/share/applications/hildon/zouba.desktop
 85cbb61cacdd967b3e62a6ba0f84f0b2  usr/share/icons/hicolor/64x64/apps/zouba.png
-c7b8cd05b8e151f54efc262bda5f47ad  usr/bin/zouba
+f9869b1dbe0a28a220a48ebad6ae8fd0  usr/bin/zouba

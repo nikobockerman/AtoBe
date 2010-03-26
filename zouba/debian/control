@@ -1,16 +1,16 @@
 Source: zouba
 Section: user/Other
 Priority: extra
-Maintainer: Max Waterman <davidmaxwaterman@jeeves>
+Maintainer: Max Waterman <davidmaxwaterman@fastmail.co.uk>
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.3
-Homepage: <insert the upstream URL, if relevant>
+Homepage: 
 
 Package: zouba
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqtm-location (>=1.0.0-beta1-maemo4), libqtm-bearer (>=1.0.0-beta1-maemo4), libqt4-maemo5-core (>=4.6.2~git20100212-0maemo1) | libqt4-core (>=4.6.2~git20100212-0maemo1), libqt4-maemo5-gui (>=4.6.2~git20100212-0maemo1) | libqt4-gui (>=4.6.2~git20100212-0maemo1), libqt4-maemo5-xml (>=4.6.2~git20100212-0maemo1) | libqt4-xml (>=4.6.2~git20100212-0maemo1), libqt4-maemo5-network (>=4.6.2~git20100212-0maemo1) | libqt4-network (>=4.6.2~git20100212-0maemo1)
+Description: Tells you which bus is next.
+ Allows you to easily find how to get the bus home. Uses HSL Journey Planner API <http://developer.reittiopas.fi/pages/en/home.php>. Uses GPS for current location. Uses Qt and QtMobility.
 # XB-Maemo-Icon-26 field contains the application icon file encoded in
 # base64. This is the icon that is shown in the Application Manager,
 # next to the package name. To perform this encoding use following mad

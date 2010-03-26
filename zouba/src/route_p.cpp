@@ -72,7 +72,7 @@ QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
   }
 
   if ( xml.hasError() ) {
-    qDebug() << "xml error";
+    qDebug() << "xml error:" << xml.errorString();
   }
 
   if ( retVal.isEmpty() ) {

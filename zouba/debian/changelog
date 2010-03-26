@@ -1,5 +1,14 @@
+zouba (0.2) unstable; urgency=low
+
+  * Better xml error string.
+  * Better message table width resizing, though visually the same.
+  * Added missing message when work button becomes valid.
+  * First upload to extras-devel.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Wed, 24 Mar 2010 21:29:00 +0200
+
 zouba (0.1) unstable; urgency=low
 
   * Initial Release.
 
- -- Max Waterman <davidmaxwaterman@jeeves>  Tue, 23 Mar 2010 20:11:34 +0200
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Tue, 23 Mar 2010 20:11:34 +0200

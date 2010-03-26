@@ -5,8 +5,8 @@
 #include "location.h"
 #include "gpscontroller.h"
 #include "ytv.h"
-#include "messagehandler.h"
 #include "messagetable.h"
+#include "messagehandler.h"
 
 #include <QDebug>
 #include <QObject>

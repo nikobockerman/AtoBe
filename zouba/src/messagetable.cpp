@@ -4,6 +4,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDebug>
+#include <QResizeEvent>
 
 MessageTable::MessageTable( QWidget *parent ) :
   QTableWidget( NumberOfRows, OneColumn, parent )
@@ -15,8 +16,6 @@ MessageTable::MessageTable( QWidget *parent ) :
     QTableWidgetItem *newRow = new QTableWidgetItem();
     setItem( row,0, newRow );
   }
-
-  horizontalHeader()->setStretchLastSection(true);
 }
 
 MessageTable::~MessageTable()
@@ -34,4 +33,12 @@ void MessageTable::displayMessage( const QString &message )
   }
 
   itemAt(0,0)->setText( message );
+}
+
+void MessageTable::resizeEvent( QResizeEvent *event )
+{
+  int width = event->size().width() / columnCount();
+  for ( int i = 0; i < columnCount(); ++i ) {
+    setColumnWidth( i, width );
+  }
 }

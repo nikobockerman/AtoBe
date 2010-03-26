@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTableWidget>
+class QResizeEvent;
 
 class MessageTable : public QTableWidget
 {
@@ -18,5 +19,8 @@ public:
   ~MessageTable();
 
   void displayMessage( const QString &message );
+
+protected:
+  void resizeEvent( QResizeEvent *event );
 };
 #endif //MESSAGETABLE_H
