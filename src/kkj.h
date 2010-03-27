@@ -1,6 +1,10 @@
 #ifndef KKJ_H
 #define KKJ_H
 
+#include <QtGlobal>
+
+class KKJPrivate;
+
 /**
  * A class representing the Finnish KKJ coordinate.
  */
@@ -31,9 +35,22 @@ public:
      */
     unsigned int easting() const;
 
+protected:
+    /**
+     * Constructs a new KKJ coordinate with the given values.
+     * @param dd a private implementation member.
+     * @param northing the northing coordinate.
+     * @param easting the easting coordinate.
+     */
+    KKJ(KKJPrivate &dd, unsigned int northing, unsigned int easting);
+
+
 private:
-    unsigned int mNorthing;
-    unsigned int mEasting;
+    /// Pointer to the private member
+    KKJPrivate *const d_ptr;
+
+    Q_DECLARE_PRIVATE(KKJ)
+
 };
 
 #endif // KKJ_H
