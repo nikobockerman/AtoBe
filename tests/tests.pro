@@ -1,5 +1,6 @@
 TEMPLATE = subdirs
-SUBDIRS = ut_coord_trans
+SUBDIRS = \
+    ut_kkj
 
 check.target = check
 check.CONFIG = recursive
