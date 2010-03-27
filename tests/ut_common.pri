@@ -1,1 +1,3 @@
-INCLUDEPATH += ../util
+SRCDIR = ../../src
+INCLUDEPATH += ../util \
+    $$SRCDIR
