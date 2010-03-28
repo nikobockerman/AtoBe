@@ -33,6 +33,13 @@ public:
     bool operator==(const KKJ &rhs) const;
 
     /**
+     * Assignment operator.
+     * @param rhs the object that is copied.
+     * @return this object.
+     */
+    KKJ& operator=(const KKJ &rhs);
+
+    /**
      * Returns the northing of the coordinate.
      * @return the northing.
      */
