@@ -19,10 +19,10 @@ int main(int argc, char *argv[] )
   QApplication app(argc, argv);
 
   QMainWindow *mainWindow = new QMainWindow;
-  Ui ui;
-  ui.setupUi(mainWindow);
+  Ui *ui = new Ui;;
+  ui->setupUi(mainWindow);
 
-  UiController  *uiController  = new UiController( &ui );
+  UiController  *uiController  = new UiController( ui );
   Route         *route         = new Route();
   GpsController *gpsController = new GpsController();
 
@@ -44,6 +44,16 @@ int main(int argc, char *argv[] )
   QObject::connect(
       uiController, SIGNAL( buttonClicked() ),
       gpsController, SLOT( getGps() )
+    );
+
+  QObject::connect(
+      ui, SIGNAL( fakeGpsPressed( Location* ) ),
+      gpsController, SLOT( useFakeGps( Location* ) )
+    );
+
+  QObject::connect(
+      ui, SIGNAL( liveGpsPressed() ),
+      gpsController, SLOT( useLiveGps() )
     );
 
   mainWindow->show();

@@ -40,9 +40,12 @@ void Ui::setupUi( QMainWindow *mainWindow )
   QAction *setWorkAddressAction = new QAction("Set work address", this);
   hideMessagesAction   = new QAction("Hide messages", this);
   showMessagesAction   = new QAction("Show messages", this);
+  useFakeGpsAction   = new QAction("Use fake GPS", this);
+  useLiveGpsAction   = new QAction("Use live GPS", this);
   menu->addAction(setHomeAddressAction);
   menu->addAction(setWorkAddressAction);
   menu->addAction(showMessagesAction);
+  menu->addAction(useFakeGpsAction);
 
   connect(
       setHomeAddressAction, SIGNAL(triggered()),
@@ -59,6 +62,14 @@ void Ui::setupUi( QMainWindow *mainWindow )
   connect(
       showMessagesAction, SIGNAL(triggered()),
       this, SLOT(showMessages())
+      );
+  connect(
+      useFakeGpsAction, SIGNAL(triggered()),
+      this, SLOT(useFakeGps())
+      );
+  connect(
+      useLiveGpsAction, SIGNAL(triggered()),
+      this, SLOT(useLiveGps())
       );
 
   centralWidget = new QWidget( mainWindow );
@@ -128,6 +139,24 @@ void Ui::showMessages()
   messageTable->show();
   menu->removeAction( showMessagesAction );
   menu->addAction( hideMessagesAction );
+}
+
+void Ui::useFakeGps()
+{
+  // really want a dialog here
+  Locations *locations = Locations::instance();
+  Location *fakeLocation = locations->location( "work" );
+
+  emit fakeGpsPressed( fakeLocation );
+  menu->removeAction( useFakeGpsAction );
+  menu->addAction( useLiveGpsAction );
+}
+
+void Ui::useLiveGps()
+{
+  emit liveGpsPressed();
+  menu->removeAction( useLiveGpsAction );
+  menu->addAction( useFakeGpsAction );
 }
 
 void Ui::setAddress( const QString &label )

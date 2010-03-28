@@ -1,8 +1,5 @@
 755 root root . usr  /
 755 root root . usr/share  /
-755 root root . usr/share/dbus-1  /
-755 root root . usr/share/dbus-1/services  /
-644 root root . usr/share/dbus-1/services/zouba.service debian/zouba/usr/share/dbus-1/services/zouba.service
 755 root root . usr/share/doc  /
 755 root root . usr/share/doc/zouba  /
 644 root root . usr/share/doc/zouba/changelog.gz debian/zouba/usr/share/doc/zouba/changelog.gz

@@ -12,6 +12,7 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QMenu;
 class QAction;
+class Location;
 
 class Ui : public QObject
 {
@@ -46,16 +47,22 @@ public:
   QMenu       *menu;
   QAction     *hideMessagesAction;
   QAction     *showMessagesAction;
+  QAction     *useFakeGpsAction;
+  QAction     *useLiveGpsAction;
 
 Q_SIGNALS:
   void homeAddressChanged( QString address );
   void workAddressChanged( QString address );
+  void fakeGpsPressed( Location * );
+  void liveGpsPressed();
 
 private Q_SLOTS:
   void setHomeAddress();
   void setWorkAddress();
   void hideMessages();
   void showMessages();
+  void useFakeGps();
+  void useLiveGps();
 
 private:
   void setAddress( const QString &label );

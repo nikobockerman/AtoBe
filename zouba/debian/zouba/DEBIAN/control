@@ -1,11 +1,10 @@
 Package: zouba
 Version: 0.2
-Architecture: armel
-Maintainer: Max Waterman <davidmaxwaterman@fastmail.co.uk>
-Installed-Size: 216
-Depends: libqtm-location (>= 1.0.0-beta1-maemo4), libqtm-bearer (>= 1.0.0-beta1-maemo4), libqt4-maemo5-core (>= 4.6.2~git20100212-0maemo1) | libqt4-core (>= 4.6.2~git20100212-0maemo1), libqt4-maemo5-gui (>= 4.6.2~git20100212-0maemo1) | libqt4-gui (>= 4.6.2~git20100212-0maemo1), libqt4-maemo5-xml (>= 4.6.2~git20100212-0maemo1) | libqt4-xml (>= 4.6.2~git20100212-0maemo1), libqt4-maemo5-network (>= 4.6.2~git20100212-0maemo1) | libqt4-network (>= 4.6.2~git20100212-0maemo1)
 Section: user/Other
 Priority: extra
+Architecture: armel
+Installed-Size: 204
+Maintainer: Max Waterman <davidmaxwaterman@fastmail.co.uk>
 Description: Tells you which bus is next.
  Allows you to easily find how to get the bus home. Uses HSL Journey Planner API <http://developer.reittiopas.fi/pages/en/home.php>. Uses GPS for current location. Uses Qt and QtMobility.
 Maemo-Icon-26: 
