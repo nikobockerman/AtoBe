@@ -32,6 +32,11 @@ KKJ::~KKJ()
 {
 }
 
+bool KKJ::operator==(const KKJ &rhs) const
+{
+    return northing() == rhs.northing() && easting() == rhs.easting();
+}
+
 unsigned int KKJ::northing() const
 {
     Q_D(const KKJ);

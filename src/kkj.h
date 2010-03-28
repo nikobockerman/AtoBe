@@ -24,6 +24,15 @@ public:
     virtual ~KKJ();
 
     /**
+     * Equals operator.
+     * Tests the equality of this coordinate and another coordinate and returns \c true
+     * if the coordinates represent the same position.
+     * @param rhs the other coordinate to test against.
+     * @return \c true if the coordinates are the same, \c false otherwise.
+     */
+    bool operator==(const KKJ &rhs) const;
+
+    /**
      * Returns the northing of the coordinate.
      * @return the northing.
      */

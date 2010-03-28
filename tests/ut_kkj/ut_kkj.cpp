@@ -3,13 +3,45 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-TEST(KKJ, ConstructorValuesReceivedViaGetters)
+class KKJTest : public ::testing::Test
 {
-    unsigned int northing = 6682815;
-    unsigned int easting = 2556686;
+public:
+    const unsigned int northing;
+    const unsigned int easting;
+
+    KKJTest() :
+        northing(6682815),
+        easting(2556686)
+    {
+    }
+};
+
+TEST_F(KKJTest, ConstructorValuesReceivedViaGetters)
+{
     KKJ kkj(northing , easting);
     ASSERT_EQ(northing, kkj.northing());
     ASSERT_EQ(easting, kkj.easting());
+}
+
+TEST_F(KKJTest, EqualsOperatorReturnsTrueForEqualCoordinates)
+{
+    KKJ kkj1(northing, easting);
+    KKJ kkj2(northing, easting);
+    ASSERT_TRUE(kkj1 == kkj2);
+}
+
+TEST_F(KKJTest, EqualsOperatorReturnsFalseForCoordinatesWithDifferentNorthing)
+{
+    KKJ kkj1(northing - 1, easting);
+    KKJ kkj2(northing, easting);
+    ASSERT_FALSE(kkj1 == kkj2);
+}
+
+TEST_F(KKJTest, EqualsOperatorReturnsFalseForCoordinatesWithDifferentEasting)
+{
+    KKJ kkj1(northing, easting - 1);
+    KKJ kkj2(northing, easting);
+    ASSERT_FALSE(kkj1 == kkj2);
 }
 
 int main(int argc, char *argv[])
