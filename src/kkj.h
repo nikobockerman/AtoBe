@@ -7,6 +7,7 @@ class KKJPrivate;
 
 /**
  * A class representing the Finnish KKJ coordinate.
+ * This is the rectangular grid coordinate version.
  */
 class KKJ
 {
