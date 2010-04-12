@@ -30,9 +30,9 @@ LEXSOURCES  += #LEXS#
 YACCSOURCES += #YACCS#
 
 INCLUDEPATH += include
-QMAKE_LIBDIR_QT = qt4-maemo5/lib
+#QMAKE_LIBDIR_QT = qt4-maemo5/lib
 #QMAKE_INCDIR_QT = qt4-maemo5/include
-LIBS        += lib/libQtLocation.so
+LIBS        += -Llib -lQtBearer -lQtLocation
 DEFINES     += Q_WS_MAEMO_5
 
 # All generated files goes same directory

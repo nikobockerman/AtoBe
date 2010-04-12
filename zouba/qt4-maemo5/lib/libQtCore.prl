@@ -1,7 +1,0 @@
-QMAKE_PRL_BUILD_DIR = /home/builder1/maemo-fremantle-armel-extras-devel/work/qt4-maemo5-4.6.2~git20100212/./src/corelib
-QMAKE_PRO_INPUT = corelib.pro
-QMAKE_PRL_TARGET = libQtCore.so.4.6.2
-QMAKE_PRL_DEFINES = QT_SHARED
-QMAKE_PRL_CONFIG = lex yacc warn_on uic resources qt warn_on release incremental link_prl exceptions maemo5 no_mocdepend release stl qt_no_framework cross_compile system-sqlite release shared dll largefile stl precompile_header separate_debug_info separate_debug_info_nocopy neon dylib create_prl link_prl depend_includepath QTDIR_build qt_install_headers qt warn_on depend_includepath qmake_cache target_qt hide_symbols bsymbolic_functions create_libtool create_pc explicitlib moc thread nostrip shared dll
-QMAKE_PRL_VERSION = 4.6.2
-QMAKE_PRL_LIBS = -L/opt/qt4-maemo5/lib  -lpthread 

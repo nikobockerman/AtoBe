@@ -1,6 +1,0 @@
-QMAKE_PRL_BUILD_DIR = /home/builder1/maemo-fremantle-armel-extras-devel/work/qt4-maemo5-4.6.2~git20100212//tools/designer/src/uitools
-QMAKE_PRO_INPUT = uitools.pro
-QMAKE_PRL_TARGET = libQtUiTools.a
-QMAKE_PRL_CONFIG = lex yacc warn_on uic resources qt warn_on release incremental link_prl exceptions maemo5 no_mocdepend release stl qt_no_framework cross_compile system-sqlite release largefile stl precompile_header separate_debug_info separate_debug_info_nocopy neon dylib create_prl link_prl depend_includepath fix_output_dirs QTDIR_build qt staticlib create_pc static staticlib moc thread nostrip
-QMAKE_PRL_VERSION = 4.6.2
-QMAKE_PRL_LIBS = -L/home/builder1/maemo-fremantle-armel-extras-devel/work/qt4-maemo5-4.6.2~git20100212/lib  -lQtXml -L/home/builder1/maemo-fremantle-armel-extras-devel/work/qt4-maemo5-4.6.2~git20100212/lib -lQtGui -L/usr/X11R6/lib -lQtCore -lpthread  

@@ -1,13 +1,13 @@
 Source: zouba
-Section: user/Other
+Section: user/navigation
 Priority: extra
 Maintainer: Max Waterman <davidmaxwaterman@fastmail.co.uk>
-Build-Depends: debhelper (>= 5)
+Build-Depends: libqt4-dev, libqtm-bearer, libqtm-location, debhelper (>= 5)
 Standards-Version: 3.7.3
 Homepage: 
 
 Package: zouba
-Architecture: any
+Architecture: armel
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Tells you which bus is next.
  Allows you to easily find how to get the bus home. Uses HSL Journey Planner API <http://developer.reittiopas.fi/pages/en/home.php>. Uses GPS for current location. Uses Qt and QtMobility.
