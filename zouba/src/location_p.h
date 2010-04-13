@@ -10,13 +10,7 @@ class LocationPrivate : public QObject
     Q_OBJECT
 
 public:
-  QString m_label;
-  QString m_address;
-  QString m_x;
-  QString m_y;
-  bool    m_valid;
   LocationPrivate( const QString &x, const QString &y, const QString &label );
-
   LocationPrivate( const QString &label );
   virtual ~LocationPrivate();
 
@@ -39,6 +33,11 @@ public:
 
   void parseReply( const QByteArray &reply );
 
+  QString m_label;
+  QString m_address;
+  QString m_x;
+  QString m_y;
+  bool    m_valid;
 };
 
 #endif // LOCATION_P_H

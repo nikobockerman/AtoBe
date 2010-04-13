@@ -336,7 +336,6 @@ QByteArray sampleInput(
 	</ROUTE>\
 </MTRXML>\
 "
-
 );
 
 void Ut_Route::init()
@@ -374,17 +373,21 @@ void Ut_Route::testParseReply()
 void Ut_Route::testSetFromLocation()
 {
   Location work( "2551042", "6672829" );
+  QCOMPARE( m_subject->fromValid(), false );
   m_subject->setFromLocation( &work );
-  QCOMPARE( work.x(), m_subject->fromLocation()->x() );
-  QCOMPARE( work.y(), m_subject->fromLocation()->y() );
+  QCOMPARE( m_subject->fromLocation()->x(), work.x() );
+  QCOMPARE( m_subject->fromLocation()->y(), work.y() );
+  QCOMPARE( m_subject->fromValid(), true );
 }
 
 void Ut_Route::testSetToLocation()
 {
   Location work( "2551042", "6672829" );
+  QCOMPARE( m_subject->toValid(), false );
   m_subject->setToLocation( &work );
-  QCOMPARE( work.x(), m_subject->toLocation()->x() );
-  QCOMPARE( work.y(), m_subject->toLocation()->y() );
+  QCOMPARE( m_subject->toLocation()->x(), work.x() );
+  QCOMPARE( m_subject->toLocation()->y(), work.y() );
+  QCOMPARE( m_subject->toValid(), true );
 }
 
 QTEST_APPLESS_MAIN(Ut_Route)

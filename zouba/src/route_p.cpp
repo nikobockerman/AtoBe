@@ -112,7 +112,7 @@ QString RoutePrivate::parseJORECode( const QString &joreCode ) const
   lineCode.setNum( lineCode.toInt() );
 
   retVal = lineCode;
-  
+
   if ( letterVariant != " " ) {
     retVal += letterVariant;
   }

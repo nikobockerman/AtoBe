@@ -53,11 +53,14 @@ void Ut_Location::testSet()
   LocationPrivate m_subject(label);
 
   label = "work";
+  QString address( "Taivaanvuohentie 7 B 27, Helsinki" );
   QString x( "2549182" );
   QString y( "6672569" );
+  m_subject.setAddress( address );
   m_subject.setLabel( label );
   m_subject.setX( x );
   m_subject.setY( y );
+  QCOMPARE( m_subject.address(), address );
   QCOMPARE( m_subject.label(), label );
   QCOMPARE( m_subject.x(), x );
   QCOMPARE( m_subject.y(), y );
