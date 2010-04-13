@@ -1,3 +1,12 @@
+zouba (0.3) unstable; urgency=low
+
+  * Fix for app manager icon
+  * Changes: cleanup and corrections for autobuilder
+  * Added new settings button to set a fake current location ('work' in the first instance).
+  * Added 'optimize' parameter set to 'leastwalking' to route server to give same results as web server early in the morning.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 12 Apr 2010 12:13:13 +0200
+
 zouba (0.2) unstable; urgency=low
 
   * Better xml error string.
