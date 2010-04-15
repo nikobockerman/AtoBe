@@ -8,6 +8,7 @@ SOURCES += \
     location_p.cpp \
     locations.cpp \
     gpscontroller.cpp \
+    gpscontroller_p.cpp \
     ui.cpp \
     messagetable.cpp \
     messagehandler.cpp \
@@ -21,11 +22,12 @@ HEADERS += \
     locations.h \
     ytv.h \
     gpscontroller.h \
+    gpscontroller_p.h \
     ui.h \
     messagetable.h \
     messagehandler.h \
 
-FORMS       += 
+FORMS       +=
 LEXSOURCES  += #LEXS#
 YACCSOURCES += #YACCS#
 
@@ -44,7 +46,7 @@ DESTDIR     = build
 TEMPLATE    = app
 DEPENDPATH  +=
 VPATH       += src uis
-CONFIG      -= 
+CONFIG      -=
 CONFIG      += debug qt mobility
 MOBILITY    += location bearer
 QT=core gui network

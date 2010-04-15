@@ -74,20 +74,7 @@ void Route::setFromLocation( Location *location )
       qDebug() << "To not valid - waiting";
     }
   } else {
-    qDebug() << "From is not valid";
-    qDebug() << "getting From from signal sender";
-    location = qobject_cast<Location*>(sender());
-    if ( location ) {
-      q->setFromLocation( location );
-      if ( q->toValid() ) {
-        qDebug() << "To is also valid";
-        getRoute();
-      } else {
-        qDebug() << "To not valid - waiting";
-      }
-    } else {
-      qDebug() << "location is zero - cast didn't work";
-    }
+    qDebug() << "ERROR:From is not valid";
   }
 }
 
@@ -111,19 +98,7 @@ void Route::setToLocation( Location *location )
     }
   } else {
     qDebug() << "To is not valid";
-    qDebug() << "getting To from signal sender";
-    Location *location = qobject_cast<Location*>(sender());
-    if ( location ) {
-      q->setToLocation( location );
-      if ( q->fromValid() ) {
-        qDebug() << "From is also valid";
-        getRoute();
-      } else {
-        qDebug() << "From not valid - waiting";
-      }
-    } else {
-      qDebug() << "location is zero; cast failed";
-    }
+    qDebug() << "ERROR:location is zero; cast failed";
   }
 }
 
