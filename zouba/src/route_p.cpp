@@ -4,6 +4,7 @@
 #include <QXmlStreamReader>
 #include <QDebug>
 #include <QList>
+#include <QFile>
 
 RoutePrivate::RoutePrivate( QObject *parent ) :
     m_fromValid(false),
@@ -21,54 +22,68 @@ RoutePrivate::~RoutePrivate()
 QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
 {
   qDebug() << "parsing route";
+  QFile file( "/home/user/route.txt" );
+  if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    QTextStream out(&file);
+    out << reply;
+    file.close();
+  } else {
+    qDebug() << "Could not open /home/user/route.txt";
+  }
+
 
   QList<RouteData> retVal;
   RouteData routeData;
 
   QXmlStreamReader xml( reply );
 
-  bool haveLine = false;
-  bool haveTime = false;
+  QHash<QString, bool> in;
+  QHash<QString, bool> have;
 
-  bool inLine = false;
-  bool inStop = false;
+  have[ "LINE" ] = false;
+  have[ "TIME" ] = false;
+
+  in[ "ROUTE" ] = false;
+  in[ "LINE" ]  = false;
+  in[ "STOP" ]  = false;
+
   while ( !xml.atEnd() ) {
     xml.readNext();
-    if ( xml.isStartElement() && xml.name() == "LINE" ) {
+    if ( xml.isStartElement() ) {
+        in[ xml.name().toString() ] = true;
+
+        if ( xml.name() == "ROUTE" ) {
+          have[ "TIME" ] = false;
+          have[ "LINE" ] = false;
+        }
+    }
+
+    if ( xml.isEndElement() ) {
+        in[ xml.name().toString() ] = false;
+    }
+
+    if ( !have[ "LINE" ] && in[ "ROUTE" ] && xml.isStartElement() && xml.name() == "LINE" ) {
       QString lineCode( xml.attributes().value("code").toString() );
 
       routeData.lineCode = parseJORECode( lineCode );
-      haveLine = true;
+      have[ "LINE" ] = true;
 
-      inLine = true;
-    } else
-    if ( inLine && xml.name() == "STOP" ) {
-      inStop = true;
-    } else
-    if ( inLine && inStop && xml.name() == "ARRIVAL" ) {
+      if ( have[ "LINE" ] && have[ "TIME" ] ) {
+        retVal.append( routeData );
+      }
+    }
+
+    if ( !have[ "TIME" ] && in[ "ROUTE" ] && in[ "LINE" ] && in[ "STOP" ] && xml.name() == "ARRIVAL" ) {
       QString arrivalTime( xml.attributes().value("time").toString() );
 
       routeData.arrivalTime = arrivalTime.rightJustified(4).insert(2,":");
-      haveTime = true;
+      have[ "TIME" ] = true;
 
-      inLine = false;
-    } else
-    if ( xml.isEndElement() && xml.name() == "STOP" ) {
-      inStop = false;
-      haveTime = false;
-    } else
-    if ( xml.isEndElement() && xml.name() == "LINE" ) {
-      inLine = false;
-      haveLine = false;
+      if ( have[ "LINE" ] && have[ "TIME" ] ) {
+        retVal.append( routeData );
+      }
     }
 
-    if ( haveLine && haveTime ) {
-      retVal.append( routeData );
-
-      // only want first STOP per LINE
-      haveTime = false;
-      haveLine = false;
-    }
   }
 
   if ( xml.hasError() ) {

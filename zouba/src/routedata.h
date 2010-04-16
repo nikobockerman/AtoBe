@@ -5,6 +5,18 @@
 
 struct RouteData
 {
+  RouteData():
+    lineCode(),
+    arrivalTime()
+  {
+  };
+
+  RouteData( QString lineCode, QString arrivalTime ):
+    lineCode(lineCode),
+    arrivalTime(arrivalTime)
+  {
+  };
+
   QString lineCode;
   QString arrivalTime;
 };

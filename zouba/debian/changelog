@@ -1,3 +1,10 @@
+zouba (0.4) unstable; urgency=low
+
+  * Fix for routes with bus changes (only displays first bus)
+  * Added and cleaned up ut_route
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Fri, 16 Apr 2010 11:28:00 +0200
+
 zouba (0.3) unstable; urgency=low
 
   * Fix for app manager icon

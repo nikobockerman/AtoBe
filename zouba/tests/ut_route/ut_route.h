@@ -7,6 +7,7 @@
 #include <route_p.h>
 
 Q_DECLARE_METATYPE(RoutePrivate*);
+Q_DECLARE_METATYPE(QList<RouteData>);
 
 class Ut_Route : public QObject
 {
@@ -20,6 +21,7 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void testParseReply();
+    void testParseReply_data();
     void testSetFromLocation();
     void testSetToLocation();
 
