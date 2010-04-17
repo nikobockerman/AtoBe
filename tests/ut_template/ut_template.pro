@@ -10,3 +10,5 @@ OBJECTS_DIR = .obj
 MOC_DIR = .moc
 SOURCES += ut_template.cpp
 HEADERS += ut_template.h
+
+include(../check.pri)
