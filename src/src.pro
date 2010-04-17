@@ -1,5 +1,7 @@
 TEMPLATE = lib
 TARGET = ptascommon
+OBJECTS_DIR = .obj
+MOC_DIR = .moc
 
 INSTALL_HEADERS = \
     coordinatesystemtransformer.h \
