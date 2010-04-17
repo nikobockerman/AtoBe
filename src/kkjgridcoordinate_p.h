@@ -1,20 +1,20 @@
-#ifndef KKJ_P_H
-#define KKJ_P_H
+#ifndef KKJGRIDCOORDINATE_P_H
+#define KKJGRIDCOORDINATE_P_H
 
 #include <QtGlobal>
 
-class KKJ;
+class KKJGridCoordinate;
 
 /**
- * A private member class for class KKJ.
+ * A private member class for class KKJGridCoordinate.
  */
-class KKJPrivate
+class KKJGridCoordinatePrivate
 {
 public:
     /**
      * Destructor.
      */
-    virtual ~KKJPrivate();
+    virtual ~KKJGridCoordinatePrivate();
 
 private:
     /**
@@ -31,10 +31,10 @@ private:
     unsigned int easting;
 
     /// The concrete class owning this private implementation member.
-    KKJ *q_ptr;
+    KKJGridCoordinate *q_ptr;
 
-    Q_DECLARE_PUBLIC(KKJ)
+    Q_DECLARE_PUBLIC(KKJGridCoordinate)
 
 };
 
-#endif // KKJ_P_H
+#endif // KKJGRIDCOORDINATE_P_H

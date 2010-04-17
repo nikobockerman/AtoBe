@@ -1,7 +1,7 @@
 #ifndef COORDINATESYSTEMTRANSFORMER_H
 #define COORDINATESYSTEMTRANSFORMER_H
 
-#include "kkj.h"
+#include "kkjgridcoordinate.h"
 #include <QGeoCoordinate>
 
 /**
@@ -16,7 +16,7 @@ public:
      * @param fromCoordinate the WGS84 coordinate that will be transformed.
      * @return the transformed coordinate in KKJ coordinate system.
      */
-    static KKJ transformToKKJ(const QTM_NAMESPACE::QGeoCoordinate &fromCoordinate);
+    static KKJGridCoordinate transformToKKJ(const QTM_NAMESPACE::QGeoCoordinate &fromCoordinate);
 
     /**
      * Makes a coordinate transformation from KKJ rectangular grid coordinate system
@@ -24,7 +24,7 @@ public:
      * @param fromCoordinate the KKJ coordinate that will be transformed.
      * @return the transformed coordinate in WGS84 coordinate system.
      */
-    static QTM_NAMESPACE::QGeoCoordinate transformToWGS84(const KKJ &fromCoordinate);
+    static QTM_NAMESPACE::QGeoCoordinate transformToWGS84(const KKJGridCoordinate &fromCoordinate);
 };
 
 #endif // COORDINATESYSTEMTRANSFORMER_H

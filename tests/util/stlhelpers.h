@@ -2,10 +2,10 @@
 #define STLHELPERS_H
 
 #include <ostream>
-#include "kkj.h"
+#include "kkjgridcoordinate.h"
 #include <QGeoCoordinate>
 
-std::ostream& operator<<(std::ostream& stream, const KKJ &val)
+std::ostream& operator<<(std::ostream& stream, const KKJGridCoordinate &val)
 {
     stream << val.northing() << ", " << val.easting();
     return stream;

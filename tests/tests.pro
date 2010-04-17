@@ -1,7 +1,7 @@
 TEMPLATE = subdirs
 SUBDIRS = \
     ut_coordinatesystemtransformer \
-    ut_kkj
+    ut_kkjgridcoordinate
 
 check.target = check
 check.CONFIG = recursive

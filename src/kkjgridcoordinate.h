@@ -1,15 +1,15 @@
-#ifndef KKJ_H
-#define KKJ_H
+#ifndef KKJGRIDCOORDINATE_H
+#define KKJGRIDCOORDINATE_H
 
 #include <QtGlobal>
 
-class KKJPrivate;
+class KKJGridCoordinatePrivate;
 
 /**
  * A class representing the Finnish KKJ coordinate.
  * This is the rectangular grid coordinate version.
  */
-class KKJ
+class KKJGridCoordinate
 {
 public:
     /**
@@ -17,12 +17,12 @@ public:
      * @param northing the northing coordinate.
      * @param easting the easting coordinate.
      */
-    KKJ(unsigned int northing, unsigned int easting);
+    KKJGridCoordinate(unsigned int northing, unsigned int easting);
 
     /**
      * Destructor.
      */
-    virtual ~KKJ();
+    virtual ~KKJGridCoordinate();
 
     /**
      * Equals operator.
@@ -31,14 +31,14 @@ public:
      * @param rhs the other coordinate to test against.
      * @return \c true if the coordinates are the same, \c false otherwise.
      */
-    bool operator==(const KKJ &rhs) const;
+    bool operator==(const KKJGridCoordinate &rhs) const;
 
     /**
      * Assignment operator.
      * @param rhs the object that is copied.
      * @return this object.
      */
-    KKJ& operator=(const KKJ &rhs);
+    KKJGridCoordinate& operator=(const KKJGridCoordinate &rhs);
 
     /**
      * Returns the northing of the coordinate.
@@ -59,15 +59,15 @@ protected:
      * @param northing the northing coordinate.
      * @param easting the easting coordinate.
      */
-    KKJ(KKJPrivate &dd, unsigned int northing, unsigned int easting);
+    KKJGridCoordinate(KKJGridCoordinatePrivate &dd, unsigned int northing, unsigned int easting);
 
 
 private:
     /// Pointer to the private member
-    KKJPrivate *const d_ptr;
+    KKJGridCoordinatePrivate *const d_ptr;
 
-    Q_DECLARE_PRIVATE(KKJ)
+    Q_DECLARE_PRIVATE(KKJGridCoordinate)
 
 };
 
-#endif // KKJ_H
+#endif // KKJGRIDCOORDINATE_H

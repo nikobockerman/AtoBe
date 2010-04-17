@@ -2,11 +2,14 @@ TEMPLATE = lib
 TARGET = ptascommon
 
 INSTALL_HEADERS = \
-    kkj.h
+    coordinatesystemtransformer.h \
+    kkjgridcoordinate.h \
+
 PRIVATE_HEADERS = \
-    kkj_p.h
+    kkjgridcoordinate_p.h
 HEADERS += \
     $$INSTALL_HEADERS \
     $$PRIVATE_HEADERS
 SOURCES += \
-    kkj.cpp
+    coordinatesystemtransformer.cpp \
+    kkjgridcoordinate.cpp

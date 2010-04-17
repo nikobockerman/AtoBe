@@ -155,7 +155,7 @@ public:
      * @param kkj the KKJ coordinate
      * @return the zone number or -1 on error
      */
-    static int getZoneNumberFromEasting(const KKJ &kkj);
+    static int getZoneNumberFromEasting(const KKJGridCoordinate &kkj);
 
     /**
      * Determines a zone number from the KKJ longitude value. If the longitude is not within any of
@@ -192,7 +192,7 @@ const double KKJZone::KKJ_ZONE_INFO[6][2] = { {18.0,  500000.0},  // zone 0
                                               {33.0, 5500000.0} };// zone 5
 
 
-int KKJZone::getZoneNumberFromEasting(const KKJ &kkj) {
+int KKJZone::getZoneNumberFromEasting(const KKJGridCoordinate &kkj) {
     int zoneNumber = floor(kkj.easting() / 1000000.0);
     if (zoneNumber < MIN_ZONE || zoneNumber > MAX_ZONE) {
         zoneNumber = -1;
@@ -274,7 +274,7 @@ KKJGeoCoordinate transformToKKJGeoCoordinate(const QGeoCoordinate &fromCoordinat
  * @param zoneNumber the zone number in which the input coordinate resides
  * @return the transformed coordinate
  */
-KKJ transformToKKJGridCoordinate(const KKJGeoCoordinate &fromCoordinate) {
+KKJGridCoordinate transformToKKJGridCoordinate(const KKJGeoCoordinate &fromCoordinate) {
     int zoneNumber = KKJZone::getZoneNumberFromLongitude(fromCoordinate);
     double Lo = radians(fromCoordinate.longitude()) - radians(KKJZone::getCentralMeridianOfZone(zoneNumber));
     double cosLa = cos(radians(fromCoordinate.latitude()));
@@ -290,7 +290,7 @@ KKJ transformToKKJGridCoordinate(const KKJGeoCoordinate &fromCoordinate) {
 
     unsigned int outY = A1 * LaF - A2 * sin(2.0 * LaF) + A3 * sin(4.0 * LaF) - A4 * sin(6.0 * LaF);
     unsigned int outX = HayfordEllipsoid::c * log(t + sqrt(1.0 + t * t)) + 500000.0 + zoneNumber * 1000000.0;
-    return KKJ(outY, outX);
+    return KKJGridCoordinate(outY, outX);
 }
 
 /**
@@ -298,7 +298,7 @@ KKJ transformToKKJGridCoordinate(const KKJGeoCoordinate &fromCoordinate) {
  * @param fromCoordinate the input coordinate
  * @return the transformed coordinate
  */
-KKJGeoCoordinate transformToKKJGeoCoordinate(const KKJ &fromCoordinate) {
+KKJGeoCoordinate transformToKKJGeoCoordinate(const KKJGridCoordinate &fromCoordinate) {
     // Scan iteratively the target area, until find matching
     // KKJ coordinate value. Area is defined with Hayford Ellipsoid.
     double minLo = 18.5;
@@ -315,7 +315,7 @@ KKJGeoCoordinate transformToKKJGeoCoordinate(const KKJ &fromCoordinate) {
         double deltaLa = maxLa - minLa;
         ret.setLongitude(minLo + 0.5 * deltaLo);
         ret.setLatitude(minLa + 0.5 * deltaLa);
-        KKJ kkj = transformToKKJGridCoordinate(ret);
+        KKJGridCoordinate kkj = transformToKKJGridCoordinate(ret);
         if (kkj.northing() < fromCoordinate.northing()) {
             minLa = minLa + 0.45 * deltaLa;
         } else {
@@ -335,13 +335,13 @@ KKJGeoCoordinate transformToKKJGeoCoordinate(const KKJ &fromCoordinate) {
 }
 
 
-KKJ CoordinateSystemTransformer::transformToKKJ(const QGeoCoordinate &fromCoordinate)
+KKJGridCoordinate CoordinateSystemTransformer::transformToKKJ(const QGeoCoordinate &fromCoordinate)
 {
     KKJGeoCoordinate tmpKKJ = transformToKKJGeoCoordinate(fromCoordinate);
     return transformToKKJGridCoordinate(tmpKKJ);
 }
 
-QGeoCoordinate CoordinateSystemTransformer::transformToWGS84(const KKJ &fromCoordinate)
+QGeoCoordinate CoordinateSystemTransformer::transformToWGS84(const KKJGridCoordinate &fromCoordinate)
 {
     KKJGeoCoordinate tmpKKJ = transformToKKJGeoCoordinate(fromCoordinate);
     return transformToWGS84GeoCoordinate(tmpKKJ);
