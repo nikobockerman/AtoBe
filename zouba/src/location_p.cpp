@@ -25,6 +25,11 @@ LocationPrivate::LocationPrivate( const QString &label ) :
 
 LocationPrivate::~LocationPrivate()
 {
+  m_label="deleted";
+  m_address="";
+  m_x="";
+  m_y="";
+  m_valid=false;
 }
 
 void LocationPrivate::parseReply( const QByteArray &reply )

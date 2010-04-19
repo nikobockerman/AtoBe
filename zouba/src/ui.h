@@ -45,10 +45,12 @@ public:
   QHBoxLayout *mainLayout;
   QVBoxLayout *buttonLayout;
   QMenu       *menu;
-  QAction     *hideMessagesAction;
-  QAction     *showMessagesAction;
-  QAction     *useFakeGpsAction;
+  QAction     *toggleMessagesAction;
+  QAction     *toggleFakeGpsAction;
   QAction     *useLiveGpsAction;
+  bool        usingFakeGps;
+  bool        messagesShown;
+  Location    *fakeLocation;
 
 Q_SIGNALS:
   void homeAddressChanged( QString address );
@@ -59,12 +61,14 @@ Q_SIGNALS:
 private Q_SLOTS:
   void setHomeAddress();
   void setWorkAddress();
-  void hideMessages();
-  void showMessages();
-  void useFakeGps();
-  void useLiveGps();
+  void toggleMessages();
+  void toggleFakeGps();
 
 private:
+  void useFakeGps();
+  void useLiveGps();
+  void hideMessages();
+  void showMessages();
   void setAddress( const QString &label );
 };
 #endif //UI_H

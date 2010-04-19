@@ -32,3 +32,6 @@ HEADERS += \
   $$ZOUBASRC/location.h \
   $$ZOUBASRC/location_p.h \
 
+QMAKE_EXTRA_TARGETS += check
+check.depends = $$TARGET
+check.commands = ./$$TARGET

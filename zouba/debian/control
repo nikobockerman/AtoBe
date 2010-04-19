@@ -9,7 +9,7 @@ Homepage:
 Package: zouba
 Architecture: armel
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Tells you which bus is next.
+Description: Tells you which bus is next (in Helsinki area).
  Allows you to easily find how to get the bus home. Uses HSL Journey Planner API <http://developer.reittiopas.fi/pages/en/home.php>. Uses GPS for current location. Uses Qt and QtMobility.
 # XB-Maemo-Icon-26 field contains the application icon file encoded in
 # base64. This is the icon that is shown in the Application Manager,

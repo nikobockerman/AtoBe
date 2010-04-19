@@ -62,7 +62,7 @@ void Route::replyFinished( QNetworkReply * reply )
 
 void Route::setFromLocation( Location *location )
 {
-  qDebug() << "setting new From location";
+  qDebug() << "setting new From location (" << location->label() << ")";
 
   if ( location && location->isValid() ) {
     qDebug() << "From is valid";
@@ -75,6 +75,7 @@ void Route::setFromLocation( Location *location )
     }
   } else {
     qDebug() << "ERROR:From is not valid";
+    qDebug() << "location=" << location;
   }
 }
 
@@ -85,7 +86,7 @@ Location *Route::fromLocation() const
 
 void Route::setToLocation( Location *location )
 {
-  qDebug() << "setting new To location";
+  qDebug() << "setting new To location (" << location->label() << ")";
 
   if ( location && location->isValid() ) {
     qDebug() << "To is valid";

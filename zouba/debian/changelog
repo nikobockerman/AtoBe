@@ -1,3 +1,11 @@
+zouba (0.5) unstable; urgency=low
+
+  * Changed package description
+  * Changed 'fakegps' button from two actions to a single toggle one
+  * Fixed core dump in gpscontroller caused by deleting the fakelocation
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 19 Apr 2010 11:18:00 +0200
+
 zouba (0.4) unstable; urgency=low
 
   * Fix for routes with bus changes (only displays first bus)

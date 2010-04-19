@@ -44,6 +44,7 @@ Location::Location( const QGeoPositionInfo &positionInfo, const QString &label )
   q( new LocationPrivate( label ) ),
   manager(0)
 {
+  qDebug() << "Location::Location( QGeoPositionInfo, label=" << label << " )";
   qreal latitude = positionInfo.coordinate().latitude();
   qreal longitude = positionInfo.coordinate().longitude();
 
@@ -62,6 +63,7 @@ Location::Location( const Location &from ) :
   q( new LocationPrivate( from.label() ) ),
   manager(0)
 {
+  qDebug() << "Location::Location( const Location [" << from.label() << "] )";
   q->setAddress( from.address() );
   q->setX( from.x() );
   q->setY( from.y() );
@@ -76,6 +78,7 @@ Location::Location( const QString &label ) :
   q( new LocationPrivate( label ) ),
   manager( new QNetworkAccessManager(this) )
 {
+  qDebug() << "Location::Location( const QString &label=" << label << " )";
   connect( manager, SIGNAL( finished(QNetworkReply*) ), this, SLOT( replyFinished(QNetworkReply*) ) );
 }
 
@@ -89,18 +92,20 @@ Location::~Location()
 
 Location &Location::operator=( const Location &from )
 {
+  qDebug() << "Location::Location( const Location &from )";
   q = new LocationPrivate( from.label() );
   q->setAddress( from.address() );
   q->setX( from.x() );
   q->setY( from.y() );
   q->setValid( from.isValid() );
+
   if ( from.manager != 0 ) {
     manager = new QNetworkAccessManager(this);
     connect( manager, SIGNAL( finished(QNetworkReply*) ), this, SLOT( replyFinished(QNetworkReply*) ) );
   } else {
     manager = 0;
   }
-  
+
   return *this;
 }
 
@@ -223,7 +228,7 @@ void Location::KKJlola_to_WGS84lola(double kkjlo, double kkjla, double *outLongi
 
 
 // Function:  WGS84lalo_to_KKJlalo
-void Location::WGS84lola_to_KKJlola(double longitude, double latitude, double *outLongitude, double *outLatitude) 
+void Location::WGS84lola_to_KKJlola(double longitude, double latitude, double *outLongitude, double *outLatitude)
 {
   double dLa = radians(-0.124766E+01 + 0.269941E+00 * latitude + -0.191342E+00 * longitude + -0.356086E-02 * latitude * latitude + 0.122353E-02 * latitude * longitude + 0.335456E-03 * longitude * longitude) / 3600.0;
   double dLo = radians(0.286008E+02 + -0.114139E+01 * latitude + 0.581329E+00 * longitude + 0.152376E-01 * latitude * latitude + -0.118166E-01 * latitude * longitude + -0.826201E-03 * longitude * longitude) / 3600.0;
@@ -234,7 +239,7 @@ void Location::WGS84lola_to_KKJlola(double longitude, double latitude, double *o
 
 
 // Function:  KKJlalo_to_KKJxy
-void Location::KKJlola_to_KKJxy(double lon, double lat, int zoneNumber, KKJ *outX, KKJ *outY) 
+void Location::KKJlola_to_KKJxy(double lon, double lat, int zoneNumber, KKJ *outX, KKJ *outY)
 {
   // Hayford ellipsoid
   double a = 6378388.0;

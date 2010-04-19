@@ -26,6 +26,7 @@ private slots:
   void testGetGpsWithNoGpsUpdates();
   void testGetGpsWithGpsUpdates();
   void testFakeGps();
+  void testLiveToFakeToLive();
 
 private:
   GpsController *m_subject;

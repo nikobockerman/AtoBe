@@ -60,7 +60,10 @@ Location *GpsControllerPrivate::currentLocation()
 
 void GpsControllerPrivate::setCurrentLocation( Location *location )
 {
-  delete m_currentLocation;
+  if ( m_currentLocation && m_currentLocation->label() == "livegps" ) {
+    delete m_currentLocation;
+    m_currentLocation=0;
+  }
   m_currentLocation = location;
 }
 
@@ -71,14 +74,19 @@ bool GpsControllerPrivate::useFakeLocation()
 
 void GpsControllerPrivate::setUseFakeLocation( bool useFake )
 {
+  // delete previous GPS if it was live and we're switching to fake
+  if ( m_currentLocation && m_currentLocation->label() == "livegps" ) {
+    delete m_currentLocation;
+    m_currentLocation = 0;
+  }
   m_useFakeLocation = useFake;
 }
 
 void GpsControllerPrivate::updateLocation( QGeoPositionInfo positionInfo )
 {
-  if ( !m_useFakeLocation ) {
+  if ( m_currentLocation && m_currentLocation->label() == "livegps" ) {
     delete m_currentLocation;
-    m_currentLocation = new Location( positionInfo );
   }
+  m_currentLocation = new Location( positionInfo, "livegps" );
 }
 

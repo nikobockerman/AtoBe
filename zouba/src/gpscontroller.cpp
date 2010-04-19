@@ -35,12 +35,13 @@ void GpsController::getGps()
 void GpsController::useLiveGps()
 {
   q->setUseFakeLocation( false );
-  q->setCurrentLocation(0);
+  q->setCurrentLocation( new Location( "livegps" ) );
   q->startGps();
 }
 
 void GpsController::useFakeGps( Location *fakeLocation )
 {
+  qDebug() << "using fake gps (" << fakeLocation->label() << ")";
   q->stopGps();
   q->setUseFakeLocation( true );
   q->setCurrentLocation( fakeLocation );
