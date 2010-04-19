@@ -1,3 +1,10 @@
+zouba (0.6) unstable; urgency=low
+
+  * Changed layout in preparation for multiple routes
+  * Changed the selection mode for the tables
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 19 Apr 2010 17:38:00 +0200
+
 zouba (0.5) unstable; urgency=low
 
   * Changed package description

@@ -14,6 +14,7 @@
 #include <QMenuBar>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QGridLayout>
 #include <QSizePolicy>
 #include <QInputDialog>
 #include <QDebug>
@@ -77,7 +78,6 @@ void Ui::setupUi( QMainWindow *mainWindow )
   homeButton->setObjectName( QString::fromUtf8("homeButton") );
   homeButton->setText( "GPS->HOME" );
   homeButton->setEnabled(false);
-  homeButton->setFixedSize( QSize( ButtonWidth, ButtonHeight ) );
 
   QRadioButton *workButton = new QRadioButton();
   workButton->setObjectName( QString::fromUtf8("workButton") );
@@ -89,20 +89,19 @@ void Ui::setupUi( QMainWindow *mainWindow )
   destinationButtons->addButton( workButton, WorkButtonId );
   destinationButtons->setExclusive( true );
 
-  buttonLayout = new QVBoxLayout();
-  buttonLayout->addWidget( homeButton );
-  buttonLayout->addWidget( workButton );
-  buttonLayout->addStretch();
-
   routeTable = new QTableWidget( 1, 2 );
   QStringList columnHeaders;
   columnHeaders << "Time" << "Bus";
   routeTable->setHorizontalHeaderLabels( columnHeaders );
   routeTable->verticalHeader()->hide();
+  routeTable->setSelectionMode( QAbstractItemView::SingleSelection );
 
   QHBoxLayout *topLayout = new QHBoxLayout();
-  topLayout->addLayout( buttonLayout );
   topLayout->addWidget( routeTable );
+
+  buttonLayout = new QGridLayout();
+  buttonLayout->addWidget( homeButton, 0, 0 );
+  buttonLayout->addWidget( workButton, 0, 1 );
 
   messageTable = new MessageTable();
   messageTable->setObjectName( QString::fromUtf8("messageTable") );
@@ -111,6 +110,7 @@ void Ui::setupUi( QMainWindow *mainWindow )
   QVBoxLayout *mainLayout = new QVBoxLayout();
   mainLayout->addLayout( topLayout );
   mainLayout->addWidget( messageTable );
+  mainLayout->addLayout( buttonLayout );
 
   centralWidget->setLayout( mainLayout );
 }

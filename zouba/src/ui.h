@@ -10,6 +10,7 @@ class QButtonGroup;
 class MessageTable;
 class QHBoxLayout;
 class QVBoxLayout;
+class QGridLayout;
 class QMenu;
 class QAction;
 class Location;
@@ -32,18 +33,13 @@ public:
     ScreenWidth=800,
     ScreenHeight=480
   };
-  enum {
-   ButtonWidth=300,
-   ButtonHeight=70
-  };
-
 
   QWidget *centralWidget;
   QButtonGroup *destinationButtons;
   QTableWidget *routeTable;
   static MessageTable *messageTable;
   QHBoxLayout *mainLayout;
-  QVBoxLayout *buttonLayout;
+  QGridLayout *buttonLayout;
   QMenu       *menu;
   QAction     *toggleMessagesAction;
   QAction     *toggleFakeGpsAction;

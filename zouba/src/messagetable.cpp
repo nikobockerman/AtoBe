@@ -11,6 +11,7 @@ MessageTable::MessageTable( QWidget *parent ) :
 {
   setHorizontalHeaderLabels( QStringList() << "Messages" );
   verticalHeader()->hide();
+  setSelectionMode( QAbstractItemView::NoSelection );
 
   for ( int row=0; row<NumberOfRows; ++row ) {
     QTableWidgetItem *newRow = new QTableWidgetItem();
