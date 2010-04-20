@@ -11,7 +11,8 @@ QTM_USE_NAMESPACE
 
 GpsControllerPrivate::GpsControllerPrivate() :
   m_gps(0),
-  m_currentLocation(0),
+  m_liveLocation( new Location( "livegps" ) ),
+  m_fakeLocationLabel(),
   m_useFakeLocation(false)
 {
 }
@@ -20,8 +21,8 @@ GpsControllerPrivate::~GpsControllerPrivate()
 {
   delete m_gps;
   m_gps = 0;
-  delete m_currentLocation;
-  m_currentLocation = 0;
+  delete m_liveLocation;
+  m_liveLocation = 0;
 }
 
 void GpsControllerPrivate::init()
@@ -53,18 +54,19 @@ void GpsControllerPrivate::setGps( QGeoPositionInfoSource *gps )
   m_gps = gps;
 }
 
-Location *GpsControllerPrivate::currentLocation()
+Location *GpsControllerPrivate::liveLocation()
 {
-  return m_currentLocation;
+  return m_liveLocation;
 }
 
-void GpsControllerPrivate::setCurrentLocation( Location *location )
+QString GpsControllerPrivate::fakeLocationLabel()
 {
-  if ( m_currentLocation && m_currentLocation->label() == "livegps" ) {
-    delete m_currentLocation;
-    m_currentLocation=0;
-  }
-  m_currentLocation = location;
+  return m_fakeLocationLabel;
+}
+
+void GpsControllerPrivate::setFakeLocationLabel( const QString &label )
+{
+  m_fakeLocationLabel = label;
 }
 
 bool GpsControllerPrivate::useFakeLocation()
@@ -74,19 +76,11 @@ bool GpsControllerPrivate::useFakeLocation()
 
 void GpsControllerPrivate::setUseFakeLocation( bool useFake )
 {
-  // delete previous GPS if it was live and we're switching to fake
-  if ( m_currentLocation && m_currentLocation->label() == "livegps" ) {
-    delete m_currentLocation;
-    m_currentLocation = 0;
-  }
   m_useFakeLocation = useFake;
 }
 
 void GpsControllerPrivate::updateLocation( QGeoPositionInfo positionInfo )
 {
-  if ( m_currentLocation && m_currentLocation->label() == "livegps" ) {
-    delete m_currentLocation;
-  }
-  m_currentLocation = new Location( positionInfo, "livegps" );
+  m_liveLocation->setLocation( positionInfo );
 }
 

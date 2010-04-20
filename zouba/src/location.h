@@ -29,6 +29,8 @@ public:
 
   QString y() const;
 
+  void setLocation( const QGeoPositionInfo &positionInfo );
+
   void setAddress( const QString &address ) const;
   QString address() const;
 
@@ -47,6 +49,7 @@ private Q_SLOTS:
   void replyFinished( QNetworkReply * reply );
 
 private:
+
   LocationPrivate *q;
   QNetworkAccessManager *manager;
 

@@ -15,7 +15,7 @@
 
 int main(int argc, char *argv[] )
 {
-  qInstallMsgHandler( messageHandler );
+  //qInstallMsgHandler( messageHandler );
   QApplication app(argc, argv);
 
   QMainWindow *mainWindow = new QMainWindow;
@@ -47,8 +47,8 @@ int main(int argc, char *argv[] )
     );
 
   QObject::connect(
-      ui, SIGNAL( fakeGpsPressed( Location* ) ),
-      gpsController, SLOT( useFakeGps( Location* ) )
+      ui, SIGNAL( fakeGpsPressed( const QString & ) ),
+      gpsController, SLOT( useFakeGps( const QString & ) )
     );
 
   QObject::connect(

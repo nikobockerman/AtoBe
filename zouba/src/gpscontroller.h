@@ -23,7 +23,7 @@ public:
 
 public Q_SLOTS:
   void getGps();
-  void useFakeGps( Location *fakeLocation );
+  void useFakeGps( const QString &fakeLocationLabel );
   void useLiveGps();
 
 Q_SIGNALS:

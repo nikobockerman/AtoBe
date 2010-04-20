@@ -21,19 +21,21 @@ public:
     virtual void stopGps();
 
     virtual void setGps( QGeoPositionInfoSource *gps );
-    virtual void setCurrentLocation( Location *location );
+    virtual void setFakeLocationLabel( const QString &label );
     virtual void setUseFakeLocation( bool useFake );
 
     virtual QGeoPositionInfoSource *gps();
-    virtual Location *currentLocation();
-    virtual bool useFakeLocation();
+    virtual Location               *liveLocation();
+    virtual QString                 fakeLocationLabel();
+    virtual bool                    useFakeLocation();
 
 private Q_SLOTS:
     virtual void updateLocation( QGeoPositionInfo positionInfo );
 
 private:
     QGeoPositionInfoSource *m_gps;
-    Location               *m_currentLocation;
+    Location               *m_liveLocation;
+    QString                 m_fakeLocationLabel;
     bool                    m_useFakeLocation;
 };
 

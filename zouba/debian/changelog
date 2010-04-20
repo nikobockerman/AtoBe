@@ -1,3 +1,9 @@
+zouba (0.7) unstable; urgency=low
+
+  * Changed gps controller to use labels for fake gps instead of a new Location instance.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 20 Apr 2010 06:27:00 +0200
+
 zouba (0.6) unstable; urgency=low
 
   * Changed layout in preparation for multiple routes

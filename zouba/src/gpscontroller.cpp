@@ -1,6 +1,8 @@
 #include "gpscontroller.h"
 #include "gpscontroller_p.h"
 
+#include "locations.h"
+
 #include <QObject>
 #include <QGeoPositionInfo>
 #include <QGeoPositionInfoSource>
@@ -27,23 +29,38 @@ GpsController::~GpsController()
 
 void GpsController::getGps()
 {
-  if ( q->currentLocation() != 0 ) {
-    emit locationChanged( q->currentLocation() );
+  Location *location;
+
+  if ( q->useFakeLocation() ) {
+    Locations *locations = Locations::instance();
+    location = locations->location( q->fakeLocationLabel() );
+  } else {
+    location = q->liveLocation();
   }
+
+  emit locationChanged( location );
 }
 
 void GpsController::useLiveGps()
 {
   q->setUseFakeLocation( false );
-  q->setCurrentLocation( new Location( "livegps" ) );
   q->startGps();
+  emit locationChanged( q->liveLocation() );
 }
 
-void GpsController::useFakeGps( Location *fakeLocation )
+void GpsController::useFakeGps( const QString &fakeLocationLabel )
 {
-  qDebug() << "using fake gps (" << fakeLocation->label() << ")";
-  q->stopGps();
-  q->setUseFakeLocation( true );
-  q->setCurrentLocation( fakeLocation );
-  emit locationChanged( q->currentLocation() );
+  qDebug() << "using fake gps (" << fakeLocationLabel << ")";
+
+  Locations *locations = Locations::instance();
+  Location  *fakeLocation = locations->location( fakeLocationLabel );
+
+  if ( fakeLocation == 0 ) {
+    qDebug() << "invalid fake location label; cannot use fake location";
+  } else {
+    q->stopGps();
+    q->setUseFakeLocation( true );
+    q->setFakeLocationLabel( fakeLocationLabel );
+    emit locationChanged( fakeLocation );
+  }
 }

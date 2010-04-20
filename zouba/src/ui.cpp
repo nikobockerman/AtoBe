@@ -27,13 +27,8 @@ Ui::Ui() :
   routeTable(0),
   usingFakeGps( false ),
   messagesShown( false ),
-  fakeLocation()
+  fakeLocationLabel( "work" )
 {
-  Locations *locations = Locations::instance();
-  Location *workLocation = locations->location( "work" );
-  fakeLocation = new Location();
-  *fakeLocation = *workLocation;
-  fakeLocation->setLabel( "fakegps" );
 }
 
 Ui::~Ui()
@@ -161,7 +156,7 @@ void Ui::toggleFakeGps()
 
 void Ui::useFakeGps()
 {
-  emit fakeGpsPressed( fakeLocation );
+  emit fakeGpsPressed( fakeLocationLabel );
   toggleFakeGpsAction->setText( "Use Live GPS" );
 }
 

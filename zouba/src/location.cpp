@@ -44,7 +44,11 @@ Location::Location( const QGeoPositionInfo &positionInfo, const QString &label )
   q( new LocationPrivate( label ) ),
   manager(0)
 {
-  qDebug() << "Location::Location( QGeoPositionInfo, label=" << label << " )";
+  setLocation( positionInfo );
+}
+
+void Location::setLocation( const QGeoPositionInfo &positionInfo )
+{
   qreal latitude = positionInfo.coordinate().latitude();
   qreal longitude = positionInfo.coordinate().longitude();
 

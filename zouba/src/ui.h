@@ -46,12 +46,12 @@ public:
   QAction     *useLiveGpsAction;
   bool        usingFakeGps;
   bool        messagesShown;
-  Location    *fakeLocation;
+  QString     fakeLocationLabel;
 
 Q_SIGNALS:
   void homeAddressChanged( QString address );
   void workAddressChanged( QString address );
-  void fakeGpsPressed( Location * );
+  void fakeGpsPressed( const QString &fakeLocationLabel );
   void liveGpsPressed();
 
 private Q_SLOTS:
