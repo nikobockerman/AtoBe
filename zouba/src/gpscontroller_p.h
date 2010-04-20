@@ -26,6 +26,7 @@ public:
 
     virtual QGeoPositionInfoSource *gps();
     virtual Location               *liveLocation();
+    virtual Location               *fakeLocation();
     virtual QString                 fakeLocationLabel();
     virtual bool                    useFakeLocation();
 

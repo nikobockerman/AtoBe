@@ -16,30 +16,37 @@ public:
   void stopGps();
 
   void setGps( QGeoPositionInfoSource *gps );
-  void setCurrentLocation( Location *location );
+  void setFakeLocationLabel( const QString &label );
   void setUseFakeLocation( bool useFake );
   void updateLocation();
 
   QGeoPositionInfoSource *gps();
-  Location               *currentLocation();
+  Location               *liveLocation();
+  Location               *fakeLocation();
   bool                    useFakeLocation();
 
   bool                    m_gpsOn;
-  Location               *m_currentLocation;
+  Location               *m_liveLocation;
+  Location               *m_fakeLocation;
+  QString                 m_fakeLocationLabel;
   bool                    m_useFakeLocation;
 };
 
 MyGpsControllerPrivate::MyGpsControllerPrivate() :
   m_gpsOn(false),
-  m_currentLocation(0),
+  m_liveLocation( new Location( "livegps" ) ),
+  m_fakeLocation( new Location( "fakegps" ) ),
+  m_fakeLocationLabel(),
   m_useFakeLocation(false)
 {
 }
 
 MyGpsControllerPrivate::~MyGpsControllerPrivate()
 {
-  delete m_currentLocation;
-  m_currentLocation=0;
+  delete m_liveLocation;
+  m_liveLocation = 0;
+  delete m_fakeLocation;
+  m_fakeLocation = 0;
 }
 
 void MyGpsControllerPrivate::init()
@@ -66,14 +73,20 @@ void MyGpsControllerPrivate::setGps( QGeoPositionInfoSource *gps )
   Q_UNUSED( gps );
 }
 
-Location *MyGpsControllerPrivate::currentLocation()
+Location *MyGpsControllerPrivate::liveLocation()
 {
-  return m_currentLocation;
+  return m_liveLocation;
 }
 
-void MyGpsControllerPrivate::setCurrentLocation( Location *location )
+Location *MyGpsControllerPrivate::fakeLocation()
 {
-  m_currentLocation = location;
+  return m_fakeLocation;
+}
+
+void MyGpsControllerPrivate::setFakeLocationLabel( const QString &label )
+{
+  m_fakeLocationLabel = label;
+  m_fakeLocation->setLabel( label );
 }
 
 bool MyGpsControllerPrivate::useFakeLocation()
@@ -88,10 +101,6 @@ void MyGpsControllerPrivate::setUseFakeLocation( bool useFake )
 
 void MyGpsControllerPrivate::updateLocation()
 {
-  if ( m_currentLocation && m_currentLocation->label() == "livegps" ) {
-    delete m_currentLocation;
-  }
-  m_currentLocation = new Location( "livegps" );
 }
 
 void Ut_GpsController::init()
@@ -121,19 +130,17 @@ void Ut_GpsController::testGetGpsWithNoGpsUpdates()
   QSignalSpy spy(m_subject, SIGNAL(locationChanged(Location*)));
 
   // this should start the gps,
-  // but since there's been no update from the GPS, there should be
-  // no signal
+  // one signal to invalidate the previous display
+  // (which could be showing fake results, for example
   m_subject->getGps();
 
   QCOMPARE(m_subject_p->m_gpsOn, true);
-  QCOMPARE(spy.count(), 0);
+  QCOMPARE(spy.count(), 1);
 }
 
 void Ut_GpsController::testGetGpsWithGpsUpdates()
 {
   QSignalSpy spy(m_subject, SIGNAL(locationChanged(Location*)));
-
-  m_subject_p->updateLocation(); // pretend GPS has given an update
 
   // make test call
   m_subject->getGps();
@@ -142,20 +149,17 @@ void Ut_GpsController::testGetGpsWithGpsUpdates()
   QCOMPARE(m_subject_p->m_gpsOn, true);
   QCOMPARE(spy.count(), 1);
   QList<QVariant> arguments = spy.takeFirst();
-  QCOMPARE(arguments.at(0).value<Location*>(), m_subject_p->m_currentLocation);
-  QVERIFY(m_subject_p->m_currentLocation != 0);
+  QCOMPARE(arguments.at(0).value<Location*>(), m_subject_p->m_liveLocation);
 }
 
 void Ut_GpsController::testFakeGps()
 {
   QSignalSpy spy(m_subject, SIGNAL(locationChanged(Location*)));
 
-  m_subject_p->updateLocation(); // pretend GPS has given an update
-  Location *gpsLocation = m_subject_p->m_currentLocation; // position from GPS
-  Location *fakeLocation = new Location("fakegps");
+  Location *gpsLocation = m_subject_p->m_liveLocation; // position from GPS
 
   // make test call
-  m_subject->useFakeGps( fakeLocation ); // ownership -> m_subject
+  m_subject->useFakeGps( "fakegps" );
   m_subject->getGps();
 
   // check effect
@@ -169,16 +173,11 @@ void Ut_GpsController::testFakeGps()
 
   // both args should be the fake gps position supplied to useFakeGps()
   arguments = spy.takeFirst();
-  QCOMPARE( arguments.at(0).value<Location*>(), m_subject_p->m_currentLocation );
+  QCOMPARE( arguments.at(0).value<Location*>(), m_subject_p->m_fakeLocation );
   QCOMPARE( arguments.at(0).value<Location*>()->label(), QString( "fakegps" ) );
   arguments = spy.takeFirst();
-  QCOMPARE( arguments.at(0).value<Location*>(), m_subject_p->m_currentLocation );
+  QCOMPARE( arguments.at(0).value<Location*>(), m_subject_p->m_fakeLocation );
   QCOMPARE( arguments.at(0).value<Location*>()->label(), QString( "fakegps" ) );
-  QCOMPARE( m_subject_p->m_currentLocation, fakeLocation );
-
-  // should not be the gpsLocation or zero
-  QVERIFY(m_subject_p->m_currentLocation != gpsLocation);
-  QVERIFY(m_subject_p->m_currentLocation != 0);
 
   // switch back to GPS
   m_subject->useLiveGps();
@@ -187,14 +186,13 @@ void Ut_GpsController::testFakeGps()
   // gps should be on
   QCOMPARE(m_subject_p->m_gpsOn, true);
 
-  QVERIFY2(spy.count()==1, "should get a locationChanged signal from getGps" );
+  QVERIFY2(spy.count()==2, "should get two locationChanged signals" );
   arguments = spy.takeFirst();
-  QCOMPARE(arguments.at(0).value<Location*>(), m_subject_p->m_currentLocation);
+  QCOMPARE(arguments.at(0).value<Location*>(), m_subject_p->m_liveLocation);
   QCOMPARE( arguments.at(0).value<Location*>()->label(), QString( "livegps" ) );
-  QVERIFY(m_subject_p->m_currentLocation != fakeLocation);
-
-  // fake a GPS update
-  m_subject_p->updateLocation(); // pretend GPS has given an update
+  arguments = spy.takeFirst();
+  QCOMPARE(arguments.at(0).value<Location*>(), m_subject_p->m_liveLocation);
+  QCOMPARE( arguments.at(0).value<Location*>()->label(), QString( "livegps" ) );
 
   // get GPS location
   m_subject->getGps();
@@ -202,36 +200,22 @@ void Ut_GpsController::testFakeGps()
   // check effect
   QCOMPARE(spy.count(), 1);
   arguments = spy.takeFirst();
-  QCOMPARE(arguments.at(0).value<Location*>(), m_subject_p->m_currentLocation);
+  QCOMPARE(arguments.at(0).value<Location*>(), m_subject_p->m_liveLocation);
   QCOMPARE( arguments.at(0).value<Location*>()->label(), QString( "livegps" ) );
-  QVERIFY(m_subject_p->m_currentLocation != 0);
 }
 
 void Ut_GpsController::testLiveToFakeToLive()
 {
   m_subject_p->updateLocation(); // pretend GPS has given an update
-  Location *fakeLocation = new Location();
 
-  m_subject->useFakeGps( fakeLocation ); // ownership -> m_subject
+  m_subject->useFakeGps( "fakegps" );
   m_subject->getGps();
 
   // switch back to live GPS
   m_subject->useLiveGps();
   m_subject->getGps();
 
-  // fake a GPS update
-  m_subject_p->updateLocation(); // pretend GPS has given an update
-
-  // get GPS location
-  m_subject->getGps();
-
-  m_subject->useFakeGps( fakeLocation ); // ownership -> m_subject
-  m_subject->getGps();
-
-  // fake a GPS update
-  m_subject_p->updateLocation(); // pretend GPS has given an update
-
-  // get GPS location
+  m_subject->useFakeGps( "fakegps" );
   m_subject->getGps();
 }
 

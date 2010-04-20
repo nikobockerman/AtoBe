@@ -7,10 +7,11 @@
 #include "locations.h"
 
 #include <QObject>
-#include <QTableWidgetItem>
 #include <QPushButton>
 #include <QDebug>
 #include <QButtonGroup>
+#include <QRadioButton>
+#include <QVBoxLayout>
 
 UiController::UiController( Ui *ui ) :
   ui(ui)
@@ -99,13 +100,23 @@ void UiController::displayRoute( const QList<RouteData> &routeData )
 {
   qDebug() << "displaying route";
 
-  ui->routeTable->setRowCount( routeData.count() );
+  for ( int i=0; i<Ytv::ShowFiveResults; ++i ) {
+    QString label;
 
-  for ( int i=0; i<routeData.count(); i++ ) {
-    QTableWidgetItem *timeItem = new QTableWidgetItem( routeData.at(i).arrivalTime );
-    ui->routeTable->setItem( i, 0, timeItem );
+    QWidget *widget = ui->routeStack->itemAt( i )->widget();
+    QRadioButton *button = qobject_cast<QRadioButton *>(widget);
 
-    QTableWidgetItem *lineItem = new QTableWidgetItem( routeData.at(i).lineCode );
-    ui->routeTable->setItem( i, 1, lineItem );
+    if ( i<routeData.count() ) {
+      RouteData thisRouteData = routeData.at(i);
+      label = ( QStringList()
+          << thisRouteData.arrivalTime
+          << thisRouteData.lineCode ).join( "/" );
+      button->setEnabled( true );
+    } else {
+      button->setEnabled( false );
+    }
+
+    button->setText( label );
   }
+
 }

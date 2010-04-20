@@ -2,6 +2,7 @@
 
 #include "messagetable.h"
 #include "locations.h"
+#include "ytv.h"
 
 #include <QMainWindow>
 #include <QRadioButton>
@@ -24,7 +25,7 @@ MessageTable *Ui::messageTable = 0;
 Ui::Ui() :
   centralWidget(0),
   destinationButtons(0),
-  routeTable(0),
+  routeStack(0),
   usingFakeGps( false ),
   messagesShown( false ),
   fakeLocationLabel( "work" )
@@ -84,15 +85,19 @@ void Ui::setupUi( QMainWindow *mainWindow )
   destinationButtons->addButton( workButton, WorkButtonId );
   destinationButtons->setExclusive( true );
 
-  routeTable = new QTableWidget( 1, 2 );
-  QStringList columnHeaders;
-  columnHeaders << "Time" << "Bus";
-  routeTable->setHorizontalHeaderLabels( columnHeaders );
-  routeTable->verticalHeader()->hide();
-  routeTable->setSelectionMode( QAbstractItemView::SingleSelection );
+  routeStack = new QVBoxLayout();
+  for ( int i=0; i<Ytv::ShowFiveResults; ++i ) {
+    QRadioButton *button = new QRadioButton();
+    button->setObjectName( "routeButton"+i );
+    button->setEnabled( false );
+
+    routeStack->addWidget( button, i );
+  }
+  routeStack->addStretch();
 
   QHBoxLayout *topLayout = new QHBoxLayout();
-  topLayout->addWidget( routeTable );
+  topLayout->addLayout( routeStack );
+  topLayout->addStretch();
 
   buttonLayout = new QGridLayout();
   buttonLayout->addWidget( homeButton, 0, 0 );

@@ -1,6 +1,7 @@
 #include "gpscontroller_p.h"
 
 #include "location.h"
+#include "locations.h"
 
 #include <QObject>
 #include <QGeoPositionInfo>
@@ -57,6 +58,13 @@ void GpsControllerPrivate::setGps( QGeoPositionInfoSource *gps )
 Location *GpsControllerPrivate::liveLocation()
 {
   return m_liveLocation;
+}
+
+Location *GpsControllerPrivate::fakeLocation()
+{
+  Locations *locations = Locations::instance();
+  Location  *location = locations->location( fakeLocationLabel() );
+  return location;
 }
 
 QString GpsControllerPrivate::fakeLocationLabel()

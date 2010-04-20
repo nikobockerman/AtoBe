@@ -33,7 +33,6 @@ Location::Location( const QString &x, const QString &y, const QString &label ) :
   q( new LocationPrivate( x, y, label ) ),
   manager( new QNetworkAccessManager(this) )
 {
-  qDebug() << "Location::Location(" << x << "," << y << "," << label <<")";
   connect(
       manager, SIGNAL( finished(QNetworkReply*) ),
       this, SLOT( replyFinished(QNetworkReply*) )
@@ -67,7 +66,6 @@ Location::Location( const Location &from ) :
   q( new LocationPrivate( from.label() ) ),
   manager(0)
 {
-  qDebug() << "Location::Location( const Location [" << from.label() << "] )";
   q->setAddress( from.address() );
   q->setX( from.x() );
   q->setY( from.y() );
@@ -82,7 +80,6 @@ Location::Location( const QString &label ) :
   q( new LocationPrivate( label ) ),
   manager( new QNetworkAccessManager(this) )
 {
-  qDebug() << "Location::Location( const QString &label=" << label << " )";
   connect( manager, SIGNAL( finished(QNetworkReply*) ), this, SLOT( replyFinished(QNetworkReply*) ) );
 }
 
@@ -96,7 +93,6 @@ Location::~Location()
 
 Location &Location::operator=( const Location &from )
 {
-  qDebug() << "Location::Location( const Location &from )";
   q = new LocationPrivate( from.label() );
   q->setAddress( from.address() );
   q->setX( from.x() );
@@ -115,8 +111,7 @@ Location &Location::operator=( const Location &from )
 
 void Location::resolveAddress( const QString &address )
 {
-  qDebug() << "resolving address";
-  qDebug() << address;
+  qDebug() << "resolving address (" << address << ")";
 
   q->setAddress( address );
   q->setValid( false );
