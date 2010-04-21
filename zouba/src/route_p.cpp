@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QList>
 #include <QFile>
+#include <QStringList>
 
 RoutePrivate::RoutePrivate( QObject *parent ) :
     m_fromValid(false),
@@ -22,66 +23,146 @@ RoutePrivate::~RoutePrivate()
 QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
 {
   qDebug() << "parsing route";
-  QFile file( "/home/user/route.txt" );
-  if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-    QTextStream out(&file);
-    out << reply;
-    file.close();
-  } else {
-    qDebug() << "Could not open /home/user/route.txt";
-  }
-
 
   QList<RouteData> retVal;
   RouteData routeData;
+  LegData legData;
 
   QXmlStreamReader xml( reply );
 
   QHash<QString, bool> in;
   QHash<QString, bool> have;
 
-  have[ "LINE" ] = false;
-  have[ "TIME" ] = false;
+  QStringList haveKeys;
+  QStringList inKeys;
 
-  in[ "ROUTE" ] = false;
-  in[ "LINE" ]  = false;
-  in[ "STOP" ]  = false;
+  haveKeys
+    << "LINE"
+    << "TIME"
+    << "TRIP"
+    << "DEPARTURE"
+    << "ARRIVAL"
+    ;
+
+  inKeys
+    << "ROUTE"
+    << "LINE"
+    << "STOP"
+    << "WALK"
+    << "POINT"
+    ;
+
+  for ( int index=0; index<haveKeys.count(); ++index ) {
+    have[ haveKeys.at(index) ] = false;
+  }
+
+  for ( int index=0; index<inKeys.count(); ++index ) {
+    in[ inKeys.at(index) ] = false;
+  }
 
   while ( !xml.atEnd() ) {
     xml.readNext();
-    if ( xml.isStartElement() ) {
-        in[ xml.name().toString() ] = true;
 
-        if ( xml.name() == "ROUTE" ) {
-          have[ "TIME" ] = false;
-          have[ "LINE" ] = false;
+    QString xmlName = xml.name().toString();
+
+    if ( xml.isStartElement() ) {
+      if ( inKeys.contains( xmlName ) ) {
+        in[ xmlName ] = true;
+        //qDebug() << "in[" << xmlName << "] = true";
+      }
+
+      if ( xmlName == "ROUTE" ) {
+        // reset the 'have' flags to false
+        QList<QString> haveKeys = have.uniqueKeys();
+        for ( int haveKeysIndex=0; haveKeysIndex<have.count(); ++haveKeysIndex ) {
+          QString thisKey = haveKeys[ haveKeysIndex ];
+          have[ thisKey ] = false;
+          //qDebug() << "have[" << thisKey << "] = false";
         }
+      }
+
+      if ( xmlName == "WALK" ) {
+        legData.m_how = "WALK";
+        have[ "DEPARTURE" ] = false;
+        have[ "ARRIVAL" ]   = false;
+        have[ "LENGTH" ]    = false;
+      }
+
+      if ( xmlName == "LINE" ) {
+        legData.m_how = "LINE";
+        QString lineCode( xml.attributes().value("code").toString() );
+        legData.m_lineCode = parseJORECode( lineCode );
+        have[ "DEPARTURE" ] = false;
+        have[ "ARRIVAL" ]   = false;
+        have[ "LENGTH" ]    = false;
+      }
     }
 
     if ( xml.isEndElement() ) {
-        in[ xml.name().toString() ] = false;
+      if ( inKeys.contains( xmlName ) ) {
+        in[ xmlName ] = false;
+        //qDebug() << "in[" << xmlName << "] = false";
+      }
+
+      if ( xmlName == "ROUTE" ) {
+        retVal.append( routeData );
+        routeData.clear();
+      }
+
+      if ( xmlName == "WALK" || xmlName == "LINE" ) {
+        routeData.m_legData.append( legData );
+        legData.clear();
+        have[ "LENGTH" ] = false;
+      }
     }
 
-    if ( !have[ "LINE" ] && in[ "ROUTE" ] && xml.isStartElement() && xml.name() == "LINE" ) {
+    if ( !have[ "ARRIVAL" ] && ( in[ "WALK" ] || in[ "LINE" ] ) && ( in[ "STOP" ] || in[ "POINT" ] ) && xml.isStartElement() && xmlName == "ARRIVAL" ) {
+      QString arrivalTime( xml.attributes().value("time").toString() );
+      legData.m_arrivalTime = arrivalTime.rightJustified(4).insert(2,":");
+
+      // don't set have[ "ARRIVAL" ] since we want the last one of many STOPs
+    }
+
+    if ( !have[ "DEPARTURE" ] && in[ "LINE" ] && in[ "STOP" ] && xml.isStartElement() && xmlName == "DEPARTURE" ) {
+      QString departureTime( xml.attributes().value("time").toString() );
+      legData.m_departureTime = departureTime.rightJustified(4).insert(2,":");
+
+      have[ "DEPARTURE" ] = true;
+    }
+
+    if ( !have[ "DEPARTURE" ] && in[ "WALK" ] && ( in[ "POINT" ] || in[ "STOP" ] ) && xml.isStartElement() && xmlName == "DEPARTURE" ) {
+      QString departureTime( xml.attributes().value("time").toString() );
+      legData.m_departureTime = departureTime.rightJustified(4).insert(2,":");
+
+      have[ "DEPARTURE" ] = true;
+    }
+
+    if ( !have[ "LENGTH" ] && ( in[ "WALK" ] || in[ "LINE" ] ) && xml.isStartElement() && xmlName == "LENGTH" ) {
+      legData.m_tripTime     = xml.attributes().value("time").toString();
+      legData.m_tripDistance = xml.attributes().value("dist").toString();
+
+      have[ "LENGTH" ] = true;
+    }
+
+    if ( !have[ "TRIP" ] && in[ "ROUTE" ] && xml.isStartElement() && xmlName == "LENGTH" ) {
+      routeData.m_tripTime     = xml.attributes().value("time").toString();
+      routeData.m_tripDistance = xml.attributes().value("dist").toString();
+
+      have[ "TRIP" ] = true;
+    }
+
+    if ( !have[ "LINE" ] && in[ "ROUTE" ] && xml.isStartElement() && xmlName == "LINE" ) {
       QString lineCode( xml.attributes().value("code").toString() );
 
-      routeData.lineCode = parseJORECode( lineCode );
+      routeData.m_lineCode = parseJORECode( lineCode );
       have[ "LINE" ] = true;
-
-      if ( have[ "LINE" ] && have[ "TIME" ] ) {
-        retVal.append( routeData );
-      }
     }
 
-    if ( !have[ "TIME" ] && in[ "ROUTE" ] && in[ "LINE" ] && in[ "STOP" ] && xml.name() == "ARRIVAL" ) {
-      QString arrivalTime( xml.attributes().value("time").toString() );
+    if ( !have[ "TIME" ] && in[ "ROUTE" ] && in[ "LINE" ] && in[ "STOP" ] && xmlName == "DEPARTURE" ) {
+      QString departureTime( xml.attributes().value("time").toString() );
 
-      routeData.arrivalTime = arrivalTime.rightJustified(4).insert(2,":");
+      routeData.m_departureTime = departureTime.rightJustified(4).insert(2,":");
       have[ "TIME" ] = true;
-
-      if ( have[ "LINE" ] && have[ "TIME" ] ) {
-        retVal.append( routeData );
-      }
     }
 
   }
