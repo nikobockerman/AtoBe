@@ -109,8 +109,8 @@ void UiController::displayRoute( const QList<RouteData> &routeData )
     if ( i<routeData.count() ) {
       RouteData thisRouteData = routeData.at(i);
       label = ( QStringList()
-          << thisRouteData.arrivalTime
-          << thisRouteData.lineCode ).join( "/" );
+          << thisRouteData.m_departureTime
+          << thisRouteData.m_lineCode ).join( "/" );
       button->setEnabled( true );
     } else {
       button->setEnabled( false );
