@@ -1,6 +1,5 @@
 #include "ui.h"
 
-#include "messagetable.h"
 #include "locations.h"
 #include "ytv.h"
 
@@ -20,15 +19,12 @@
 #include <QInputDialog>
 #include <QDebug>
 
-MessageTable *Ui::messageTable = 0;
-
 Ui::Ui() :
-  centralWidget(0),
-  destinationButtons(0),
-  routeStack(0),
-  usingFakeGps( false ),
-  messagesShown( false ),
-  fakeLocationLabel( "work" )
+  m_centralWidget(0),
+  m_destinationButtons(0),
+  m_routeStack(0),
+  m_usingFakeGps( false ),
+  m_fakeLocationLabel( "work" )
 {
 }
 
@@ -38,17 +34,17 @@ Ui::~Ui()
 
 void Ui::setupUi( QMainWindow *mainWindow )
 {
-  mainWindow->resize(800,480);
-  menu = mainWindow->menuBar()->addMenu("Settings");
+  m_mainWindow = mainWindow;
+  m_mainWindow->resize(800,480);
+
+  m_menu = mainWindow->menuBar()->addMenu("Settings");
 
   QAction *setHomeAddressAction = new QAction("Set home address", this);
   QAction *setWorkAddressAction = new QAction("Set work address", this);
-  toggleMessagesAction = new QAction("Show messages", this);
-  toggleFakeGpsAction  = new QAction("Use fake GPS", this);
-  menu->addAction(setHomeAddressAction);
-  menu->addAction(setWorkAddressAction);
-  menu->addAction(toggleMessagesAction);
-  menu->addAction(toggleFakeGpsAction);
+  m_toggleFakeGpsAction  = new QAction("Use fake GPS", this);
+  m_menu->addAction(setHomeAddressAction);
+  m_menu->addAction(setWorkAddressAction);
+  m_menu->addAction(m_toggleFakeGpsAction);
 
   connect(
       setHomeAddressAction, SIGNAL(triggered()),
@@ -59,16 +55,12 @@ void Ui::setupUi( QMainWindow *mainWindow )
       this, SLOT(setWorkAddress())
       );
   connect(
-      toggleMessagesAction, SIGNAL(triggered()),
-      this, SLOT(toggleMessages())
-      );
-  connect(
-      toggleFakeGpsAction, SIGNAL(triggered()),
+      m_toggleFakeGpsAction, SIGNAL(triggered()),
       this, SLOT(toggleFakeGps())
       );
 
-  centralWidget = new QWidget( mainWindow );
-  mainWindow->setCentralWidget(centralWidget);
+  m_centralWidget = new QWidget( m_mainWindow );
+  m_mainWindow->setCentralWidget( m_centralWidget);
 
   QRadioButton *homeButton = new QRadioButton();
   homeButton->setObjectName( QString::fromUtf8("homeButton") );
@@ -80,39 +72,40 @@ void Ui::setupUi( QMainWindow *mainWindow )
   workButton->setText( "GPS->WORK" );
   workButton->setEnabled(false);
 
-  destinationButtons = new QButtonGroup();
-  destinationButtons->addButton( homeButton, HomeButtonId );
-  destinationButtons->addButton( workButton, WorkButtonId );
-  destinationButtons->setExclusive( true );
+  m_destinationButtons = new QButtonGroup();
+  m_destinationButtons->addButton( homeButton, HomeButtonId );
+  m_destinationButtons->addButton( workButton, WorkButtonId );
+  m_destinationButtons->setExclusive( true );
 
-  routeStack = new QVBoxLayout();
+  m_routeButtons = new QButtonGroup();
+  m_routeButtons->setExclusive( true );
+  m_routeStack = new QVBoxLayout();
   for ( int i=0; i<Ytv::ShowFiveResults; ++i ) {
     QRadioButton *button = new QRadioButton();
     button->setObjectName( "routeButton"+i );
     button->setEnabled( false );
 
-    routeStack->addWidget( button, i );
+    m_routeStack->addWidget( button, i );
+    m_routeButtons->addButton( button, i );
   }
-  routeStack->addStretch();
+  m_routeStack->addStretch();
+
+  m_routeDetailTable = new QTableWidget();
+  m_routeDetailTable->setColumnCount(6);
 
   QHBoxLayout *topLayout = new QHBoxLayout();
-  topLayout->addLayout( routeStack );
-  topLayout->addStretch();
+  topLayout->addLayout( m_routeStack );
+  topLayout->addWidget( m_routeDetailTable );
 
-  buttonLayout = new QGridLayout();
-  buttonLayout->addWidget( homeButton, 0, 0 );
-  buttonLayout->addWidget( workButton, 0, 1 );
+  m_buttonLayout = new QGridLayout();
+  m_buttonLayout->addWidget( homeButton, 0, 0 );
+  m_buttonLayout->addWidget( workButton, 0, 1 );
 
-  messageTable = new MessageTable();
-  messageTable->setObjectName( QString::fromUtf8("messageTable") );
-  messageTable->hide();
+  m_mainLayout = new QVBoxLayout();
+  m_mainLayout->addLayout( topLayout );
+  m_mainLayout->addLayout( m_buttonLayout );
 
-  QVBoxLayout *mainLayout = new QVBoxLayout();
-  mainLayout->addLayout( topLayout );
-  mainLayout->addWidget( messageTable );
-  mainLayout->addLayout( buttonLayout );
-
-  centralWidget->setLayout( mainLayout );
+  m_centralWidget->setLayout( m_mainLayout );
 }
 
 void Ui::setHomeAddress()
@@ -125,34 +118,11 @@ void Ui::setWorkAddress()
   setAddress( "work" );
 }
 
-void Ui::toggleMessages()
-{
-  messagesShown = !messagesShown;
-
-  if ( messagesShown ) {
-    showMessages();
-  } else {
-    hideMessages();
-  }
-}
-
-void Ui::hideMessages()
-{
-  messageTable->hide();
-  toggleMessagesAction->setText( "Show messages" );
-}
-
-void Ui::showMessages()
-{
-  messageTable->show();
-  toggleMessagesAction->setText( "Hide messages" );
-}
-
 void Ui::toggleFakeGps()
 {
-  usingFakeGps = !usingFakeGps;
+  m_usingFakeGps = !m_usingFakeGps;
 
-  if ( usingFakeGps ) {
+  if ( m_usingFakeGps ) {
     useFakeGps();
   } else {
     useLiveGps();
@@ -161,14 +131,14 @@ void Ui::toggleFakeGps()
 
 void Ui::useFakeGps()
 {
-  emit fakeGpsPressed( fakeLocationLabel );
-  toggleFakeGpsAction->setText( "Use Live GPS" );
+  emit fakeGpsPressed( m_fakeLocationLabel );
+  m_toggleFakeGpsAction->setText( "Use Live GPS" );
 }
 
 void Ui::useLiveGps()
 {
   emit liveGpsPressed();
-  toggleFakeGpsAction->setText( "Use Fake GPS" );
+  m_toggleFakeGpsAction->setText( "Use Fake GPS" );
 }
 
 void Ui::setAddress( const QString &label )
@@ -178,7 +148,7 @@ void Ui::setAddress( const QString &label )
 
   bool ok;
   QString address = QInputDialog::getText(
-     centralWidget,
+     m_centralWidget,
      tr("Enter address for \""+QString(label).toLatin1()+"\""),
      tr("Address"),
      QLineEdit::Normal,
@@ -195,4 +165,9 @@ void Ui::setAddress( const QString &label )
       location->resolveAddress( address );
     }
   }
+}
+
+void Ui::setBusy( bool busy )
+{
+  m_mainWindow->setAttribute(Qt::WA_Maemo5ShowProgressIndicator, busy);
 }

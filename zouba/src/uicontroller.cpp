@@ -3,7 +3,6 @@
 #include "ui.h"
 #include "ytv.h"
 #include "location.h"
-#include "messagetable.h"
 #include "locations.h"
 
 #include <QObject>
@@ -12,9 +11,14 @@
 #include <QButtonGroup>
 #include <QRadioButton>
 #include <QVBoxLayout>
+#include <QTableWidgetItem>
 
 UiController::UiController( Ui *ui ) :
-  ui(ui)
+  m_routeData(),
+  m_destination(),
+  m_ui(ui),
+  m_currentDestination(-1),
+  m_currentRoute(-1)
 {
   Locations *locations = Locations::instance();
   Location *homeLocation = locations->location( "home" );
@@ -52,12 +56,17 @@ UiController::UiController( Ui *ui ) :
       locations, SLOT( saveLocation() )
       );
 
-  destination.append( homeLocation );
-  destination.append( workLocation );
+  m_destination.append( homeLocation );
+  m_destination.append( workLocation );
 
   connect(
-      ui->destinationButtons, SIGNAL( buttonClicked( int ) ),
+      m_ui->m_destinationButtons, SIGNAL( buttonClicked( int ) ),
       this, SLOT( changeDestination( int ) )
+  );
+
+  connect(
+      m_ui->m_routeButtons, SIGNAL( buttonClicked( int ) ),
+      this, SLOT( changeRoute( int ) )
   );
 }
 
@@ -79,16 +88,18 @@ void UiController::setWorkButtonValid()
 
 void UiController::setButtonValid( int id )
 {
-  ui->destinationButtons->button( id )->setEnabled(true);
+  m_ui->m_destinationButtons->button( id )->setEnabled(true);
 }
 
 void UiController::changeDestination( int id )
 {
-  qDebug() << "Button "+QString::number(id)+" clicked";
+  qDebug() << "Destination button "+QString::number(id)+" clicked";
 
-  bool destinationHasChanged = ( currentDestination != id );
+  bool destinationHasChanged = ( m_currentDestination != id );
+  qDebug() << "Destination has changed=" << destinationHasChanged;
   if ( destinationHasChanged ) {
-    emit destinationChanged( destination[id] );
+    qDebug() << "Emitting destination changed (" << m_destination[id]->label() << ")";
+    emit destinationChanged( m_destination[id] );
   }
 
   // always want to emit this so that the gps position is update
@@ -96,14 +107,62 @@ void UiController::changeDestination( int id )
   emit buttonClicked();
 }
 
+void UiController::changeRoute( int id )
+{
+  qDebug() << "Route button "+QString::number(id)+" clicked";
+
+  bool routeHasChanged = ( m_currentRoute != id );
+  if ( routeHasChanged ) {
+    displayRouteDetail( id );
+  }
+}
+
+void UiController::displayRouteDetail( int id )
+{
+  QTableWidget *table = m_ui->m_routeDetailTable;
+
+  if ( id < m_routeData.count() ) {
+    QList<LegData> &legDataList = m_routeData[ id ].m_legData;
+    table->setRowCount( legDataList.count() );
+
+    int row=0;
+    foreach( LegData thisLegData, legDataList ) {
+
+      QStringList tableStrings;
+      tableStrings
+        << thisLegData.m_how
+        << thisLegData.m_tripTime
+        << thisLegData.m_tripDistance
+        << thisLegData.m_departureTime
+        << thisLegData.m_arrivalTime
+        << thisLegData.m_lineCode;
+
+      int col=0;
+      foreach( QString thisString, tableStrings ) {
+        QTableWidgetItem *newItem = new QTableWidgetItem();
+        newItem->setText( thisString );
+        table->setItem( row,col, newItem );
+        ++col;
+      }
+
+      ++row;
+    }
+  } else {
+    table->setRowCount( 0 );
+  }
+  table->resizeColumnsToContents();
+}
+
 void UiController::displayRoute( const QList<RouteData> &routeData )
 {
+  m_routeData = routeData;
+
   qDebug() << "displaying route";
 
   for ( int i=0; i<Ytv::ShowFiveResults; ++i ) {
     QString label;
 
-    QWidget *widget = ui->routeStack->itemAt( i )->widget();
+    QWidget *widget = m_ui->m_routeStack->itemAt( i )->widget();
     QRadioButton *button = qobject_cast<QRadioButton *>(widget);
 
     if ( i<routeData.count() ) {
@@ -119,4 +178,7 @@ void UiController::displayRoute( const QList<RouteData> &routeData )
     button->setText( label );
   }
 
+  QTableWidget *table = m_ui->m_routeDetailTable;
+  table->setRowCount( 0 );
+  table->resizeColumnsToContents();
 }

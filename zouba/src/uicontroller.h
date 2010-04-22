@@ -25,16 +25,20 @@ Q_SIGNALS:
 
 private Q_SLOTS:
   void changeDestination( int id );
+  void changeRoute( int id );
   void setHomeButtonValid();
   void setWorkButtonValid();
+  void displayRouteDetail( int id );
 
 private:
   void setButtonValid( int id );
 
 private:
-  QList<Location*> destination;
-  Ui *ui;
-  int currentDestination;
+  QList<RouteData> m_routeData;
+  QList<Location*> m_destination;
+  Ui *m_ui;
+  int m_currentDestination;
+  int m_currentRoute;
 };
 #endif // UICONTROLLER_H
 

@@ -12,6 +12,7 @@
 #include <QStringList>
 #include <QString>
 #include <QXmlStreamReader>
+#include <QWidget>
 
 #include "ytv.h"
 
@@ -50,6 +51,7 @@ void Route::getRoute()
   manager->get( QNetworkRequest( fullUrl ) );
   qDebug() << "getting url" << fullUrl.toEncoded();
   qDebug() << "waiting for reply from Ytv";
+  emit( busy( true ) );
 }
 
 void Route::replyFinished( QNetworkReply * reply )
@@ -58,6 +60,7 @@ void Route::replyFinished( QNetworkReply * reply )
   QList<RouteData> routeData = q->parseReply( reply->readAll() );
 
   emit( routeReady( routeData ) );
+  emit( busy( false ) );
 }
 
 void Route::setFromLocation( Location *location )
@@ -76,6 +79,9 @@ void Route::setFromLocation( Location *location )
   } else {
     qDebug() << "ERROR:From is not valid";
     qDebug() << "location=" << location;
+    if ( location ) {
+      qDebug() << "location->isValid()=" << location->isValid();
+    }
   }
 }
 
@@ -98,8 +104,11 @@ void Route::setToLocation( Location *location )
       qDebug() << "From not valid - waiting";
     }
   } else {
-    qDebug() << "To is not valid";
-    qDebug() << "ERROR:location is zero; cast failed";
+    qDebug() << "ERROR:From is not valid";
+    qDebug() << "location=" << location;
+    if ( location ) {
+      qDebug() << "location->isValid()=" << location->isValid();
+    }
   }
 }
 

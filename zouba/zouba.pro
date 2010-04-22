@@ -10,8 +10,6 @@ SOURCES += \
     gpscontroller.cpp \
     gpscontroller_p.cpp \
     ui.cpp \
-    messagetable.cpp \
-    messagehandler.cpp \
 
 HEADERS += \
     route.h \
@@ -24,14 +22,13 @@ HEADERS += \
     gpscontroller.h \
     gpscontroller_p.h \
     ui.h \
-    messagetable.h \
-    messagehandler.h \
 
 FORMS       +=
 LEXSOURCES  += #LEXS#
 YACCSOURCES += #YACCS#
 
 INCLUDEPATH += include
+DEPENDSPATH += INCLUDEPATH
 #QMAKE_LIBDIR_QT = qt4-maemo5/lib
 #QMAKE_INCDIR_QT = qt4-maemo5/include
 LIBS        += -Llib -lQtBearer -lQtLocation

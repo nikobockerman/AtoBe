@@ -5,8 +5,6 @@
 #include "location.h"
 #include "gpscontroller.h"
 #include "ytv.h"
-#include "messagetable.h"
-#include "messagehandler.h"
 
 #include <QDebug>
 #include <QObject>
@@ -15,7 +13,6 @@
 
 int main(int argc, char *argv[] )
 {
-  //qInstallMsgHandler( messageHandler );
   QApplication app(argc, argv);
 
   QMainWindow *mainWindow = new QMainWindow;
@@ -54,6 +51,11 @@ int main(int argc, char *argv[] )
   QObject::connect(
       ui, SIGNAL( liveGpsPressed() ),
       gpsController, SLOT( useLiveGps() )
+    );
+
+  QObject::connect(
+      route, SIGNAL( busy( bool ) ),
+      ui, SLOT( setBusy( bool ) )
     );
 
   mainWindow->show();

@@ -51,6 +51,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
   void routeReady( QList<RouteData> );
+  void busy( bool busy );
 
 private Q_SLOTS:
   void replyFinished( QNetworkReply* );

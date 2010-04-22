@@ -7,7 +7,6 @@ class QMainWindow;
 class QWidget;
 class QTableWidget;
 class QButtonGroup;
-class MessageTable;
 class QHBoxLayout;
 class QVBoxLayout;
 class QGridLayout;
@@ -34,19 +33,19 @@ public:
     ScreenHeight=480
   };
 
-  QWidget *centralWidget;
-  QButtonGroup *destinationButtons;
-  QVBoxLayout *routeStack;
-  static MessageTable *messageTable;
-  QHBoxLayout *mainLayout;
-  QGridLayout *buttonLayout;
-  QMenu       *menu;
-  QAction     *toggleMessagesAction;
-  QAction     *toggleFakeGpsAction;
-  QAction     *useLiveGpsAction;
-  bool        usingFakeGps;
-  bool        messagesShown;
-  QString     fakeLocationLabel;
+  QMainWindow *m_mainWindow;
+  QWidget *m_centralWidget;
+  QButtonGroup *m_destinationButtons;
+  QButtonGroup *m_routeButtons;
+  QVBoxLayout *m_routeStack;
+  QTableWidget *m_routeDetailTable;
+  QVBoxLayout *m_mainLayout;
+  QGridLayout *m_buttonLayout;
+  QMenu       *m_menu;
+  QAction     *m_toggleFakeGpsAction;
+  QAction     *m_useLiveGpsAction;
+  bool        m_usingFakeGps;
+  QString     m_fakeLocationLabel;
 
 Q_SIGNALS:
   void homeAddressChanged( QString address );
@@ -57,14 +56,12 @@ Q_SIGNALS:
 private Q_SLOTS:
   void setHomeAddress();
   void setWorkAddress();
-  void toggleMessages();
   void toggleFakeGps();
+  void setBusy( bool busy );
 
 private:
   void useFakeGps();
   void useLiveGps();
-  void hideMessages();
-  void showMessages();
   void setAddress( const QString &label );
 };
 #endif //UI_H
