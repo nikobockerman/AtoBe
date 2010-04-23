@@ -150,6 +150,7 @@ void UiController::displayRouteDetail( int id )
   } else {
     table->setRowCount( 0 );
   }
+
   table->resizeColumnsToContents();
 }
 
@@ -175,10 +176,14 @@ void UiController::displayRoute( const QList<RouteData> &routeData )
       button->setEnabled( false );
     }
 
+    if ( i==0 ) {
+      button->setChecked( true );
+    } else {
+      button->setChecked( false );
+    }
+
     button->setText( label );
   }
 
-  QTableWidget *table = m_ui->m_routeDetailTable;
-  table->setRowCount( 0 );
-  table->resizeColumnsToContents();
+  displayRouteDetail( 0 );
 }

@@ -92,6 +92,10 @@ void Ui::setupUi( QMainWindow *mainWindow )
 
   m_routeDetailTable = new QTableWidget();
   m_routeDetailTable->setColumnCount(6);
+  m_routeDetailTable->setHorizontalHeaderLabels(
+      QStringList() << "How" << "Time" << "Dist" << "Dep" << "Arr" << "Line"
+      );
+  m_routeDetailTable->resizeColumnsToContents();
 
   QHBoxLayout *topLayout = new QHBoxLayout();
   topLayout->addLayout( m_routeStack );
