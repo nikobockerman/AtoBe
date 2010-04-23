@@ -93,8 +93,6 @@ void UiController::setButtonValid( int id )
 
 void UiController::changeDestination( int id )
 {
-  qDebug() << "Destination button "+QString::number(id)+" clicked";
-
   bool destinationHasChanged = ( m_currentDestination != id );
   qDebug() << "Destination has changed=" << destinationHasChanged;
   if ( destinationHasChanged ) {
@@ -109,8 +107,6 @@ void UiController::changeDestination( int id )
 
 void UiController::changeRoute( int id )
 {
-  qDebug() << "Route button "+QString::number(id)+" clicked";
-
   bool routeHasChanged = ( m_currentRoute != id );
   if ( routeHasChanged ) {
     displayRouteDetail( id );
@@ -127,15 +123,20 @@ void UiController::displayRouteDetail( int id )
 
     int row=0;
     foreach( LegData thisLegData, legDataList ) {
+      QString thisHow = thisLegData.m_how;
+
+      bool thisIsLine = ( thisHow == "LINE" );
+      if ( thisIsLine ) {
+        thisHow = thisLegData.m_lineCode;
+      }
 
       QStringList tableStrings;
       tableStrings
-        << thisLegData.m_how
+        << thisHow
         << thisLegData.m_tripTime
         << thisLegData.m_tripDistance
         << thisLegData.m_departureTime
-        << thisLegData.m_arrivalTime
-        << thisLegData.m_lineCode;
+        << thisLegData.m_arrivalTime;
 
       int col=0;
       foreach( QString thisString, tableStrings ) {

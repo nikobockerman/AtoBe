@@ -90,12 +90,12 @@ void Ui::setupUi( QMainWindow *mainWindow )
   }
   m_routeStack->addStretch();
 
+  QStringList headers( QStringList() << "How" << "Time" << "Dist" << "Dep" << "Arr" );
   m_routeDetailTable = new QTableWidget();
-  m_routeDetailTable->setColumnCount(6);
-  m_routeDetailTable->setHorizontalHeaderLabels(
-      QStringList() << "How" << "Time" << "Dist" << "Dep" << "Arr" << "Line"
-      );
+  m_routeDetailTable->setColumnCount( headers.count() );
+  m_routeDetailTable->setHorizontalHeaderLabels( headers );
   m_routeDetailTable->resizeColumnsToContents();
+  m_routeDetailTable->setSelectionMode( QAbstractItemView::NoSelection );
 
   QHBoxLayout *topLayout = new QHBoxLayout();
   topLayout->addLayout( m_routeStack );
