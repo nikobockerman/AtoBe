@@ -1,9 +1,15 @@
+zouba (0.8) unstable; urgency=low
+
+  * Fixed problem when changing the address of a location to something invalid.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Sat, 24 Apr 2010 03:39:00 +0200
+
 zouba (0.7) unstable; urgency=low
 
   * Changed gps controller to use labels for fake gps instead of a new Location instance.
   * Added route detail table and general associated shuffle of api.
 
- -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 20 Apr 2010 06:27:00 +0200
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Tue, 20 Apr 2010 06:27:00 +0200
 
 zouba (0.6) unstable; urgency=low
 

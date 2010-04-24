@@ -124,6 +124,7 @@ void Location::resolveAddress( const QString &address )
 
   manager->get( QNetworkRequest( fullUrl ) );
   qDebug() << "waiting for reply from Ytv";
+  emit( busy( true ) );
 }
 
 void Location::replyFinished( QNetworkReply * reply )
@@ -134,7 +135,12 @@ void Location::replyFinished( QNetworkReply * reply )
   if ( isValid() ) {
     qDebug() << label() << "becomeValid";
     emit( becomeValid() );
+  } else {
+    qDebug() << label() << "not valid";
+    emit( becomeInValid() );
   }
+
+  emit( busy( false ) );
 }
 
 QString Location::x() const

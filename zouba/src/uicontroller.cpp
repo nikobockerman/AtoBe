@@ -43,8 +43,16 @@ UiController::UiController( Ui *ui ) :
       this, SLOT( setHomeButtonValid() )
   );
   connect(
+      homeLocation, SIGNAL( becomeInValid() ),
+      this, SLOT( setHomeButtonInValid() )
+  );
+  connect(
       homeLocation, SIGNAL( becomeValid() ),
       locations, SLOT( saveLocation() )
+      );
+  connect(
+      homeLocation, SIGNAL( busy( bool ) ),
+      ui, SLOT( setBusy( bool ) )
       );
 
   connect(
@@ -52,8 +60,16 @@ UiController::UiController( Ui *ui ) :
       this, SLOT( setWorkButtonValid() )
   );
   connect(
+      workLocation, SIGNAL( becomeInValid() ),
+      this, SLOT( setWorkButtonInValid() )
+  );
+  connect(
       workLocation, SIGNAL( becomeValid() ),
       locations, SLOT( saveLocation() )
+      );
+  connect(
+      workLocation, SIGNAL( busy( bool ) ),
+      ui, SLOT( setBusy( bool ) )
       );
 
   m_destination.append( homeLocation );
@@ -74,21 +90,33 @@ UiController::~UiController()
 {
 }
 
+void UiController::setHomeButtonInValid()
+{
+  qDebug() << "setting home button invalid";
+  setButtonValid( Ui::HomeButtonId, false );
+}
+
 void UiController::setHomeButtonValid()
 {
   qDebug() << "setting home button valid";
-  setButtonValid( Ui::HomeButtonId );
+  setButtonValid( Ui::HomeButtonId, true );
+}
+
+void UiController::setWorkButtonInValid()
+{
+  qDebug() << "setting work button invalid";
+  setButtonValid( Ui::WorkButtonId, false );
 }
 
 void UiController::setWorkButtonValid()
 {
   qDebug() << "setting work button valid";
-  setButtonValid( Ui::WorkButtonId );
+  setButtonValid( Ui::WorkButtonId, true );
 }
 
-void UiController::setButtonValid( int id )
+void UiController::setButtonValid( int id, bool isValid )
 {
-  m_ui->m_destinationButtons->button( id )->setEnabled(true);
+  m_ui->m_destinationButtons->button( id )->setEnabled( isValid );
 }
 
 void UiController::changeDestination( int id )

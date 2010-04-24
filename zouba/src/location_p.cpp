@@ -36,22 +36,33 @@ void LocationPrivate::parseReply( const QByteArray &reply )
 {
   qDebug() << "parsing";
   QXmlStreamReader xml( reply );
+  bool responseHasError = false;
 
   while ( !xml.atEnd() ) {
     xml.readNext();
-    if ( xml.isStartElement() && xml.name() == "LOC" ) {
-      QXmlStreamAttributes attributes( xml.attributes() );
-      QStringRef xAttribute( attributes.value("x") );
-      QStringRef yAttribute( attributes.value("y") );
-      QString newX( xAttribute.toString() );
-      QString newY( yAttribute.toString() );
 
-      m_x = newX;
-      m_y = newY;
+    if ( xml.isStartElement() ) {
+      QString xmlName( xml.name().toString() );
+
+      if ( xmlName == "LOC" ) {
+        QXmlStreamAttributes attributes( xml.attributes() );
+        QStringRef xAttribute( attributes.value("x") );
+        QStringRef yAttribute( attributes.value("y") );
+        QString newX( xAttribute.toString() );
+        QString newY( yAttribute.toString() );
+
+        m_x = newX;
+        m_y = newY;
+      }
+
+      if ( xmlName == "ERROR" ) {
+        responseHasError = true;
+      }
+
     }
   }
 
-  if ( xml.hasError() ) {
+  if ( xml.hasError() || responseHasError ) {
     qDebug() << "xml error";
     m_valid = false;
   } else {

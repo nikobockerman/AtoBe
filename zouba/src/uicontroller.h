@@ -28,10 +28,12 @@ private Q_SLOTS:
   void changeRoute( int id );
   void setHomeButtonValid();
   void setWorkButtonValid();
+  void setHomeButtonInValid();
+  void setWorkButtonInValid();
   void displayRouteDetail( int id );
 
 private:
-  void setButtonValid( int id );
+  void setButtonValid( int id, bool isValid );
 
 private:
   QList<RouteData> m_routeData;

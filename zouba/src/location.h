@@ -44,6 +44,8 @@ public Q_SLOTS:
 
 Q_SIGNALS:
   void becomeValid();
+  void becomeInValid();
+  void busy( bool busy );
 
 private Q_SLOTS:
   void replyFinished( QNetworkReply * reply );
