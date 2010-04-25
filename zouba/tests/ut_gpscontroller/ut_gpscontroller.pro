@@ -11,6 +11,7 @@ MOBILITY = \
 QT += \
   testlib \
   network \
+  maemo5 \
 
 INCLUDEPATH += \
   $$ZOUBASRC \
