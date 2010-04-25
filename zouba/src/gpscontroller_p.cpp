@@ -57,6 +57,7 @@ void GpsControllerPrivate::setGps( QGeoPositionInfoSource *gps )
 
 Location *GpsControllerPrivate::liveLocation()
 {
+  m_mostRecentlyReportedLocation = m_liveLocation;
   return m_liveLocation;
 }
 
@@ -64,6 +65,7 @@ Location *GpsControllerPrivate::fakeLocation()
 {
   Locations *locations = Locations::instance();
   Location  *location = locations->location( fakeLocationLabel() );
+  m_mostRecentlyReportedLocation = location;
   return location;
 }
 
@@ -92,3 +94,7 @@ void GpsControllerPrivate::updateLocation( QGeoPositionInfo positionInfo )
   m_liveLocation->setLocation( positionInfo );
 }
 
+Location *GpsControllerPrivate::mostRecentlyReportedLocation()
+{
+  return m_mostRecentlyReportedLocation;
+}

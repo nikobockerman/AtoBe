@@ -28,6 +28,7 @@ GpsController::~GpsController()
 void GpsController::getGps()
 {
   Location *location;
+  Location *previousLocation = q->mostRecentlyReportedLocation();
 
   if ( q->useFakeLocation() ) {
     location = q->fakeLocation();
@@ -35,7 +36,9 @@ void GpsController::getGps()
     location = q->liveLocation();
   }
 
-  emit locationChanged( location );
+  if ( location != previousLocation ) {
+    emit locationChanged( location );
+  }
 }
 
 void GpsController::useLiveGps()

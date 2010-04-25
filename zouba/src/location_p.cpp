@@ -4,6 +4,7 @@
 #include <QXmlStreamReader>
 #include <QByteArray>
 #include <QDebug>
+#include <QMaemo5InformationBox>
 
 LocationPrivate::LocationPrivate( const QString &x, const QString &y, const QString &label ) :
   m_label(label),
@@ -63,6 +64,7 @@ void LocationPrivate::parseReply( const QByteArray &reply )
   }
 
   if ( xml.hasError() || responseHasError ) {
+    QMaemo5InformationBox::information( 0, "address resolution error - please check address" );
     qDebug() << "xml error";
     m_valid = false;
   } else {

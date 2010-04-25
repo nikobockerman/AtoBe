@@ -46,7 +46,7 @@ VPATH       += src uis
 CONFIG      -=
 CONFIG      += debug qt mobility
 MOBILITY    += location bearer
-QT=core gui network
+QT=core gui network maemo5
 
 INSTALLS    += target
 target.path  = /usr/bin/

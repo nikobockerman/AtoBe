@@ -126,9 +126,10 @@ void UiController::changeDestination( int id )
   if ( destinationHasChanged ) {
     qDebug() << "Emitting destination changed (" << m_destination[id]->label() << ")";
     emit destinationChanged( m_destination[id] );
+    m_currentDestination = id;
   }
 
-  // always want to emit this so that the gps position is update
+  // always want to emit this so that the gps position is updated
   // and the user gets new information
   emit buttonClicked();
 }

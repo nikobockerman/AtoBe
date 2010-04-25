@@ -6,6 +6,7 @@
 #include <QList>
 #include <QFile>
 #include <QStringList>
+#include <QMaemo5InformationBox>
 
 RoutePrivate::RoutePrivate( QObject *parent ) :
     m_fromValid(false),
@@ -169,6 +170,7 @@ QList<RouteData> RoutePrivate::parseReply( const QByteArray &reply )
 
   if ( retVal.isEmpty() ) {
     qDebug() << "no routes found";
+    QMaemo5InformationBox::information( 0, "no routes found" );
   }
 
   return retVal;

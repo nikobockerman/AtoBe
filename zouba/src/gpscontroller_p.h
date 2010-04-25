@@ -27,6 +27,7 @@ public:
     virtual QGeoPositionInfoSource *gps();
     virtual Location               *liveLocation();
     virtual Location               *fakeLocation();
+    virtual Location               *mostRecentlyReportedLocation();
     virtual QString                 fakeLocationLabel();
     virtual bool                    useFakeLocation();
 
@@ -38,6 +39,7 @@ private:
     Location               *m_liveLocation;
     QString                 m_fakeLocationLabel;
     bool                    m_useFakeLocation;
+    Location               *m_mostRecentlyReportedLocation;
 };
 
 #endif //GPSCONTROLLER_P_H
