@@ -20,20 +20,20 @@ UiController::UiController( Ui *ui ) :
   m_currentDestination(-1),
   m_currentRoute(-1)
 {
-  Locations *locations = Locations::instance();
-  Location *homeLocation = locations->location( "home" );
-  Location *workLocation = locations->location( "work" );
+  Locations locations;
+  Location *homeLocation = locations.location( "home" );
+  Location *workLocation = locations.location( "work" );
 
   if ( homeLocation==0 ) {
     homeLocation = new Location( "home" );
-    locations->addLocation( homeLocation );
+    locations.addLocation( homeLocation );
   } else if ( homeLocation->isValid() ) {
     setHomeButtonValid();
   }
 
   if ( workLocation==0 ) {
     workLocation = new Location( "work" );
-    locations->addLocation( workLocation );
+    locations.addLocation( workLocation );
   } else if ( workLocation->isValid() ) {
     setWorkButtonValid();
   }
@@ -48,7 +48,7 @@ UiController::UiController( Ui *ui ) :
   );
   connect(
       homeLocation, SIGNAL( becomeValid() ),
-      locations, SLOT( saveLocation() )
+      &locations, SLOT( saveLocation() )
       );
   connect(
       homeLocation, SIGNAL( busy( bool ) ),
@@ -65,7 +65,7 @@ UiController::UiController( Ui *ui ) :
   );
   connect(
       workLocation, SIGNAL( becomeValid() ),
-      locations, SLOT( saveLocation() )
+      &locations, SLOT( saveLocation() )
       );
   connect(
       workLocation, SIGNAL( busy( bool ) ),

@@ -8,24 +8,22 @@
 #include <QCoreApplication>
 
 QHash<QString,Location *> Locations::locationHash;
-Locations Locations::singleton;
+bool Locations::initialised = false;
 
 Locations::Locations()
 {
-  QCoreApplication::setOrganizationName("ZouBa");
-  QCoreApplication::setOrganizationDomain("zouba.yi.org");
-  QCoreApplication::setOrganizationName("ZouBa");
+    if ( !initialised ) {
+        QCoreApplication::setOrganizationName("ZouBa");
+        QCoreApplication::setOrganizationDomain("zouba.yi.org");
+        QCoreApplication::setOrganizationName("ZouBa");
 
-  restoreLocations();
+        restoreLocations();
+        initialised = true;
+    }
 }
 
 Locations::~Locations()
 {
-}
-
-Locations *Locations::instance()
-{
-  return &singleton;
 }
 
 bool Locations::addLocation( Location *location )

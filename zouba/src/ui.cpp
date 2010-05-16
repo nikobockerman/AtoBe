@@ -147,8 +147,8 @@ void Ui::useLiveGps()
 
 void Ui::setAddress( const QString &label )
 {
-  Locations *locations=Locations::instance();
-  Location *location=locations->location( label );
+  Locations locations;
+  Location *location=locations.location( label );
 
   bool ok;
   QString address = QInputDialog::getText(
@@ -162,8 +162,8 @@ void Ui::setAddress( const QString &label )
 
   if ( ok ) {
     qDebug() << "new address" << address;
-    Locations *locations = Locations::instance();
-    Location  *location  = locations->location( label );
+    Locations locations;
+    Location  *location  = locations.location( label );
     qDebug() << "location" << location;
     if ( location ) {
       location->resolveAddress( address );

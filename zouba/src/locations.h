@@ -26,7 +26,7 @@ public Q_SLOTS:
 private:
   void restoreLocations();
   static QHash<QString,Location *> locationHash;
-  static Locations singleton;
+  static bool initialised;
 
   void saveLocation( Location *location );
 };

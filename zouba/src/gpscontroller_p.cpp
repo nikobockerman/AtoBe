@@ -63,8 +63,8 @@ Location *GpsControllerPrivate::liveLocation()
 
 Location *GpsControllerPrivate::fakeLocation()
 {
-  Locations *locations = Locations::instance();
-  Location  *location = locations->location( fakeLocationLabel() );
+  Locations locations;
+  Location  *location = locations.location( fakeLocationLabel() );
   m_mostRecentlyReportedLocation = location;
   return location;
 }
