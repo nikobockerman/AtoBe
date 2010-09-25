@@ -3,34 +3,39 @@
 
 #include "location.h"
 
-#include "gpscontroller_p.h"
-
 #include <QObject>
 #include <QGeoPositionInfo>
 #include <QGeoPositionInfoSource>
 
-QTM_USE_NAMESPACE
+QTM_USE_NAMESPACE;
+
+class Location;
 
 class GpsController : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  GpsController();
-  GpsController( GpsControllerPrivate *gpsControllerPrivate );
+    GpsController(bool started = true);
 
-  ~GpsController();
+    ~GpsController();
+
+    QGeoPositionInfoSource *gps() const;
+    bool                    isStarted() const;
 
 public Q_SLOTS:
-  void getGps();
-  void useFakeGps( const QString &fakeLocationLabel );
-  void useLiveGps();
+    void useGPS( bool );
 
 Q_SIGNALS:
-  void locationChanged( Location *newLocation );
+    void gpsLocationChanged( Location *newLocation );
+
+private Q_SLOTS:
+    void updateLocation( QGeoPositionInfo positionInfo );
+    void timeoutRequested();
 
 private:
-    GpsControllerPrivate *q;
+    QGeoPositionInfoSource *m_gps;
+    bool                    m_started;
 };
 
 #endif // GPSCONTROLLER_H

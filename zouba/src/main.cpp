@@ -5,6 +5,7 @@
 #include "location.h"
 #include "gpscontroller.h"
 #include "ytv.h"
+#include "locations.h"
 
 #include <QDebug>
 #include <QObject>
@@ -13,52 +14,59 @@
 
 int main(int argc, char *argv[] )
 {
-  QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-  QMainWindow *mainWindow = new QMainWindow;
-  Ui *ui = new Ui;;
-  ui->setupUi(mainWindow);
+    QCoreApplication::setOrganizationName("ZouBa");
+    QCoreApplication::setOrganizationDomain("zouba.yi.org");
+    QCoreApplication::setApplicationName("ZouBa");
 
-  UiController  *uiController  = new UiController( ui );
-  Route         *route         = new Route();
-  GpsController *gpsController = new GpsController();
+    Locations* locations = Locations::GetInstance();
+    Locations *other_locations = Locations::GetInstance();
+    if (locations == other_locations)
+        qDebug() << "Same instance";
+    else
+        qDebug() << "!!NOT SAME INSTANCE!!";
 
-  QObject::connect(
-      route, SIGNAL( routeReady( QList<RouteData> ) ),
-      uiController, SLOT( displayRoute( QList<RouteData> ) )
-      );
+    QMainWindow *mainWindow = new QMainWindow;
+    Ui *ui = new Ui;;
+    ui->setupUi(mainWindow);
 
-  QObject::connect(
-      gpsController, SIGNAL( locationChanged( Location* ) ),
-      route, SLOT( setFromLocation( Location* ) )
-      );
+    UiController  *uiController  = new UiController( ui );
+    Route         *route         = new Route();
+    GpsController *gpsController = new GpsController();
 
-  QObject::connect(
-      uiController, SIGNAL( destinationChanged( Location* ) ),
-      route, SLOT( setToLocation( Location* ) )
-    );
+    QObject::connect(
+            route, SIGNAL( routeReady( QList<RouteData> ) ),
+            uiController, SLOT( displayRoute( QList<RouteData> ) )
+            );
 
-  QObject::connect(
-      uiController, SIGNAL( buttonClicked() ),
-      gpsController, SLOT( getGps() )
-    );
+    /*QObject::connect(
+      gpsController, SIGNAL( gpsLocationChanged( Location* ) ),
+      uiController, SLOT()
+      );*/
 
-  QObject::connect(
-      ui, SIGNAL( fakeGpsPressed( const QString & ) ),
-      gpsController, SLOT( useFakeGps( const QString & ) )
-    );
+    QObject::connect(
+            uiController, SIGNAL(fromChanged(Location*)),
+            route, SLOT(setFromLocation(Location*)));
 
-  QObject::connect(
-      ui, SIGNAL( liveGpsPressed() ),
-      gpsController, SLOT( useLiveGps() )
-    );
+    QObject::connect(
+            uiController, SIGNAL(toChanged(Location*)),
+            route, SLOT(setToLocation(Location*)));
 
-  QObject::connect(
-      route, SIGNAL( busy( bool ) ),
-      ui, SLOT( setBusy( bool ) )
-    );
+    QObject::connect(
+            uiController, SIGNAL(routeSearchRequested()),
+            route, SLOT(searchRoute()));
 
-  mainWindow->show();
+    QObject::connect(
+            route, SIGNAL(busy(bool)),
+            ui, SLOT(setBusy(bool)));
 
-  return app.exec();
+    QObject::connect(
+            ui->m_UseGpsAction, SIGNAL(toggled(bool)), gpsController, SLOT(useGPS(bool)));
+
+    mainWindow->show();
+
+    //Locations::destroyLocations();
+
+    return app.exec();
 }

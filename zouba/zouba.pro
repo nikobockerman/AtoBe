@@ -5,23 +5,26 @@ SOURCES += \
     route_p.cpp \
     uicontroller.cpp \
     location.cpp \
-    location_p.cpp \
     locations.cpp \
     gpscontroller.cpp \
-    gpscontroller_p.cpp \
     ui.cpp \
+    locationbutton.cpp \
+    locationsdisplay.cpp \
+    addressdialog.cpp \
+    src/ytv.cpp
 
 HEADERS += \
     route.h \
     route_p.h \
     uicontroller.h \
     location.h \
-    location_p.h \
     locations.h \
     ytv.h \
     gpscontroller.h \
-    gpscontroller_p.h \
     ui.h \
+    locationbutton.h \
+    locationsdisplay.h \
+    addressdialog.h
 
 FORMS       +=
 LEXSOURCES  += #LEXS#

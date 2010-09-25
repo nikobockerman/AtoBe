@@ -9,25 +9,43 @@
 
 class Locations: public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  Locations();
-  ~Locations();
+    static Locations *GetInstance();
+    //static void destroyLocations();
 
-  static Locations *instance();
-  bool addLocation( Location *location );
+    bool addEditLocation(Location *location);
+    bool removeLocation(Location *location);
 
-  Location *location( const QString &label );
+    bool increaseLocationIndex(const QString &label);
+    bool lowerLocationIndex(const QString &label);
 
-public Q_SLOTS:
-  void saveLocation();
+    Location *getLocation(const QString &label) const;
+    Location *getLocation(const int&) const;
+    Location *getGpsLocation() const;
+    int size() const;
+
+    //const QHash<QString, Location *>& getLocations() const;
+
+signals:
+    void locationsChanged();
 
 private:
-  void restoreLocations();
-  static QHash<QString,Location *> locationHash;
-  static bool initialised;
+    Locations();
+    //~Locations();
+    Locations(const Locations&);
+    void operator=(const Locations&);
 
-  void saveLocation( Location *location );
+    void restoreLocations();
+    void saveLocation(Location *location, int index);
+    bool findLabel(const int &index, QString &label) const;
+    void changeIndex(const QString &label, const int &index, bool signal = true);
+
+    QHash<QString, Location*> m_locationStorage;
+    QHash<QString, int> m_indexStorage;
+    Location* m_gpsLocation;
+
+    static Locations *m_instance;
 };
 #endif // LOCATIONS_H

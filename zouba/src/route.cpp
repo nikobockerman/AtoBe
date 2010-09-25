@@ -66,23 +66,16 @@ void Route::replyFinished( QNetworkReply * reply )
 void Route::setFromLocation( Location *location )
 {
   qDebug() << "setting new From location (" << location->label() << ")";
+  this->setLocation(location, true);
+}
 
-  if ( location && location->isValid() ) {
-    qDebug() << "From is valid";
-    q->setFromLocation( location );
-    if ( q->toValid() ) {
-      qDebug() << "To is also valid";
-      getRoute();
-    } else {
-      qDebug() << "To not valid - waiting";
+void Route::searchRoute()
+{
+    if (q->fromValid() && q->toValid())
+    {
+        qDebug() << "From and To addresses are valid.";
+        getRoute();
     }
-  } else {
-    qDebug() << "ERROR:From is not valid";
-    qDebug() << "location=" << location;
-    if ( location ) {
-      qDebug() << "location->isValid()=" << location->isValid();
-    }
-  }
 }
 
 Location *Route::fromLocation() const
@@ -90,26 +83,29 @@ Location *Route::fromLocation() const
   return q->fromLocation();
 }
 
+void Route::setLocation(Location *location, bool from)
+{
+  if (location != 0)
+  {
+    if (location->isValid())
+    {
+      qDebug() << "Location is valid";
+      if (from) q->setFromLocation( location );
+      else q->setToLocation(location);
+    } else {
+      qDebug() << "Location is not valid. Try again or fix address";
+      qDebug() << "Location = " << location;
+      //location->resolveAddress(location->address());
+    }
+  } else {
+    qDebug() << "ERROR:Null location pointer given.";
+  }
+}
+
 void Route::setToLocation( Location *location )
 {
   qDebug() << "setting new To location (" << location->label() << ")";
-
-  if ( location && location->isValid() ) {
-    qDebug() << "To is valid";
-    q->setToLocation( location );
-    if ( q->fromValid() ) {
-      qDebug() << "From is also valid";
-      getRoute();
-    } else {
-      qDebug() << "From not valid - waiting";
-    }
-  } else {
-    qDebug() << "ERROR:From is not valid";
-    qDebug() << "location=" << location;
-    if ( location ) {
-      qDebug() << "location->isValid()=" << location->isValid();
-    }
-  }
+  this->setLocation(location, false);
 }
 
 Location *Route::toLocation() const

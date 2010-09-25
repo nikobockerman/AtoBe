@@ -1,65 +1,66 @@
 #include "gpscontroller.h"
-#include "gpscontroller_p.h"
+#include "locations.h"
 
 #include <QObject>
 #include <QGeoPositionInfo>
 #include <QGeoPositionInfoSource>
 #include <QDebug>
 
-GpsController::GpsController() :
-  q( new GpsControllerPrivate() )
-{
-  q->init();
-  q->startGps();
-}
-
-GpsController::GpsController( GpsControllerPrivate *gpsControllerPrivate ) :
-  q( gpsControllerPrivate )
-{
-  q->init();
-  q->startGps();
+GpsController::GpsController(bool started) :
+        m_gps(QGeoPositionInfoSource::createDefaultSource(this)),
+        m_started(started)
+{   
+    m_gps->setUpdateInterval(20000);
+    connect(m_gps, SIGNAL(positionUpdated(QGeoPositionInfo)),
+            this, SLOT(updateLocation(QGeoPositionInfo)));
+    connect(m_gps, SIGNAL(updateTimeout()),
+            this, SLOT(timeoutRequested()));
+    if (m_started) m_gps->startUpdates();
 }
 
 GpsController::~GpsController()
 {
-  delete q;
+    delete m_gps;
 }
 
-void GpsController::getGps()
+void GpsController::useGPS( bool use)
 {
-  Location *location;
-  Location *previousLocation = q->mostRecentlyReportedLocation();
-
-  if ( q->useFakeLocation() ) {
-    location = q->fakeLocation();
-  } else {
-    location = q->liveLocation();
-  }
-
-  if ( location != previousLocation ) {
-    emit locationChanged( location );
-  }
+    if (use) m_gps->startUpdates();
+    else m_gps->stopUpdates();
 }
 
-void GpsController::useLiveGps()
+bool GpsController::isStarted() const
 {
-  q->setUseFakeLocation( false );
-  q->startGps();
-  emit locationChanged( q->liveLocation() );
+    return m_started;
 }
 
-void GpsController::useFakeGps( const QString &fakeLocationLabel )
+QGeoPositionInfoSource *GpsController::gps() const
 {
-  qDebug() << "using fake gps (" << fakeLocationLabel << ")";
+    return m_gps;
+}
 
-  q->setFakeLocationLabel( fakeLocationLabel );
-  Location  *fakeLocation = q->fakeLocation();
+void GpsController::updateLocation( QGeoPositionInfo positionInfo )
+{
+    qDebug() << "GPS location update received";
+    Locations *locations = Locations::GetInstance();
 
-  if ( fakeLocation == 0 ) {
-    qDebug() << "invalid fake location label; cannot use fake location";
-  } else {
-    q->stopGps();
-    q->setUseFakeLocation( true );
-    emit locationChanged( fakeLocation );
-  }
+    //DEBUG
+    /*if (locations == 0)
+        qDebug() << "Null locations received from getInstance";
+    else
+        qDebug() << "Locations is not null";
+    Location* gpsLoc = locations->getGpsLocation();
+    if (gpsLoc == 0)
+        qDebug() << "Null gpsLocation received from locations";
+    else
+        qDebug() << "GPS location is not null.";*/
+    //DEBUG ENDED
+
+    locations->getGpsLocation()->setLocation(positionInfo);
+    //emit(gpsLocationChanged(m_location));
+}
+
+void GpsController::timeoutRequested()
+{
+    qDebug() << "GPS sent timeout requested.";
 }

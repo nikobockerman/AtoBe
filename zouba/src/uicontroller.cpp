@@ -12,208 +12,182 @@
 #include <QRadioButton>
 #include <QVBoxLayout>
 #include <QTableWidgetItem>
+#include <QString>
+#include <QMaemo5AbstractPickSelector>
+#include <QMaemo5InformationBox>
 
 UiController::UiController( Ui *ui ) :
-  m_routeData(),
-  m_destination(),
-  m_ui(ui),
-  m_currentDestination(-1),
-  m_currentRoute(-1)
+        m_routeData(),
+        m_ui(ui),
+        m_currentRoute(-1)
 {
-  Locations locations;
-  Location *homeLocation = locations.location( "home" );
-  Location *workLocation = locations.location( "work" );
+    Locations *locations = Locations::GetInstance();
+    if (locations->size() == 0)
+    {
+        locations->addEditLocation(new Location("Home"));
+        locations->addEditLocation(new Location("Work"));
+    }
 
-  if ( homeLocation==0 ) {
-    homeLocation = new Location( "home" );
-    locations.addLocation( homeLocation );
-  } else if ( homeLocation->isValid() ) {
-    setHomeButtonValid();
-  }
-
-  if ( workLocation==0 ) {
-    workLocation = new Location( "work" );
-    locations.addLocation( workLocation );
-  } else if ( workLocation->isValid() ) {
-    setWorkButtonValid();
-  }
-
-  connect(
-      homeLocation, SIGNAL( becomeValid() ),
-      this, SLOT( setHomeButtonValid() )
-  );
-  connect(
-      homeLocation, SIGNAL( becomeInValid() ),
-      this, SLOT( setHomeButtonInValid() )
-  );
-  connect(
-      homeLocation, SIGNAL( becomeValid() ),
-      &locations, SLOT( saveLocation() )
-      );
-  connect(
-      homeLocation, SIGNAL( busy( bool ) ),
-      ui, SLOT( setBusy( bool ) )
-      );
-
-  connect(
-      workLocation, SIGNAL( becomeValid() ),
-      this, SLOT( setWorkButtonValid() )
-  );
-  connect(
-      workLocation, SIGNAL( becomeInValid() ),
-      this, SLOT( setWorkButtonInValid() )
-  );
-  connect(
-      workLocation, SIGNAL( becomeValid() ),
-      &locations, SLOT( saveLocation() )
-      );
-  connect(
-      workLocation, SIGNAL( busy( bool ) ),
-      ui, SLOT( setBusy( bool ) )
-      );
-
-  m_destination.append( homeLocation );
-  m_destination.append( workLocation );
-
-  connect(
-      m_ui->m_destinationButtons, SIGNAL( buttonClicked( int ) ),
-      this, SLOT( changeDestination( int ) )
-  );
-
-  connect(
-      m_ui->m_routeButtons, SIGNAL( buttonClicked( int ) ),
-      this, SLOT( changeRoute( int ) )
-  );
+    QObject::connect(m_ui->m_routeButton, SIGNAL(clicked()), this, SLOT(findRoute()));
+    QObject::connect(this->m_ui->m_fromButton->pickSelector(), SIGNAL(selected(const QString &)), this, SLOT(changeFrom()));
+    connect(m_ui->m_toButton->pickSelector(), SIGNAL(selected(const QString &)), this, SLOT(changeTo()));
+    connect(m_ui->m_routeButtons, SIGNAL(buttonClicked(int)), this, SLOT(displayRouteDetail(int)));
 }
 
 UiController::~UiController()
 {
 }
 
-void UiController::setHomeButtonInValid()
-{
-  qDebug() << "setting home button invalid";
-  setButtonValid( Ui::HomeButtonId, false );
-}
-
-void UiController::setHomeButtonValid()
-{
-  qDebug() << "setting home button valid";
-  setButtonValid( Ui::HomeButtonId, true );
-}
-
-void UiController::setWorkButtonInValid()
-{
-  qDebug() << "setting work button invalid";
-  setButtonValid( Ui::WorkButtonId, false );
-}
-
-void UiController::setWorkButtonValid()
-{
-  qDebug() << "setting work button valid";
-  setButtonValid( Ui::WorkButtonId, true );
-}
-
-void UiController::setButtonValid( int id, bool isValid )
-{
-  m_ui->m_destinationButtons->button( id )->setEnabled( isValid );
-}
-
-void UiController::changeDestination( int id )
-{
-  bool destinationHasChanged = ( m_currentDestination != id );
-  qDebug() << "Destination has changed=" << destinationHasChanged;
-  if ( destinationHasChanged ) {
-    qDebug() << "Emitting destination changed (" << m_destination[id]->label() << ")";
-    emit destinationChanged( m_destination[id] );
-    m_currentDestination = id;
-  }
-
-  // always want to emit this so that the gps position is updated
-  // and the user gets new information
-  emit buttonClicked();
-}
-
 void UiController::changeRoute( int id )
 {
-  bool routeHasChanged = ( m_currentRoute != id );
-  if ( routeHasChanged ) {
-    displayRouteDetail( id );
-  }
+    bool routeHasChanged = ( m_currentRoute != id );
+    if ( routeHasChanged ) {
+        displayRouteDetail( id );
+    }
 }
 
 void UiController::displayRouteDetail( int id )
 {
-  QTableWidget *table = m_ui->m_routeDetailTable;
+    QTableWidget *table = m_ui->m_routeDetailTable;
 
-  if ( id < m_routeData.count() ) {
-    QList<LegData> &legDataList = m_routeData[ id ].m_legData;
-    table->setRowCount( legDataList.count() );
+    if ( id < m_routeData.count() ) {
+        QList<LegData> &legDataList = m_routeData[ id ].m_legData;
+        table->setRowCount( legDataList.count() );
 
-    int row=0;
-    foreach( LegData thisLegData, legDataList ) {
-      QString thisHow = thisLegData.m_how;
+        int row=0;
+        foreach( LegData thisLegData, legDataList ) {
+            QString thisHow = thisLegData.m_how;
 
-      bool thisIsLine = ( thisHow == "LINE" );
-      if ( thisIsLine ) {
-        thisHow = thisLegData.m_lineCode;
-      }
+            bool thisIsLine = ( thisHow == "LINE" );
+            if ( thisIsLine ) {
+                thisHow = thisLegData.m_lineCode;
+            }
 
-      QStringList tableStrings;
-      tableStrings
-        << thisHow
-        << thisLegData.m_tripTime
-        << thisLegData.m_tripDistance
-        << thisLegData.m_departureTime
-        << thisLegData.m_arrivalTime;
+            QStringList tableStrings;
+            tableStrings
+                    << thisHow
+                    << thisLegData.m_tripTime
+                    << thisLegData.m_tripDistance
+                    << thisLegData.m_departureTime
+                    << thisLegData.m_arrivalTime;
 
-      int col=0;
-      foreach( QString thisString, tableStrings ) {
-        QTableWidgetItem *newItem = new QTableWidgetItem();
-        newItem->setText( thisString );
-        table->setItem( row,col, newItem );
-        ++col;
-      }
+            int col=0;
+            foreach( QString thisString, tableStrings ) {
+                QTableWidgetItem *newItem = new QTableWidgetItem();
+                newItem->setText( thisString );
+                table->setItem( row,col, newItem );
+                ++col;
+            }
 
-      ++row;
+            ++row;
+        }
+    } else {
+        table->setRowCount( 0 );
     }
-  } else {
-    table->setRowCount( 0 );
-  }
 
-  table->resizeColumnsToContents();
+    table->resizeColumnsToContents();
 }
 
 void UiController::displayRoute( const QList<RouteData> &routeData )
 {
-  m_routeData = routeData;
+    m_routeData = routeData;
 
-  qDebug() << "displaying route";
+    qDebug() << "displaying route";
 
-  for ( int i=0; i<Ytv::ShowFiveResults; ++i ) {
-    QString label;
+    for ( int i=0; i<Ytv::ShowFiveResults; ++i ) {
+        QString label;
 
-    QWidget *widget = m_ui->m_routeStack->itemAt( i )->widget();
-    QRadioButton *button = qobject_cast<QRadioButton *>(widget);
+        QWidget *widget = m_ui->m_routeStack->itemAt( i )->widget();
+        QRadioButton *button = qobject_cast<QRadioButton *>(widget);
 
-    if ( i<routeData.count() ) {
-      RouteData thisRouteData = routeData.at(i);
-      label = ( QStringList()
-          << thisRouteData.m_departureTime
-          << thisRouteData.m_lineCode ).join( "/" );
-      button->setEnabled( true );
-    } else {
-      button->setEnabled( false );
+        if ( i<routeData.count() ) {
+            RouteData thisRouteData = routeData.at(i);
+            label = ( QStringList()
+                      << thisRouteData.m_departureTime
+                      << thisRouteData.m_lineCode ).join( "/" );
+            button->setEnabled( true );
+        } else {
+            button->setEnabled( false );
+        }
+
+        if ( i==0 ) {
+            button->setChecked( true );
+        } else {
+            button->setChecked( false );
+        }
+
+        button->setText( label );
     }
 
-    if ( i==0 ) {
-      button->setChecked( true );
-    } else {
-      button->setChecked( false );
+    displayRouteDetail( 0 );
+}
+
+void UiController::findRoute()
+{
+    qDebug() << "Route search button clicked";
+    emit(routeSearchRequested());
+}
+
+/*void UiController::updateLocationSelectors()
+{
+    m_ui->setLocations();
+}*/
+
+void UiController::changeFrom()
+{
+    qDebug() << "From selection changed";
+    Locations *locations = Locations::GetInstance();
+    Location *from;
+
+    const QString newValue = m_ui->m_fromButton->valueText();
+    if (newValue == "GPS")
+    {
+        from = locations->getGpsLocation();
+        if (!from->isValid())
+        {
+            qDebug() << "GPS location is not valid.";
+            QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location has not been received yet. Wait a moment.");
+            connect(from, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
+            return;
+        }
     }
+    else
+        from = locations->getLocation(newValue);
 
-    button->setText( label );
-  }
+    qDebug() << "Emitting signal of new from selection";
+    emit(fromChanged(from));
+}
 
-  displayRouteDetail( 0 );
+void UiController::gpsBecameValid()
+{
+    QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location received.");
+    Location *gps = Locations::GetInstance()->getGpsLocation();
+    disconnect(gps, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
+    this->changeFrom();
+    this->changeTo();
+}
+
+void UiController::changeTo()
+{
+    qDebug() << "To selection changed";
+    Locations *locations = Locations::GetInstance();
+    Location *to;
+
+    const QString newValue = m_ui->m_toButton->valueText();
+    if (newValue == "GPS")
+    {
+        to = locations->getGpsLocation();
+        if (!to->isValid())
+        {
+            qDebug() << "GPS location is not valid.";
+            QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location has not been received yet. Wait a moment.");
+            connect(to, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
+            return;
+        }
+    }
+    else
+        to = locations->getLocation(newValue);
+
+    qDebug() << "Emitting signal of new to selection";
+    emit(toChanged(to));
 }

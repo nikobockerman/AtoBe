@@ -49,6 +49,8 @@ public Q_SLOTS:
     */
   void setToLocation( Location *location=0 );
 
+  void searchRoute();
+
 Q_SIGNALS:
   void routeReady( QList<RouteData> );
   void busy( bool busy );
@@ -56,6 +58,8 @@ Q_SIGNALS:
 private Q_SLOTS:
   void replyFinished( QNetworkReply* );
 
+private:
+  void setLocation(Location*, bool from);
 private:
   RoutePrivate *q;
   QNetworkAccessManager *manager;

@@ -2,8 +2,23 @@
 #define UI_H
 
 #include <QObject>
+#include <QStandardItemModel>
+#include <QPushButton>
+#include <QMenuBar>
+#include <QMainWindow>
+#include <QWidget>
+#include <QTableWidget>
+#include <QButtonGroup>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QAction>
+#include <QMaemo5ValueButton>
 
-class QMainWindow;
+#include "location.h"
+#include "locationsdisplay.h"
+
+/*class QMainWindow;
 class QWidget;
 class QTableWidget;
 class QButtonGroup;
@@ -12,7 +27,7 @@ class QVBoxLayout;
 class QGridLayout;
 class QMenu;
 class QAction;
-class Location;
+class Location;*/
 
 class Ui : public QObject
 {
@@ -24,8 +39,9 @@ public:
   void setupUi( QMainWindow *mainWindow );
 
   enum {
-    HomeButtonId=0,
-    WorkButtonId=1
+    FromButtonId=0,
+    ToButtonId=1,
+    RouteButtonId=2
   };
 
   enum {
@@ -35,33 +51,34 @@ public:
 
   QMainWindow *m_mainWindow;
   QWidget *m_centralWidget;
-  QButtonGroup *m_destinationButtons;
+  QMaemo5ValueButton *m_fromButton;
+  QMaemo5ValueButton *m_toButton;
   QButtonGroup *m_routeButtons;
   QVBoxLayout *m_routeStack;
   QTableWidget *m_routeDetailTable;
   QVBoxLayout *m_mainLayout;
   QGridLayout *m_buttonLayout;
-  QMenu       *m_menu;
-  QAction     *m_toggleFakeGpsAction;
-  QAction     *m_useLiveGpsAction;
-  bool        m_usingFakeGps;
-  QString     m_fakeLocationLabel;
+  QMenuBar       *m_menu;
+  QAction     *m_UseGpsAction;
+  QStandardItemModel *m_locationsModel;
+  QPushButton *m_routeButton;
+  LocationsDisplay *m_locDisp;
+
+public slots:
+  void setLocations();
 
 Q_SIGNALS:
   void homeAddressChanged( QString address );
   void workAddressChanged( QString address );
-  void fakeGpsPressed( const QString &fakeLocationLabel );
-  void liveGpsPressed();
 
 private Q_SLOTS:
   void setHomeAddress();
   void setWorkAddress();
-  void toggleFakeGps();
   void setBusy( bool busy );
+  //void modifyLocations();
+
 
 private:
-  void useFakeGps();
-  void useLiveGps();
   void setAddress( const QString &label );
 };
 #endif //UI_H
