@@ -6,12 +6,11 @@ SOURCES += \
     uicontroller.cpp \
     location.cpp \
     locations.cpp \
-    gpscontroller.cpp \
     ui.cpp \
     locationbutton.cpp \
-    locationsdisplay.cpp \
     addressdialog.cpp \
-    src/ytv.cpp
+    ytv.cpp \
+    locationsdisplaywindow.cpp
 
 HEADERS += \
     route.h \
@@ -20,13 +19,13 @@ HEADERS += \
     location.h \
     locations.h \
     ytv.h \
-    gpscontroller.h \
     ui.h \
     locationbutton.h \
-    locationsdisplay.h \
-    addressdialog.h
+    addressdialog.h \
+    locationsdisplaywindow.h
 
-FORMS       +=
+FORMS       += \
+    locationsdisplaywindow.ui
 LEXSOURCES  += #LEXS#
 YACCSOURCES += #YACCS#
 
@@ -34,8 +33,8 @@ INCLUDEPATH += include
 DEPENDSPATH += INCLUDEPATH
 #QMAKE_LIBDIR_QT = qt4-maemo5/lib
 #QMAKE_INCDIR_QT = qt4-maemo5/include
-LIBS        += -Llib -lQtBearer -lQtLocation
-DEFINES     += Q_WS_MAEMO_5
+LIBS        += -Llib
+#DEFINES     += Q_WS_MAEMO_5
 
 # All generated files goes same directory
 OBJECTS_DIR = build
@@ -47,9 +46,18 @@ TEMPLATE    = app
 DEPENDPATH  +=
 VPATH       += src uis
 CONFIG      -=
-CONFIG      += debug qt mobility
-MOBILITY    += location bearer
-QT=core gui network maemo5
+CONFIG      += debug qt
+#MOBILITY    += location bearer
+QT=core gui network
+
+linux-g++-maemo5 {
+SOURCES += gpscontroller.cpp
+HEADERS += gpscontroller.h
+QT += maemo5
+LIBS += -lQtBearer -lQtLocation
+MOBILITY += location bearer
+CONFIG += mobility
+}
 
 INSTALLS    += target
 target.path  = /usr/bin/

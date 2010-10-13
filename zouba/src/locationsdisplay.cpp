@@ -1,30 +1,43 @@
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QMaemo5EditBar>
 #include <QListWidget>
 #include <QHash>
 #include <QDebug>
 #include <QListWidgetItem>
 #include <QPoint>
 #include <QMenu>
-#include <QMaemo5EditBar>
 #include <QMenuBar>
 #include <QAction>
 #include <QWidget>
+#ifdef Q_WS_MAEMO_5
+#include <QMaemo5EditBar>
+#endif
 
 #include "locationsdisplay.h"
 #include "locations.h"
 #include "addressdialog.h"
 
+const QString invalidPostText = " - Invalid address";
+const QString editText = "Edit list";
+const QString newLocText = "Add new location";
+const QString removeText = "Remove";
+const QString doneText = "Done";
+const QString moveUpText = "Move up";
+const QString moveDownText = "Move down";
+
+QString getLocName(const QListWidgetItem *item);
+Location* getSelectedLocation(QList<QListWidgetItem*> list);
 
 LocationsDisplay::LocationsDisplay(QWidget *parent) :
         QMainWindow(parent)
 {
+#ifdef Q_WS_MAEMO_5
     this->setAttribute(Qt::WA_Maemo5StackedWindow);
-    this->setWindowFlags(this->windowFlags() | Qt::Window);
+    //this->setWindowFlags(this->windowFlags() | Qt::Window);
+#endif
 
     QMenuBar *menu = this->menuBar();
-    QAction *editListAction = new QAction("Edit list", menu);
+    QAction *editListAction = new QAction(editText, menu);
     menu->addAction(editListAction);
     connect(editListAction, SIGNAL(triggered()), this, SLOT(showEditOptions()));
 
@@ -38,7 +51,7 @@ LocationsDisplay::LocationsDisplay(QWidget *parent) :
     layout->addWidget(this->m_topWidget);
     QVBoxLayout *topLayout = new QVBoxLayout(this->m_topWidget);
     this->m_topWidget->setLayout(topLayout);
-    this->m_addButton = new QPushButton("Add new location", this->m_topWidget);
+    this->m_addButton = new QPushButton(newLocText, this->m_topWidget);
     connect(this->m_addButton, SIGNAL(clicked()), this, SLOT(addAddress()));
     topLayout->addWidget(this->m_addButton);
 
@@ -54,10 +67,17 @@ LocationsDisplay::LocationsDisplay(QWidget *parent) :
     layout->addWidget(this->m_bottomWidget);
     QHBoxLayout *bottomLayout = new QHBoxLayout(this->m_bottomWidget);
     this->m_bottomWidget->setLayout(bottomLayout);
-    QPushButton *removeButton = new QPushButton("Remove", this->m_bottomWidget);
+    QPushButton *removeButton = new QPushButton(removeText, this->m_bottomWidget);
     connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
     bottomLayout->addWidget(removeButton);
-    QPushButton *doneButton = new QPushButton("Done", this->m_bottomWidget);
+    QPushButton *moveUpButton = new QPushButton(moveUpText, this->m_bottomWidget);
+    connect(moveUpButton, SIGNAL(clicked()), this, SLOT(moveUp()));
+    bottomLayout->addWidget(moveUpButton);
+    QPushButton *moveDownButton = new QPushButton(moveDownText, this->m_bottomWidget);
+    connect(moveDownButton, SIGNAL(clicked()), this, SLOT(moveDown()));
+    bottomLayout->addWidget(moveDownButton);
+
+    QPushButton *doneButton = new QPushButton(doneText, this->m_bottomWidget);
     connect(doneButton, SIGNAL(clicked()), this, SLOT(closeEditOptions()));
     bottomLayout->addWidget(doneButton);
     this->m_bottomWidget->hide();
@@ -75,7 +95,11 @@ void LocationsDisplay::populateLocations()
     for (int index = 1; index <= locations->size(); ++index)
     {
         qDebug() << "Adding location: " << locations->getLocation(index)->label();
-        new QListWidgetItem(locations->getLocation(index)->label(), m_list);
+        Location* loc = locations->getLocation(index);
+        QString dispName = loc->label();
+        if (!loc->isValid())
+            dispName.append(invalidPostText);
+        new QListWidgetItem(dispName, m_list);
     }
     qDebug() << "Locations populated";
 }
@@ -88,10 +112,13 @@ void LocationsDisplay::addAddress()
 
 void LocationsDisplay::editLocation(QListWidgetItem *item)
 {
+    if (!item) return;
+
     Locations *locations = Locations::GetInstance();
-    Location *loc = locations->getLocation(item->text());
+    QString findText = getLocName(item);
+    Location *loc = locations->getLocation(findText);
     if (!loc)
-        qDebug() << "No location with label " << item->text() << " was found from locations.";
+        qDebug() << "No location with label " << findText << " was found from locations.";
     else
     {
         AddressDialog *dialog = new AddressDialog(this, loc);
@@ -99,28 +126,75 @@ void LocationsDisplay::editLocation(QListWidgetItem *item)
     }
 }
 
-void LocationsDisplay::contextMenu(const QPoint &point)
+QString getLocNameold(const QListWidgetItem *item)
+{
+    if (!item) return 0;
+    QString retText = item->text();
+    if (retText.contains(" - Invalid address", Qt::CaseSensitive))
+        retText.chop(18);
+    return retText;
+}
+
+/*void LocationsDisplay::contextMenu(const QPoint &point)
 {
     qDebug() << "ContextMenu requested";
     this->m_point = point;
     QMenu *menu = new QMenu(this->m_list);
     menu->addAction("Delete", this, SLOT(remove()));
     menu->exec(this->mapToGlobal(point));
-}
+}*/
 
 void LocationsDisplay::remove()
 {
     qDebug() << "Remove called";
-    QList<QListWidgetItem*> list = this->m_list->selectedItems();
+    Location* loc = getSelectedLocation(this->m_list->selectedItems());
+    if (!loc)
+        qDebug() << "No location with selected label was found from locations.";
+    else
+    {
+        Locations *locations = Locations::GetInstance();
+        locations->removeLocation(loc);
+    }
+}
+
+Location* getSelectedLocationold(QList<QListWidgetItem*> list)
+{
     if (list.size() == 0)
     {
         qDebug() << "No item is selected";
-        return;
+        return 0;
     }
     QListWidgetItem *item = list.at(0);
-    qDebug() << "Selected item is" << item->text();
+    QString name = getLocName(item);
+    qDebug() << "Selected item is" << name;
     Locations *locations = Locations::GetInstance();
-    locations->removeLocation(locations->getLocation(item->text()));
+    return locations->getLocation(name);
+}
+
+void LocationsDisplay::moveUp()
+{
+    qDebug() << "Move up called";
+    Location* loc = getSelectedLocation(this->m_list->selectedItems());
+    if (!loc)
+        qDebug() << "No location with selected label was found from locations.";
+    else
+    {
+        Locations *locations = Locations::GetInstance();
+        locations->lowerLocationIndex(loc->label());
+    }
+}
+
+void LocationsDisplay::moveDown()
+{
+    qDebug() << "Move down called";
+    Location* loc = getSelectedLocation(this->m_list->selectedItems());
+    if (!loc)
+        qDebug() << "No location with selected label was found from locations.";
+    else
+    {
+        Locations *locations = Locations::GetInstance();
+        locations->increaseLocationIndex(loc->label());
+    }
 }
 
 void LocationsDisplay::showEditOptions()

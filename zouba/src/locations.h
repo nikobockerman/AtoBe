@@ -4,6 +4,7 @@
 #include "location.h"
 
 #include <QHash>
+#include <QList>
 #include <QString>
 #include <QObject>
 
@@ -38,12 +39,12 @@ private:
     void operator=(const Locations&);
 
     void restoreLocations();
-    void saveLocation(Location *location, int index);
+    void saveLocation(Location *location);
     bool findLabel(const int &index, QString &label) const;
     void changeIndex(const QString &label, const int &index, bool signal = true);
 
     QHash<QString, Location*> m_locationStorage;
-    QHash<QString, int> m_indexStorage;
+    QList<QString> m_indexStorage;
     Location* m_gpsLocation;
 
     static Locations *m_instance;

@@ -28,12 +28,14 @@ int main(int argc, char *argv[] )
         qDebug() << "!!NOT SAME INSTANCE!!";
 
     QMainWindow *mainWindow = new QMainWindow;
-    Ui *ui = new Ui;;
+    UiClass *ui = new UiClass;;
     ui->setupUi(mainWindow);
 
     UiController  *uiController  = new UiController( ui );
     Route         *route         = new Route();
+#ifdef Q_WS_MAEMO_5
     GpsController *gpsController = new GpsController();
+#endif
 
     QObject::connect(
             route, SIGNAL( routeReady( QList<RouteData> ) ),
@@ -61,8 +63,10 @@ int main(int argc, char *argv[] )
             route, SIGNAL(busy(bool)),
             ui, SLOT(setBusy(bool)));
 
+#ifdef Q_WS_MAEMO_5
     QObject::connect(
             ui->m_UseGpsAction, SIGNAL(toggled(bool)), gpsController, SLOT(useGPS(bool)));
+#endif
 
     mainWindow->show();
 

@@ -25,7 +25,9 @@ const double KkjZoneInfo[6][2] = {
     {33.0, 5500000.0}
 };
 
+#ifdef Q_WS_MAEMO_5
 QTM_USE_NAMESPACE
+#endif
 
         Location::Location( const QString &x, const QString &y, const QString &label ) :
         m_label(label),
@@ -35,12 +37,12 @@ QTM_USE_NAMESPACE
         m_valid(true)
 {
 }
-
+#ifdef Q_WS_MAEMO_5
 Location::Location(const QGeoPositionInfo &positionInfo, const QString &label) :
         m_label(label),
         m_address(QString()),
-        m_x(0),
-        m_y(0),
+        m_x("0"),
+        m_y("0"),
         m_valid(false)
 {
     setLocation(positionInfo);
@@ -76,6 +78,7 @@ void Location::setLocation(const QGeoPositionInfo &positionInfo)
     emit(becomeValid());
     //qDebug() << "Location set";
 }
+#endif
 
 void Location::setPosition(const QString &x, const QString &y)
 {
@@ -87,8 +90,8 @@ void Location::setPosition(const QString &x, const QString &y)
 Location::Location(const QString &label) :
         m_label(label),
         m_address(QString()),
-        m_x(0),
-        m_y(0),
+        m_x("0"),
+        m_y("0"),
         m_valid(false)
 {
 }

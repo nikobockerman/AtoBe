@@ -20,29 +20,33 @@
 #include <QDebug>
 #include <QMenu>
 #include <QPushButton>
+#ifdef Q_WS_MAEMO_5
 #include <QMaemo5ValueButton>
 #include <QMaemo5ListPickSelector>
+#endif
 #include <QStandardItemModel>
 
-Ui::Ui() :
+UiClass::UiClass() :
         m_centralWidget(NULL),
         m_routeStack(NULL),
         m_locDisp(NULL)
 {
 }
 
-Ui::~Ui()
+UiClass::~UiClass()
 {
     delete m_locDisp;
 }
 
-void Ui::setupUi( QMainWindow *mainWindow )
+void UiClass::setupUi( QMainWindow *mainWindow )
 {
     m_mainWindow = mainWindow;
+#ifdef Q_WS_MAEMO_5
     m_mainWindow->setAttribute(Qt::WA_Maemo5StackedWindow);
+#endif
     //m_mainWindow->resize(800,480);
 
-    m_locDisp = new LocationsDisplay(mainWindow);
+    m_locDisp = new LocationsDisplayWindow(mainWindow);
 
     m_menu = mainWindow->menuBar();
 
@@ -52,6 +56,7 @@ void Ui::setupUi( QMainWindow *mainWindow )
     m_UseGpsAction  = new QAction("Use GPS", this);
     m_UseGpsAction->setCheckable(true);
     m_UseGpsAction->setChecked(true);
+    connect(this->m_UseGpsAction, SIGNAL(toggled(bool)), this, SLOT(setLocations()));
     /*m_menu->addAction(setHomeAddressAction);
     m_menu->addAction(setWorkAddressAction);*/
     m_menu->addAction(m_UseGpsAction);
@@ -77,6 +82,7 @@ void Ui::setupUi( QMainWindow *mainWindow )
     m_locationsModel = new QStandardItemModel(0,1);
     this->setLocations();
 
+#ifdef Q_WS_MAEMO_5
     m_fromButton = new QMaemo5ValueButton(QString::fromUtf8("From"));
     m_fromButton->setValueLayout(QMaemo5ValueButton::ValueBesideText);
     QMaemo5ListPickSelector *fromSelector = new QMaemo5ListPickSelector();
@@ -88,6 +94,7 @@ void Ui::setupUi( QMainWindow *mainWindow )
     QMaemo5ListPickSelector *toSelector = new QMaemo5ListPickSelector();
     toSelector->setModel(m_locationsModel);
     m_toButton->setPickSelector(toSelector);
+#endif
 
     m_routeButton = new QPushButton("Route");
 
@@ -116,8 +123,10 @@ void Ui::setupUi( QMainWindow *mainWindow )
     topLayout->addWidget( m_routeDetailTable );
 
     m_buttonLayout = new QGridLayout();
+#ifdef Q_WS_MAEMO_5
     m_buttonLayout->addWidget(m_fromButton, 0, 0);
     m_buttonLayout->addWidget(m_toButton, 0, 1);
+#endif
     m_buttonLayout->addWidget(m_routeButton, 0, 2);
 
     m_mainLayout = new QVBoxLayout();
@@ -127,16 +136,20 @@ void Ui::setupUi( QMainWindow *mainWindow )
     m_centralWidget->setLayout( m_mainLayout );
 }
 
-void Ui::setLocations()
+void UiClass::setLocations()
 {
     qDebug() << "Setting locations for main menu selectors.";
     Locations *locations = Locations::GetInstance();
 
     m_locationsModel->clear();
-    QStandardItem *item = new QStandardItem(QString("GPS"));
-    item->setTextAlignment(Qt::AlignCenter);
-    item->setEditable(false);
-    m_locationsModel->appendRow(item);
+    QStandardItem *item;
+    if (this->m_UseGpsAction->isChecked())
+    {
+        item = new QStandardItem(QString("GPS"));
+        item->setTextAlignment(Qt::AlignCenter);
+        item->setEditable(false);
+        m_locationsModel->appendRow(item);
+    }
 
     for (int index = 1; index <= locations->size(); ++index)
     {
@@ -147,17 +160,17 @@ void Ui::setLocations()
     }
 }
 
-void Ui::setHomeAddress()
+void UiClass::setHomeAddress()
 {
     setAddress( "home" );
 }
 
-void Ui::setWorkAddress()
+void UiClass::setWorkAddress()
 {
     setAddress( "work" );
 }
 
-void Ui::setAddress( const QString &label )
+void UiClass::setAddress( const QString &label )
 {
     /*Locations locations;
     Location *location=locations.location( label );
@@ -188,7 +201,9 @@ void Ui::setAddress( const QString &label )
     LocationsDisplay
 }*/
 
-void Ui::setBusy( bool busy )
+void UiClass::setBusy( bool busy )
 {
+#ifdef Q_WS_MAEMO_5
     m_mainWindow->setAttribute(Qt::WA_Maemo5ShowProgressIndicator, busy);
+#endif
 }

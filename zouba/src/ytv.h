@@ -16,8 +16,8 @@ namespace Ytv {
 
     enum {
         WalkSpeedSlow=1,
-        WalkSpeedFast=2,
-        WalkSpeedNormal=3,
+        WalkSpeedNormal=2,
+        WalkSpeedFast=3,
         WalkSpeedRunning=4,
         WalkSpeedCycling=5,
         NoWalkSpeeds=5

@@ -44,7 +44,7 @@ void Route::getRoute()
   fullUrl.addQueryItem( "b", b.join(",") );
   fullUrl.addQueryItem( "show", QString::number(Ytv::ShowFiveResults) );
   fullUrl.addQueryItem( "walkspeed", QString::number(Ytv::WalkSpeedFast) );
-  fullUrl.addQueryItem( "optimize", QString::number(Ytv::OptimizeLeastWalking) );
+  fullUrl.addQueryItem( "optimize", QString::number(Ytv::OptimizeDefault) );
   fullUrl.addQueryItem( "user", Ytv::Username );
   fullUrl.addQueryItem( "pass", Ytv::Password );
 

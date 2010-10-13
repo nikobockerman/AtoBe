@@ -11,9 +11,11 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QXmlStreamReader>
-#include <QMaemo5InformationBox>
 #include <QListWidget>
 #include <QDebug>
+#ifdef Q_WS_MAEMO_5
+#include <QMaemo5InformationBox>
+#endif
 
 AddressDialog::AddressDialog(QWidget *parent, const Location *location) :
     QDialog(parent), m_reply(0), m_current(0)
@@ -117,7 +119,9 @@ void AddressDialog::searchFinished()
                     QString errorMessage("Unknown category: ");
                     errorMessage.append(category);
                     qDebug() << errorMessage;
+#ifdef Q_WS_MAEMO_5
                     QMaemo5InformationBox::information(this, errorMessage);
+#endif
                 }
             }
 
@@ -132,13 +136,17 @@ void AddressDialog::searchFinished()
 
     qDebug() << xml.errorString();
     if ( xml.hasError() || responseHasError ) {
+#ifdef Q_WS_MAEMO_5
         QMaemo5InformationBox::information(this, "Invalid response received from Ytv.");
+#endif
         qDebug() << "Invalid response received from Ytv";
     } else {
         // Case where no addresses are found.
         if (m_places.size() + m_roadNames.size() + m_stops.size() == 0)
         {
+#ifdef Q_WS_MAEMO_5
             QMaemo5InformationBox::information(this, "No addresses were found with the given address.");
+#endif
         }
         // Case where addresses are found.
         else        {

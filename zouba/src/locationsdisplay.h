@@ -2,7 +2,9 @@
 #define LOCATIONSDISPLAY_H
 
 #include <QMainWindow>
+#ifdef Q_WS_MAEMO_5
 #include <QMaemo5EditBar>
+#endif
 
 class QVBoxLayout;
 class QWidget;
@@ -37,8 +39,10 @@ public slots:
 private slots:
     void addAddress();
     void editLocation(QListWidgetItem*);
-    void contextMenu(const QPoint&);
+    //void contextMenu(const QPoint&);
     void remove();
+    void moveUp();
+    void moveDown();
     void showEditOptions();
     void closeEditOptions();
 

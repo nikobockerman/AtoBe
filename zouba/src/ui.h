@@ -13,10 +13,12 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QAction>
+#ifdef Q_WS_MAEMO_5
 #include <QMaemo5ValueButton>
+#endif
 
 #include "location.h"
-#include "locationsdisplay.h"
+#include "locationsdisplaywindow.h"
 
 /*class QMainWindow;
 class QWidget;
@@ -29,13 +31,13 @@ class QMenu;
 class QAction;
 class Location;*/
 
-class Ui : public QObject
+class UiClass : public QObject
 {
   Q_OBJECT
 
 public:
-  Ui();
-  ~Ui();
+  UiClass();
+  ~UiClass();
   void setupUi( QMainWindow *mainWindow );
 
   enum {
@@ -51,8 +53,10 @@ public:
 
   QMainWindow *m_mainWindow;
   QWidget *m_centralWidget;
+#ifdef Q_WS_MAEMO_5
   QMaemo5ValueButton *m_fromButton;
   QMaemo5ValueButton *m_toButton;
+#endif
   QButtonGroup *m_routeButtons;
   QVBoxLayout *m_routeStack;
   QTableWidget *m_routeDetailTable;
@@ -62,7 +66,7 @@ public:
   QAction     *m_UseGpsAction;
   QStandardItemModel *m_locationsModel;
   QPushButton *m_routeButton;
-  LocationsDisplay *m_locDisp;
+  LocationsDisplayWindow *m_locDisp;
 
 public slots:
   void setLocations();

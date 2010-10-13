@@ -13,10 +13,12 @@
 #include <QVBoxLayout>
 #include <QTableWidgetItem>
 #include <QString>
+#ifdef Q_WS_MAEMO_5
 #include <QMaemo5AbstractPickSelector>
 #include <QMaemo5InformationBox>
+#endif
 
-UiController::UiController( Ui *ui ) :
+UiController::UiController( UiClass *ui ) :
         m_routeData(),
         m_ui(ui),
         m_currentRoute(-1)
@@ -29,8 +31,10 @@ UiController::UiController( Ui *ui ) :
     }
 
     QObject::connect(m_ui->m_routeButton, SIGNAL(clicked()), this, SLOT(findRoute()));
+#ifdef Q_WS_MAEMO_5
     QObject::connect(this->m_ui->m_fromButton->pickSelector(), SIGNAL(selected(const QString &)), this, SLOT(changeFrom()));
     connect(m_ui->m_toButton->pickSelector(), SIGNAL(selected(const QString &)), this, SLOT(changeTo()));
+#endif
     connect(m_ui->m_routeButtons, SIGNAL(buttonClicked(int)), this, SLOT(displayRouteDetail(int)));
 }
 
@@ -139,28 +143,42 @@ void UiController::changeFrom()
     Locations *locations = Locations::GetInstance();
     Location *from;
 
+#ifdef Q_WS_MAEMO_5
     const QString newValue = m_ui->m_fromButton->valueText();
+#else
+    const QString newValue = "";
+#endif
     if (newValue == "GPS")
     {
         from = locations->getGpsLocation();
         if (!from->isValid())
         {
             qDebug() << "GPS location is not valid.";
+#ifdef Q_WS_MAEMO_5
             QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location has not been received yet. Wait a moment.");
+#endif
             connect(from, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
             return;
         }
     }
     else
+    {
         from = locations->getLocation(newValue);
-
-    qDebug() << "Emitting signal of new from selection";
-    emit(fromChanged(from));
+        if (!from)
+            qDebug() << "No location with label " << newValue << " was found.";
+    }
+    if (from)
+    {
+        qDebug() << "Emitting signal of new from selection";
+        emit(fromChanged(from));
+    }
 }
 
 void UiController::gpsBecameValid()
 {
+#ifdef Q_WS_MAEMO_5
     QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location received.");
+#endif
     Location *gps = Locations::GetInstance()->getGpsLocation();
     disconnect(gps, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
     this->changeFrom();
@@ -173,21 +191,33 @@ void UiController::changeTo()
     Locations *locations = Locations::GetInstance();
     Location *to;
 
+#ifdef Q_WS_MAEMO_5
     const QString newValue = m_ui->m_toButton->valueText();
+#else
+    const QString newValue = "";
+#endif
     if (newValue == "GPS")
     {
         to = locations->getGpsLocation();
         if (!to->isValid())
         {
             qDebug() << "GPS location is not valid.";
+#ifdef Q_WS_MAEMO_5
             QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location has not been received yet. Wait a moment.");
+#endif
             connect(to, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
             return;
         }
     }
     else
+    {
         to = locations->getLocation(newValue);
-
-    qDebug() << "Emitting signal of new to selection";
-    emit(toChanged(to));
+        if (!to)
+            qDebug() << "No location with label " << newValue << " was found.";
+    }
+    if (to)
+    {
+        qDebug() << "Emitting signal of new to selection";
+        emit(toChanged(to));
+    }
 }

@@ -6,14 +6,14 @@
 
 #include <QObject>
 
-class Ui;
+class UiClass;
 
 class UiController : public QObject
 {
   Q_OBJECT
 
 public:
-  UiController( Ui *ui );
+  UiController( UiClass *ui );
   ~UiController();
 
 public Q_SLOTS:
@@ -35,7 +35,7 @@ private Q_SLOTS:
 
 private:
   QList<RouteData> m_routeData;
-  Ui *m_ui;
+  UiClass *m_ui;
   int m_currentRoute;
 };
 #endif // UICONTROLLER_H
