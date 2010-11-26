@@ -175,7 +175,7 @@ bool Locations::removeLocation(Location *location)
     qDebug() << "Trying to remove location " << location->label();
     QSettings settings;
     settings.beginGroup("Locations");
-    if (settings.contains(location->label()))
+    if (settings.contains("" + location->label() + "/index"))
     {
         qDebug() << "Given location exists in settings -> removing it";
         settings.remove(location->label());
