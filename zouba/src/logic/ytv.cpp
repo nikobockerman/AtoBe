@@ -19,5 +19,5 @@ QNetworkReply* Ytv::searchAddress(const QString &address)
 
     qDebug() << "The query url: " << fullUrl.toString();
 
-    return manager->get(QNetworkRequest(fullUrl));
+    return manager.get(QNetworkRequest(fullUrl));
 };

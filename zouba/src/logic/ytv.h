@@ -36,7 +36,7 @@ namespace Ytv {
         OptimizeLeastWalking=4
                          };
 
-    static QNetworkAccessManager *manager = new QNetworkAccessManager();
+    static QNetworkAccessManager manager;
 
     QNetworkReply* searchAddress(const QString &address);
 

@@ -3,7 +3,7 @@
 
 #include "routedata.h"
 
-#include "location.h"
+#include "logic/location.h"
 
 #include <QObject>
 

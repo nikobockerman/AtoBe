@@ -2,7 +2,7 @@
 #include "route.h"
 
 #include "routedata.h"
-#include "location.h"
+#include "logic/location.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -14,7 +14,7 @@
 #include <QXmlStreamReader>
 #include <QWidget>
 
-#include "ytv.h"
+#include "logic/ytv.h"
 
 Route::Route() :
   q( new RoutePrivate( this ) ),

@@ -10,15 +10,16 @@
 
 QTM_USE_NAMESPACE;
 
-class Location : public QObject
+class Location
 {
-    Q_OBJECT
 
 public:
     Location( const QString &x, const QString &y, const QString &label=QString() );
     Location( const QGeoPositionInfo &positionInfo, const QString &label=QString() );
     Location( const QString &label=QString() );
-    Location(const Location* location);
+    Location(const Location &location);
+    //Location(const Location *location);
+
 
     QString x() const;
 
@@ -36,10 +37,10 @@ public:
 
     bool isValid() const;
 
-Q_SIGNALS:
+/*Q_SIGNALS:
     void becomeValid();
     void becomeInValid();
-    void busy( bool busy );
+    void busy( bool busy );*/
 
 private:
     QString m_label;

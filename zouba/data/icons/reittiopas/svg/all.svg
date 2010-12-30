@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="129.32375"
+   height="21.637915"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.46"
+   sodipodi:docname="maemo-mapper-reittiopas-icons.svg"
+   sodipodi:version="0.32"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2824"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2906"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2935"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3036"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3050"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3072"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3152"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3227"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3342"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4135"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="63.727377"
+     inkscape:cy="-20.537488"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1050"
+     inkscape:window-height="800"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="false"
+     showborder="false" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-235.07788,-517.92067)">
+    <g
+       id="g2886"
+       transform="translate(0.17849731,2.8162323)"
+       inkscape:export-filename="/home/salva/Desktop/maemo-mapper-reittiopas-icons/128x128/maemo-mapper-bus.png"
+       inkscape:export-xdpi="577.42999"
+       inkscape:export-ydpi="577.42999">
+      <g
+         inkscape:export-ydpi="289.17194"
+         inkscape:export-xdpi="289.17194"
+         inkscape:export-filename="/home/salva/Desktop/maemo-mapper-reittiopas-icons/64x64/maemo-mapper-bus.png"
+         id="g2875">
+        <rect
+           style="fill:#193695;fill-opacity:1;stroke:none"
+           id="rect2830"
+           width="19.950514"
+           height="19.918922"
+           x="344.27261"
+           y="516.82343"
+           ry="1.9571706" />
+        <g
+           id="g2861">
+          <rect
+             ry="1.022532"
+             y="519.99615"
+             x="348.30356"
+             height="12.991072"
+             width="12.008929"
+             id="rect2834"
+             style="fill:#ffffff;fill-opacity:1;stroke:none" />
+          <rect
+             style="fill:#193695;fill-opacity:1;stroke:none"
+             id="rect2836"
+             width="9.9107151"
+             height="7.0535717"
+             x="349.35266"
+             y="521.29083"
+             ry="0.55518919" />
+          <path
+             transform="matrix(0.82857143,0,0,0.82857143,59.934301,90.790155)"
+             d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+             sodipodi:ry="0.78125"
+             sodipodi:rx="0.78125"
+             sodipodi:cy="530.91132"
+             sodipodi:cx="351.0491"
+             id="path2838"
+             style="fill:#193695;fill-opacity:1;stroke:none"
+             sodipodi:type="arc" />
+          <path
+             sodipodi:type="arc"
+             style="fill:#193695;fill-opacity:1;stroke:none"
+             id="path2840"
+             sodipodi:cx="351.0491"
+             sodipodi:cy="530.91132"
+             sodipodi:rx="0.78125"
+             sodipodi:ry="0.78125"
+             d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+             transform="matrix(0.82857143,0,0,0.82857143,66.94323,90.790155)" />
+        </g>
+        <g
+           id="g2871"
+           transform="translate(-0.02231234,0)">
+          <rect
+             ry="0.55518919"
+             y="532.18359"
+             x="349.46426"
+             height="2.7232144"
+             width="1.9196428"
+             id="rect2867"
+             style="fill:#ffffff;fill-opacity:1;stroke:none" />
+          <rect
+             style="fill:#ffffff;fill-opacity:1;stroke:none"
+             id="rect2869"
+             width="1.9196428"
+             height="2.7232144"
+             x="357.27676"
+             y="532.18359"
+             ry="0.55518919" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g3013"
+       transform="translate(-0.22271729,0.45124205)"
+       inkscape:export-filename="/home/salva/Desktop/maemo-mapper-reittiopas-icons/16x16/maemo-mapper-ferry.png"
+       inkscape:export-xdpi="72.292984"
+       inkscape:export-ydpi="72.292984">
+      <rect
+         ry="1.9571706"
+         y="519.18842"
+         x="321.0069"
+         height="19.918922"
+         width="19.950514"
+         id="rect2830-8"
+         style="fill:#00aee7;fill-opacity:1;stroke:none" />
+      <g
+         transform="matrix(1,0,0,1.0495379,0.09152746,-26.219436)"
+         id="g3000">
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           d="m 323.46875,531.584 1,2.68488 c 0,0.57804 0.79864,1.05356 1.8125,1.05356 l 9.21875,0 c 1.01386,0 1.8125,-0.47552 1.8125,-1.05356 l 1,-2.68488 c -0.79721,-1.03549 -2.04097,-0.98088 -3.38143,-1.2167 -1.34047,-0.23581 -2.77764,-0.76207 -3.96169,-0.76207 -1.28107,0.0837 -2.69996,0.6115 -4.02671,0.8272 -1.32675,0.21569 -2.56137,0.11922 -3.47392,1.15157 z"
+           id="rect2963"
+           sodipodi:nodetypes="cccccczczc" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           d="m 325.78125,524.6169 0,4.98621 c 0,0 1.69271,0 2.53906,0 0.84636,0 2.53906,-0.36414 2.53906,-0.36414 l 2.53907,0.36414 2.53906,0 0,-4.98621 -10.15625,0 z"
+           id="rect2967"
+           sodipodi:nodetypes="ccsccccc" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect2969"
+           width="2.4622469"
+           height="3.6390722"
+           x="329.62543"
+           y="521.94464"
+           ry="0.58786494" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect2971"
+           width="15.783633"
+           height="0.75527918"
+           x="322.99881"
+           y="535.60834"
+           ry="0.37763959" />
+        <g
+           id="g2992"
+           transform="matrix(1,0,0,1.0875465,0.03067094,-46.956752)">
+          <g
+             id="g2982">
+            <rect
+               style="fill:#00aee7;fill-opacity:1;stroke:none"
+               id="rect2974"
+               width="1.2946428"
+               height="1.25"
+               x="326.60712"
+               y="527.80859"
+               ry="0.26785016" />
+            <rect
+               ry="0.26785016"
+               y="527.80859"
+               x="328.4375"
+               height="1.25"
+               width="1.2946428"
+               id="rect2976"
+               style="fill:#00aee7;fill-opacity:1;stroke:none" />
+          </g>
+          <g
+             transform="translate(5.3125,0)"
+             id="g2986">
+            <rect
+               ry="0.26785016"
+               y="527.80859"
+               x="326.60712"
+               height="1.25"
+               width="1.2946428"
+               id="rect2988"
+               style="fill:#00aee7;fill-opacity:1;stroke:none" />
+            <rect
+               style="fill:#00aee7;fill-opacity:1;stroke:none"
+               id="rect2990"
+               width="1.2946428"
+               height="1.25"
+               x="328.4375"
+               y="527.80859"
+               ry="0.26785016" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g3132"
+       inkscape:export-filename="/home/salva/Desktop/maemo-mapper-reittiopas-icons/16x16/maemo-mapper-metro.png"
+       inkscape:export-xdpi="72.18"
+       inkscape:export-ydpi="72.18"
+       transform="translate(-4.5146484,0.36194761)">
+      <rect
+         style="fill:#fb6500;fill-opacity:1;stroke:none"
+         id="rect2830-8-3"
+         width="19.950514"
+         height="19.918922"
+         x="301.6319"
+         y="519.27771"
+         ry="1.9571706" />
+      <g
+         transform="translate(0,-0.9709661)"
+         id="g3122">
+        <g
+           id="g3112"
+           transform="matrix(1,0,0,0.91065292,-0.44642857,47.285796)">
+          <g
+             transform="translate(3.9285734,-2.4107084)"
+             id="g3102">
+            <rect
+               ry="1.022532"
+               y="525.15234"
+               x="302.12054"
+               height="12.991072"
+               width="12.008929"
+               id="rect2834-4"
+               style="fill:#ffffff;fill-opacity:1;stroke:none" />
+            <rect
+               style="fill:#fb6500;fill-opacity:1;stroke:none"
+               id="rect2836-7"
+               width="9.9107151"
+               height="7.0535717"
+               x="303.16965"
+               y="526.44702"
+               ry="0.55518919" />
+            <g
+               transform="translate(0.08929196,0)"
+               id="g3108">
+              <path
+                 sodipodi:type="arc"
+                 style="fill:#fb6500;fill-opacity:1;stroke:none"
+                 id="path2838-7"
+                 sodipodi:cx="351.0491"
+                 sodipodi:cy="530.91132"
+                 sodipodi:rx="0.78125"
+                 sodipodi:ry="0.78125"
+                 d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+                 transform="matrix(0.82857144,0,0,0.82857144,13.215563,96.660648)" />
+              <path
+                 transform="matrix(0.82857144,0,0,0.82857144,21.11735,96.660648)"
+                 d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+                 sodipodi:ry="0.78125"
+                 sodipodi:rx="0.78125"
+                 sodipodi:cy="530.91132"
+                 sodipodi:cx="351.0491"
+                 id="path2840-3"
+                 style="fill:#fb6500;fill-opacity:1;stroke:none"
+                 sodipodi:type="arc" />
+            </g>
+          </g>
+        </g>
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect3120"
+           width="5"
+           height="1.4285715"
+           x="309.10715"
+           y="535.66571"
+           ry="0.28573519" />
+      </g>
+    </g>
+    <g
+       id="g3194"
+       transform="translate(0.1237101,0)">
+      <g
+         id="g3191" />
+    </g>
+    <g
+       id="g3205"
+       inkscape:export-filename="/home/salva/Desktop/maemo-mapper-reittiopas-icons/128x128/maemo-mapper-train.png"
+       inkscape:export-xdpi="577.42999"
+       inkscape:export-ydpi="577.42999"
+       transform="translate(-4.0641876,0.36194761)">
+      <g
+         transform="translate(-24.117392,0)"
+         id="g3158"
+         inkscape:export-filename="/home/salva/Desktop/maemo-mapper-reittiopas-icons/16x16/maemo-mapper-metro.png"
+         inkscape:export-xdpi="72.18"
+         inkscape:export-ydpi="72.18">
+        <rect
+           style="fill:#ce1141;fill-opacity:1;stroke:none"
+           id="rect3160"
+           width="19.950514"
+           height="19.918922"
+           x="301.6319"
+           y="519.27771"
+           ry="1.9571706" />
+        <g
+           transform="translate(0,-0.9709661)"
+           id="g3162">
+          <g
+             id="g3164"
+             transform="matrix(1,0,0,0.91065292,-0.44642857,47.285796)">
+            <g
+               transform="translate(3.9285734,-2.4107084)"
+               id="g3166">
+              <path
+                 id="rect3168"
+                 d="m 303.13525,524.40901 c -0.56648,0 -1,0.48549 -1,1.0795 l 0,11.47873 c 0,0.59401 0.43352,1.07951 1,1.07951 l 1.25,0 0,0.57573 -1.09375,0 c -0.1583,0 -0.28125,0.14157 -0.28125,0.32385 l 0,1.00754 c 0,0.18228 0.12295,0.32385 0.28125,0.32385 l 9.65625,0 c 0.1583,0 0.28125,-0.14157 0.28125,-0.32385 l 0,-1.00754 c 0,-0.18228 -0.12295,-0.32385 -0.28125,-0.32385 l -1.0625,0 0,-0.57573 1.21875,0 c 0.56648,0 1.03125,-0.4855 1.03125,-1.07951 l 0,-11.47873 c 0,-0.59401 -0.46477,-1.0795 -1.03125,-1.0795 l -9.96875,0 z m 2.625,13.63774 4.71875,0 0,0.57573 -4.71875,0 0,-0.57573 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:none" />
+              <rect
+                 style="fill:#ce1141;fill-opacity:1;stroke:none"
+                 id="rect3170"
+                 width="9.9107151"
+                 height="6.3672514"
+                 x="303.16965"
+                 y="527.1333"
+                 ry="0.50116861" />
+              <g
+                 transform="translate(0.08929196,0)"
+                 id="g3172">
+                <g
+                   transform="translate(-0.0453027,0)"
+                   id="g3180">
+                  <path
+                     transform="matrix(1.0087656,0,0,1.0087656,-50.052442,0.9935338)"
+                     d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+                     sodipodi:ry="0.78125"
+                     sodipodi:rx="0.78125"
+                     sodipodi:cy="530.91132"
+                     sodipodi:cx="351.0491"
+                     id="path3174"
+                     style="fill:#ce1141;fill-opacity:1;stroke:none"
+                     sodipodi:type="arc" />
+                  <path
+                     sodipodi:type="arc"
+                     style="fill:#ce1141;fill-opacity:1;stroke:none"
+                     id="path3176"
+                     sodipodi:cx="351.0491"
+                     sodipodi:cy="530.91132"
+                     sodipodi:rx="0.78125"
+                     sodipodi:ry="0.78125"
+                     d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+                     transform="matrix(1.0087656,0,0,1.0087656,-42.038036,0.9935338)" />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <rect
+         ry="0.50116861"
+         y="522.22827"
+         x="285.83798"
+         height="1.2053572"
+         width="3.3035715"
+         id="rect3203"
+         style="fill:#ce1141;fill-opacity:1;stroke:none" />
+    </g>
+    <g
+       id="g3319"
+       inkscape:export-filename="/home/salva/Desktop/maemo-mapper-reittiopas-icons/16x16/maemo-mapper-tram.png"
+       inkscape:export-xdpi="72.18"
+       inkscape:export-ydpi="72.18"
+       transform="translate(-4.2450714,0.36194761)">
+      <rect
+         style="fill:#00ab67;fill-opacity:1;stroke:none"
+         id="rect3237"
+         width="19.950514"
+         height="19.918922"
+         x="254.02846"
+         y="519.27771"
+         ry="1.9571706" />
+      <g
+         transform="translate(0.04464286,-0.1382311)"
+         id="g3306">
+        <g
+           id="g3293"
+           transform="translate(0.29258313,23.758674)">
+          <g
+             transform="matrix(0.84216366,0,0,0.96504877,1.2023017,-4.800965)"
+             id="g3239">
+            <g
+               id="g3241"
+               transform="matrix(1,0,0,0.91065292,-0.44642857,47.285796)">
+              <g
+                 transform="translate(3.9285734,-2.4107084)"
+                 id="g3243">
+                <path
+                   sodipodi:nodetypes="cccccccccccccccccccccccccc"
+                   id="path3245"
+                   d="m 303.13525,524.40901 c -0.56648,0 -1,0.48549 -1,1.0795 l 0,11.47873 c 0,0.59401 0.43352,1.07951 1,1.07951 l 1.25,0 0,1.15991 -1.75637,0 c -0.1583,0 -0.28125,0.14157 -0.28125,0.32385 l 0,0.42336 c 0,0.18228 0.12295,0.32385 0.28125,0.32385 l 11.29955,0 c 0.1583,0 0.28125,-0.14157 0.28125,-0.32385 l 0,-0.42336 c 0,-0.18228 -0.12295,-0.32385 -0.28125,-0.32385 l -2.04318,0 0,-1.15991 1.21875,0 c 0.56648,0 1.03125,-0.4855 1.03125,-1.07951 l 0,-11.47873 c 0,-0.59401 -0.46477,-1.0795 -1.03125,-1.0795 l -9.96875,0 z m 2.625,13.63774 4.71875,0 0,1.15991 -4.71875,0 0,-1.15991 z"
+                   style="fill:#ffffff;fill-opacity:1;stroke:none" />
+                <rect
+                   style="fill:#00ac67;fill-opacity:1;stroke:none"
+                   id="rect3247"
+                   width="9.2215891"
+                   height="7.8404045"
+                   x="303.56168"
+                   y="525.86334"
+                   ry="0.61712098" />
+                <g
+                   transform="translate(0.08929196,0)"
+                   id="g3249">
+                  <g
+                     transform="translate(-0.0453027,0)"
+                     id="g3251">
+                    <path
+                       transform="matrix(1.0087656,0,0,1.0087656,-50.052442,0.9935338)"
+                       d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+                       sodipodi:ry="0.78125"
+                       sodipodi:rx="0.78125"
+                       sodipodi:cy="530.91132"
+                       sodipodi:cx="351.0491"
+                       id="path3253"
+                       style="fill:#00ab67;fill-opacity:1;stroke:none"
+                       sodipodi:type="arc" />
+                    <path
+                       sodipodi:type="arc"
+                       style="fill:#00ab67;fill-opacity:1;stroke:none"
+                       id="path3255"
+                       sodipodi:cx="351.0491"
+                       sodipodi:cy="530.91132"
+                       sodipodi:rx="0.78125"
+                       sodipodi:ry="0.78125"
+                       d="m 351.83035,530.91132 c 0,0.43147 -0.34977,0.78125 -0.78125,0.78125 -0.43147,0 -0.78125,-0.34978 -0.78125,-0.78125 0,-0.43148 0.34978,-0.78125 0.78125,-0.78125 0.43148,0 0.78125,0.34977 0.78125,0.78125 z"
+                       transform="matrix(1.0087656,0,0,1.0087656,-42.038036,0.9935338)" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect3304"
+           width="3.7053573"
+           height="1.1607143"
+           x="262.10638"
+           y="521.4693"
+           ry="0.40181187" />
+      </g>
+    </g>
+    <g
+       id="g3497"
+       transform="translate(11.111678,22.728432)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none"
+         id="rect2498"
+         width="19.950514"
+         height="19.918922"
+         x="215.25363"
+         y="496.51663"
+         ry="1.9571706" />
+      <g
+         transform="matrix(7.9656517e-2,0,0,8.8314679e-2,215.34234,496.56756)"
+         id="g3486">
+        <g
+           id="g8150"
+           transform="matrix(25.900445,0,0,-25.900445,134.32984,53.145434)">
+          <path
+             d="M 0,0 C 0.326,-0.025 0.611,0.219 0.637,0.543 C 0.663,0.869 0.42,1.154 0.094,1.18 C -0.232,1.205 -0.518,0.963 -0.543,0.637 C -0.568,0.311 -0.325,0.025 0,0"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path8152" />
+        </g>
+        <g
+           id="g8154"
+           transform="matrix(25.900445,0,0,-25.900445,121.35393,59.4179)">
+          <path
+             d="M 0,0 C 0.116,0.08 0.26,0.135 0.415,0.123 C 0.618,0.105 0.786,-0.02 0.886,-0.174 L 1.484,-1.357 L 2.298,-1.918 C 2.368,-1.971 2.41,-2.059 2.403,-2.152 C 2.392,-2.299 2.263,-2.408 2.115,-2.396 C 2.071,-2.395 2.036,-2.377 1.993,-2.357 L 1.104,-1.746 C 1.077,-1.723 1.056,-1.697 1.038,-1.666 L 0.813,-1.223 L 0.547,-2.404 L 1.597,-3.645 C 1.62,-3.684 1.636,-3.727 1.646,-3.771 L 1.929,-5.27 C 1.928,-5.303 1.933,-5.324 1.931,-5.352 C 1.913,-5.572 1.72,-5.736 1.499,-5.719 C 1.317,-5.705 1.181,-5.568 1.138,-5.402 L 0.87,-3.998 L 0.019,-3.064 L -0.181,-3.975 C -0.187,-4.018 -0.243,-4.107 -0.261,-4.145 L -1.078,-5.523 C -1.161,-5.65 -1.297,-5.73 -1.454,-5.719 C -1.675,-5.701 -1.84,-5.508 -1.822,-5.287 C -1.817,-5.225 -1.791,-5.16 -1.769,-5.115 L -1.007,-3.838 L -0.374,-1.025 L -0.788,-1.361 L -1.007,-2.363 C -1.036,-2.49 -1.153,-2.596 -1.292,-2.584 C -1.438,-2.572 -1.549,-2.445 -1.538,-2.297 L -1.532,-2.262 L -1.271,-1.094 C -1.257,-1.041 -1.228,-0.998 -1.188,-0.965 L 0,0 z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path8156" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

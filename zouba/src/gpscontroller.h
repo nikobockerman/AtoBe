@@ -1,7 +1,7 @@
 #ifndef GPSCONTROLLER_H
 #define GPSCONTROLLER_H
 
-#include "location.h"
+#include "logic/location.h"
 
 #include <QObject>
 #include <QGeoPositionInfo>

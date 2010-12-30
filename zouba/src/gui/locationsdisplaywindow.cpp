@@ -1,7 +1,9 @@
 #include "locationsdisplaywindow.h"
 #include "ui_locationsdisplaywindow.h"
-#include "locations.h"
-#include "addressdialog.h"
+
+#include "src/logic/locations.h"
+
+#include "src/addressdialog.h"
 
 #include <QDebug>
 #include <QListWidgetItem>
@@ -21,45 +23,23 @@ LocationsDisplayWindow::LocationsDisplayWindow(QWidget *parent) :
     ui(new Ui::LocationsDisplayWindow)
 {
     ui->setupUi(this);
+
 #ifdef Q_WS_MAEMO_5
     this->setAttribute(Qt::WA_Maemo5StackedWindow);
 #endif
-    QAction *editListAction = new QAction(editText, this->ui->menuBar);
-    this->ui->menuBar->addAction(editListAction);
-    connect(editListAction, SIGNAL(triggered()), this, SLOT(showEditOptions()));
-//#endif
-    this->ui->editViewWidget->hide();
-
-    connect(this->ui->newLocButton, SIGNAL(clicked()), this, SLOT(addAddress()));
-    connect(this->ui->locationsWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(editLocation(QListWidgetItem*)));
-    connect(this->ui->deleteButton, SIGNAL(clicked()), this, SLOT(remove()));
-    connect(this->ui->upButton, SIGNAL(clicked()), this, SLOT(moveUp()));
-    connect(this->ui->downButton, SIGNAL(clicked()), this, SLOT(moveDown()));
-    connect(this->ui->doneButton, SIGNAL(clicked()), this, SLOT(closeEditOptions()));
 
     this->populateLocations();
 
     Locations *locations = Locations::GetInstance();
     connect(locations, SIGNAL(locationsChanged()), this, SLOT(populateLocations()));
+
+    this->ui->buttonsStacked->adjustSize();
+    this->ui->locationsWidget->adjustSize();
 }
 
 LocationsDisplayWindow::~LocationsDisplayWindow()
 {
     delete ui;
-}
-
-void LocationsDisplayWindow::showEditOptions()
-{
-    disconnect(this->ui->locationsWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(editLocation(QListWidgetItem*)));
-    this->ui->defaultViewWidget->hide();
-    this->ui->editViewWidget->show();
-}
-
-void LocationsDisplayWindow::closeEditOptions()
-{
-    connect(this->ui->locationsWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(editLocation(QListWidgetItem*)));
-    this->ui->defaultViewWidget->show();
-    this->ui->editViewWidget->hide();
 }
 
 void LocationsDisplayWindow::populateLocations()
@@ -68,6 +48,7 @@ void LocationsDisplayWindow::populateLocations()
     qDebug() << "Populating locations";
     Locations *locations = Locations::GetInstance();
 
+    QStringList locs;
     for (int index = 1; index <= locations->size(); ++index)
     {
         qDebug() << "Adding location: " << locations->getLocation(index)->label();
@@ -75,20 +56,17 @@ void LocationsDisplayWindow::populateLocations()
         QString dispName = loc->label();
         if (!loc->isValid())
             dispName.append(invalidPostText);
-        new QListWidgetItem(dispName, this->ui->locationsWidget);
+        locs << dispName;
     }
+    this->ui->locationsWidget->addItems(locs);
     qDebug() << "Locations populated";
 }
 
-void LocationsDisplayWindow::addAddress()
-{
-    AddressDialog *dialog = new AddressDialog(this);
-    dialog->show();
-}
 
 void LocationsDisplayWindow::editLocation(QListWidgetItem *item)
 {
-    if (!item) return;
+    /// TODO
+    /*if (!item) return;
 
     Locations *locations = Locations::GetInstance();
     QString findText = getLocName(item);
@@ -99,37 +77,24 @@ void LocationsDisplayWindow::editLocation(QListWidgetItem *item)
     {
         AddressDialog *dialog = new AddressDialog(this, loc);
         dialog->show();
-    }
+    }*/
 }
 
-QString getLocName(const QListWidgetItem *item)
+QString LocationsDisplayWindow::getLocName(const QListWidgetItem *item)
 {
-    if (!item) return 0;
+    if (!item) return NULL;
     QString retText = item->text();
     if (retText.contains(" - Invalid address", Qt::CaseSensitive))
         retText.chop(18);
     return retText;
 }
 
-void LocationsDisplayWindow::remove()
-{
-    qDebug() << "Remove called";
-    Location* loc = getSelectedLocation(this->ui->locationsWidget->selectedItems());
-    if (!loc)
-        qDebug() << "No location with selected label was found from locations.";
-    else
-    {
-        Locations *locations = Locations::GetInstance();
-        locations->removeLocation(loc);
-    }
-}
-
-Location* getSelectedLocation(QList<QListWidgetItem*> list)
+Location* LocationsDisplayWindow::getSelectedLocation(QList<QListWidgetItem*> list)
 {
     if (list.size() == 0)
     {
         qDebug() << "No item is selected";
-        return 0;
+        return NULL;
     }
     QListWidgetItem *item = list.at(0);
     QString name = getLocName(item);
@@ -138,10 +103,17 @@ Location* getSelectedLocation(QList<QListWidgetItem*> list)
     return locations->getLocation(name);
 }
 
-void LocationsDisplayWindow::moveUp()
+void LocationsDisplayWindow::on_newLocButton_clicked()
+{
+    /// TODO
+    /*AddressDialog *dialog = new AddressDialog(this);
+    dialog->show();*/
+}
+
+void LocationsDisplayWindow::on_upButton_clicked()
 {
     qDebug() << "Move up called";
-    Location* loc = getSelectedLocation(this->ui->locationsWidget->selectedItems());
+    Location* loc = this->getSelectedLocation(this->ui->locationsWidget->selectedItems());
     if (!loc)
         qDebug() << "No location with selected label was found from locations.";
     else
@@ -151,10 +123,10 @@ void LocationsDisplayWindow::moveUp()
     }
 }
 
-void LocationsDisplayWindow::moveDown()
+void LocationsDisplayWindow::on_downButton_clicked()
 {
     qDebug() << "Move down called";
-    Location* loc = getSelectedLocation(this->ui->locationsWidget->selectedItems());
+    Location* loc = this->getSelectedLocation(this->ui->locationsWidget->selectedItems());
     if (!loc)
         qDebug() << "No location with selected label was found from locations.";
     else
@@ -164,3 +136,33 @@ void LocationsDisplayWindow::moveDown()
     }
 }
 
+void LocationsDisplayWindow::on_deleteButton_clicked()
+{
+    qDebug() << "Remove called";
+    Location* loc = this->getSelectedLocation(this->ui->locationsWidget->selectedItems());
+    if (!loc)
+        qDebug() << "No location with selected label was found from locations.";
+    else
+    {
+        Locations *locations = Locations::GetInstance();
+        locations->removeLocation(loc);
+    }
+}
+
+void LocationsDisplayWindow::on_customizeButton_clicked()
+{
+    this->ui->buttonsStacked->setCurrentIndex(1);
+}
+
+void LocationsDisplayWindow::on_doneButton_clicked()
+{
+    this->ui->buttonsStacked->setCurrentIndex(0);
+}
+
+void LocationsDisplayWindow::on_locationsWidget_itemClicked(QListWidgetItem* item)
+{
+    if (this->ui->buttonsStacked->currentIndex() == 0)
+        this->editLocation(item);
+}
+
+void LocationsDisplayWindow::on_locationsWidget_clicked(QModelIndex index){}

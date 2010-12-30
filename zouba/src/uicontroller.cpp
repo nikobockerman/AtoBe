@@ -1,9 +1,9 @@
 #include "uicontroller.h"
 #include "route.h"
 #include "ui.h"
-#include "ytv.h"
-#include "location.h"
-#include "locations.h"
+#include "logic/ytv.h"
+#include "logic/location.h"
+#include "logic/locations.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -24,11 +24,11 @@ UiController::UiController( UiClass *ui ) :
         m_currentRoute(-1)
 {
     Locations *locations = Locations::GetInstance();
-    if (locations->size() == 0)
+    /*if (locations->size() == 0)
     {
         locations->addEditLocation(new Location("Home"));
         locations->addEditLocation(new Location("Work"));
-    }
+    }*/
 
     QObject::connect(m_ui->m_routeButton, SIGNAL(clicked()), this, SLOT(findRoute()));
 #ifdef Q_WS_MAEMO_5
@@ -157,7 +157,7 @@ void UiController::changeFrom()
 #ifdef Q_WS_MAEMO_5
             QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location has not been received yet. Wait a moment.");
 #endif
-            connect(from, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
+            //connect(from, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
             return;
         }
     }
@@ -180,7 +180,7 @@ void UiController::gpsBecameValid()
     QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location received.");
 #endif
     Location *gps = Locations::GetInstance()->getGpsLocation();
-    disconnect(gps, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
+    //disconnect(gps, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
     this->changeFrom();
     this->changeTo();
 }
@@ -205,7 +205,7 @@ void UiController::changeTo()
 #ifdef Q_WS_MAEMO_5
             QMaemo5InformationBox::information(this->m_ui->m_mainWindow, "GPS location has not been received yet. Wait a moment.");
 #endif
-            connect(to, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
+            //connect(to, SIGNAL(becomeValid()), this, SLOT(gpsBecameValid()));
             return;
         }
     }

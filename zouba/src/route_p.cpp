@@ -1,5 +1,5 @@
 #include "route_p.h"
-#include "location.h"
+#include "logic/location.h"
 
 #include <QXmlStreamReader>
 #include <QDebug>

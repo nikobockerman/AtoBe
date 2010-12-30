@@ -1,5 +1,5 @@
 #include "gpscontroller.h"
-#include "locations.h"
+#include "logic/locations.h"
 
 #include <QObject>
 #include <QGeoPositionInfo>

@@ -75,7 +75,7 @@ void Location::setLocation(const QGeoPositionInfo &positionInfo)
     this->m_y.setNum(outY);
     //qDebug() << "Setting as valid";
     this->m_valid = true;
-    emit(becomeValid());
+    //emit(becomeValid());
     //qDebug() << "Location set";
 }
 #endif
@@ -96,14 +96,23 @@ Location::Location(const QString &label) :
 {
 }
 
-Location::Location(const Location *location) :
-        m_label(location->m_label),
-        m_address(location->m_address),
-        m_x(location->m_x),
-        m_y(location->m_y),
-        m_valid(location->m_valid)
+Location::Location(const Location &other) :
+    m_label(other.m_label),
+    m_address(other.m_address),
+    m_x(other.m_x),
+    m_y(other.m_y),
+    m_valid(other.m_valid)
 {
 }
+
+/*Location* Location::copy_Location(const Location *other)
+{
+    Location *ret = new Location(other->m_x, other->m_y, other->m_label);
+    ret->m_address = other->m_address;
+    ret->m_valid = other->m_valid;
+    return ret;
+}*/
+
 
 QString Location::x() const
 {

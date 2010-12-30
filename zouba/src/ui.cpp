@@ -1,7 +1,7 @@
 #include "ui.h"
 
-#include "locations.h"
-#include "ytv.h"
+#include "logic/locations.h"
+#include "logic/ytv.h"
 
 #include <QMainWindow>
 #include <QRadioButton>

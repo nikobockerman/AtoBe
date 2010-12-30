@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/reittiopas">
+        <file alias="bus">data/icons/reittiopas/maemo-mapper-bus.png</file>
+        <file alias="ferry">data/icons/reittiopas/maemo-mapper-ferry.png</file>
+        <file alias="metro">data/icons/reittiopas/maemo-mapper-metro.png</file>
+        <file alias="train">data/icons/reittiopas/maemo-mapper-train.png</file>
+        <file alias="tram">data/icons/reittiopas/maemo-mapper-tram.png</file>
+        <file alias="walk">data/icons/reittiopas/maemo-mapper-walk.png</file>
+    </qresource>
+</RCC>

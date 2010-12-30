@@ -17,8 +17,8 @@
 #include <QMaemo5ValueButton>
 #endif
 
-#include "location.h"
-#include "locationsdisplaywindow.h"
+#include "logic/location.h"
+#include "gui/locationsdisplaywindow.h"
 
 /*class QMainWindow;
 class QWidget;

@@ -2,15 +2,20 @@
 #include "route.h"
 #include "ui.h"
 #include "uicontroller.h"
-#include "location.h"
+#include "logic/location.h"
 #include "gpscontroller.h"
-#include "ytv.h"
-#include "locations.h"
+#include "logic/ytv.h"
+#include "logic/locations.h"
+
+#include "gui/searchdisplay.h"
 
 #include <QDebug>
 #include <QObject>
 #include <QApplication>
 #include <QMainWindow>
+#include <QLabel>
+
+//#define BUILD_TWO_GUIS 1
 
 int main(int argc, char *argv[] )
 {
@@ -22,20 +27,37 @@ int main(int argc, char *argv[] )
 
     Locations* locations = Locations::GetInstance();
     Locations *other_locations = Locations::GetInstance();
+    if (locations->size() == 0)
+    {
+        locations->addEditLocation(new Location("2558542", "6676458", "Home"));
+        locations->addEditLocation(new Location("2540835", "6672773", "Work"));
+    }
+
+#ifdef Q_WS_MAEMO_5
+    SearchDisplay *mainWindow = new SearchDisplay();
+    //layout->addWidget(win);
+#else
+    //DesktopWindow* mainWindow = new DesktopWindow();
+    SearchDisplay *mainWindow = new SearchDisplay();
+#endif
+    mainWindow->show();
+
     if (locations == other_locations)
         qDebug() << "Same instance";
     else
         qDebug() << "!!NOT SAME INSTANCE!!";
 
-    QMainWindow *mainWindow = new QMainWindow;
+#ifdef BUILD_TWO_GUIS
+#ifdef Q_WS_MAEMO_5
+    QMainWindow *oldMainWindow = new QMainWindow;
     UiClass *ui = new UiClass;;
-    ui->setupUi(mainWindow);
+    ui->setupUi(oldMainWindow);
 
     UiController  *uiController  = new UiController( ui );
     Route         *route         = new Route();
-#ifdef Q_WS_MAEMO_5
+//#ifdef Q_WS_MAEMO_5
     GpsController *gpsController = new GpsController();
-#endif
+//#endif
 
     QObject::connect(
             route, SIGNAL( routeReady( QList<RouteData> ) ),
@@ -63,13 +85,14 @@ int main(int argc, char *argv[] )
             route, SIGNAL(busy(bool)),
             ui, SLOT(setBusy(bool)));
 
-#ifdef Q_WS_MAEMO_5
+//#ifdef Q_WS_MAEMO_5
     QObject::connect(
             ui->m_UseGpsAction, SIGNAL(toggled(bool)), gpsController, SLOT(useGPS(bool)));
-#endif
+//#endif
 
-    mainWindow->show();
-
+    oldMainWindow->show();
+#endif // Q_WS_MAEMO_5
+#endif // BUILD_TWO_GUIS
     //Locations::destroyLocations();
 
     return app.exec();

@@ -1,7 +1,7 @@
 #include "addressdialog.h"
-#include "location.h"
-#include "ytv.h"
-#include "locations.h"
+#include "logic/location.h"
+#include "logic/ytv.h"
+#include "logic/locations.h"
 
 #include <QWidget>
 #include <QDialog>
@@ -68,7 +68,7 @@ void AddressDialog::searchFinished()
     QXmlStreamReader xml(this->m_reply->readAll());
     //Remove the reply. Hopefully also removes the connection.
     //delete this->m_reply;
-    this->m_reply = 0;
+    this->m_reply->deleteLater();
     
     bool responseHasError = false;
     this->m_places = QList<Location*>();
@@ -271,7 +271,7 @@ Location* foundFromList(const QString address, const QList<Location*>& list)
         if (address == (*it)->label())
         {
             qDebug() << "Found item from list: " << *it;
-            ret = new Location(*it);
+            ret = new Location(**it);
             qDebug() << "After assignment: " << ret;
         }
     }

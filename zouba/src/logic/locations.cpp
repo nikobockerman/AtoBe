@@ -205,7 +205,7 @@ bool Locations::removeLocation(Location *location)
 Location *Locations::getLocation(const QString &label) const
 {
     qDebug() << "requesting location " << label;
-    Location *retVal = 0;
+    Location *retVal = NULL;
 
     if (this->m_locationStorage.contains(label)) {
         qDebug() << "found location " << label;
@@ -253,7 +253,7 @@ Location *Locations::getLocation(const QString &label) const
 Location *Locations::getLocation(const int &index) const
 {
     qDebug() << "Getting location for index" << index;
-    Location *loc = 0;
+    Location *loc = NULL;
     /*QString label;
     if (this->findLabel(index, label))
     {
