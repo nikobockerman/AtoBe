@@ -22,7 +22,24 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="locations"/>
+    <widget class="QPushButton" name="gps_button">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>Current location</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="locations">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>600</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -45,8 +62,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>252</x>
+     <y>295</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -61,8 +78,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>320</x>
+     <y>295</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

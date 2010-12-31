@@ -37,6 +37,14 @@ SearchDisplay::SearchDisplay(QWidget *parent) :
     //this->ui->from_favorites->setIcon(QIcon::fromTheme("edit-copy"));
     //this->ui->dest_favorites->setText("Fav");
 
+    QMenuBar *menu = this->ui->menubar;
+    QAction *use_gps = new QAction("Use GPS", this);
+    use_gps->setCheckable(true);
+    use_gps->setChecked(false);
+    this->connect(use_gps, SIGNAL(toggled(bool)), SLOT(gps_status_change_requested(bool)));
+    this->connect(use_gps, SIGNAL(toggled(bool)), locations->getGpsLocation(), SLOT(enableGps(bool)));
+    menu->addAction(use_gps);
+
     this->from_selected = NULL;
     this->dest_selected = NULL;
     this->edit_window = NULL;
@@ -69,6 +77,12 @@ SearchDisplay::SearchDisplay(QWidget *parent) :
 #endif
 
     qDebug() << "Finish constructor";
+}
+
+void SearchDisplay::gps_status_change_requested(bool status)
+{
+
+
 }
 
 SearchDisplay::~SearchDisplay()

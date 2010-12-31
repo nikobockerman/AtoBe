@@ -19,8 +19,7 @@ public:
     explicit GpsLocation(QObject *parent = 0);
     ~GpsLocation();
 
-    QString x();
-    QString y();
+    bool isUpdating() const;
 
 signals:
     void gpsLocationChanged(GpsLocation *newLocation);
@@ -37,7 +36,7 @@ private:
     void calculateXY();
 
     QGeoPositionInfoSource *m_gps;
-    bool m_active, m_calculated;
+    bool m_active;
     qreal latitude, longitude;
 
 };

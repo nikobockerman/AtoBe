@@ -27,14 +27,38 @@ FavoriteSelectionDialog::FavoriteSelectionDialog(QWidget *parent) :
             locs << loc->label();
         }
     }
-
     this->ui->locations->addItems(locs);
+
+
+    if (!locations->getGpsLocation()->isUpdating())
+        this->ui->gps_button->setEnabled(false);
+    else if (!locations->getGpsLocation()->isValid())
+    {
+        this->ui->gps_button->setEnabled(false);
+        this->m_text = this->ui->gps_button->text();
+        this->ui->gps_button->setText(this->m_text + " (Searching...)");
+        this->connect(locations->getGpsLocation(), SIGNAL(gpsLocationChanged(GpsLocation*)), SLOT(gps_location_retrieved()));
+    }
+
+    //this->connect(locations->getGpsLocation(), SIGNAL(gpsLocationUpdatingChanged(bool)), SLOT(gps_updating_changed(bool)));
 
 }
 
 FavoriteSelectionDialog::~FavoriteSelectionDialog()
 {
     delete ui;
+}
+
+void FavoriteSelectionDialog::gps_updating_changed(bool isActive)
+{
+    //this->ui->gps_button->setEnabled(isActive);
+}
+
+void FavoriteSelectionDialog::gps_location_retrieved()
+{
+    this->ui->gps_button->setEnabled(true);
+    this->ui->gps_button->setText(this->m_text);
+    this->disconnect(this, SLOT(gps_location_retrieved()));
 }
 
 void FavoriteSelectionDialog::on_locations_itemClicked(QListWidgetItem* item)
@@ -48,5 +72,12 @@ void FavoriteSelectionDialog::on_locations_itemClicked(QListWidgetItem* item)
 void FavoriteSelectionDialog::on_modify_button_clicked()
 {
     emit(this->customizeRequested());
+    this->deleteLater();
+}
+
+void FavoriteSelectionDialog::on_gps_button_clicked()
+{
+    Locations *locations = Locations::GetInstance();
+    emit(this->selectedLocation(locations->getGpsLocation()));
     this->deleteLater();
 }

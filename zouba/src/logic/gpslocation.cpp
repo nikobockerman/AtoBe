@@ -5,7 +5,6 @@
 GpsLocation::GpsLocation(QObject *parent) :
     QObject(parent), Location("0", "0", "GPS", "GPS"),
     m_gps(QGeoPositionInfoSource::createDefaultSource(this)), m_active(false),
-    m_calculated(false),
     latitude(0), longitude(0)
 {
     m_valid = false;
@@ -28,6 +27,7 @@ void GpsLocation::enableGps(bool enable)
     else
         this->m_gps->stopUpdates();
 
+    this->m_active = enable;
     emit(this->gpsLocationUpdatingChanged(enable));
 }
 
@@ -36,7 +36,8 @@ void GpsLocation::updateLocation(QGeoPositionInfo positionInfo)
     this->latitude = positionInfo.coordinate().latitude();
     this->longitude = positionInfo.coordinate().longitude();
 
-    this->m_calculated = false;
+    this->calculateXY();
+
     this->m_valid = true;
 
     emit(this->gpsLocationChanged(this));
@@ -56,26 +57,11 @@ void GpsLocation::calculateXY()
 
     this->m_x.setNum(outX);
     this->m_y.setNum(outY);
-
-    this->m_calculated = true;
 }
 
-QString GpsLocation::x()
+bool GpsLocation::isUpdating() const
 {
-    if (!this->m_calculated)
-    {
-        this->calculateXY();
-    }
-    return this->m_x;
-}
-
-QString GpsLocation::y()
-{
-    if (!this->m_calculated)
-    {
-        this->calculateXY();
-    }
-    return this->m_y;
+    return this->m_active;
 }
 
 const double KkjZoneInfo[6][2] = {

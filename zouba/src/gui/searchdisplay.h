@@ -35,6 +35,8 @@ private slots:
 
     void route_finder_finished();
 
+    void gps_status_change_requested(bool status);
+
 private:
     void setEditText(QLineEdit*, QString&);
     void updateLocationLists();
