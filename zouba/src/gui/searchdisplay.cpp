@@ -179,8 +179,7 @@ void SearchDisplay::on_searchButton_clicked()
         from = new Location(*from);
     } else {
         qDebug() << "Written text differs from the text in the combo box.";
-        from = new Location("Temp");
-        from->setAddress(this->ui->from_edit->text());
+        from = new Location("Temp", this->ui->from_edit->text());
     }
 
     if (dest != NULL && this->ui->dest_edit->text() == dest->address()) {
@@ -188,8 +187,7 @@ void SearchDisplay::on_searchButton_clicked()
         dest = new Location(*dest);
     } else {
         qDebug() << "Written text differs from the text in the combo box.";
-        dest = new Location("Temp");
-        dest->setAddress(this->ui->dest_edit->text());
+        dest = new Location("Temp", this->ui->dest_edit->text());
     }
 
     qDebug() << "Starting route search";

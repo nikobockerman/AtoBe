@@ -29,7 +29,7 @@ Locations* Locations::GetInstance()
 Locations::Locations() :
         m_locationStorage(QHash<QString,Location *>()),
         m_indexStorage(QList<QString>()),
-        m_gpsLocation(new Location("GPS"))
+        m_gpsLocation(new GpsLocation())
 {
     this->restoreLocations();
     qDebug() << "Size of index storage:" << this->m_indexStorage.size();
@@ -103,16 +103,14 @@ void Locations::restoreLocations()
         qDebug() << "Restoring " << label;
         Location *location;
         if (valid) {
-            location = new Location( x, y, label );
-            location->setAddress(address);
+            location = new Location( x, y, label, address );
+            this->m_locationStorage[label] = location;
+            this->m_indexStorage.append(label);
+            if (index != 0)
+                tempIndex.insert(label, index);
         }
-        else
-            location = new Location(label);
 
-        this->m_locationStorage[label] = location;
-        this->m_indexStorage.append(label);
-        if (index != 0)
-            tempIndex.insert(label, index);
+
     }
 
     settings.endGroup();
@@ -300,7 +298,7 @@ Location *Locations::getLocation(const int &index) const
     return this->m_locationStorage;
 }*/
 
-Location *Locations::getGpsLocation() const
+GpsLocation *Locations::getGpsLocation() const
 {
     qDebug() << "GPS location requested.";
     return this->m_gpsLocation;

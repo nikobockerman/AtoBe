@@ -2,6 +2,7 @@
 #define LOCATIONS_H
 
 #include "location.h"
+#include "gpslocation.h"
 
 #include <QHash>
 #include <QList>
@@ -24,7 +25,7 @@ public:
 
     Location *getLocation(const QString &label) const;
     Location *getLocation(const int&) const;
-    Location *getGpsLocation() const;
+    GpsLocation *getGpsLocation() const;
     int size() const;
 
     //const QHash<QString, Location *>& getLocations() const;
@@ -45,7 +46,7 @@ private:
 
     QHash<QString, Location*> m_locationStorage;
     QList<QString> m_indexStorage;
-    Location* m_gpsLocation;
+    GpsLocation* m_gpsLocation;
 
     static Locations *m_instance;
 };

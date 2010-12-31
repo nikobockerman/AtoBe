@@ -47,6 +47,8 @@ void RouteLegWidget::setDisplay(RouteLeg *leg)
     case TRAM:
         this->ui->image->setPixmap(QIcon(":/reittiopas/tram").pixmap(picSize));
         break;
+    case WALK:
+        break;
     }
     this->ui->image->adjustSize();
 }

@@ -1,12 +1,6 @@
 TARGET      = zouba
 SOURCES += \
     src/main.cpp \
-    src/route.cpp \
-    src/route_p.cpp \
-    src/uicontroller.cpp \
-    src/ui.cpp \
-    src/locationbutton.cpp \
-    src/addressdialog.cpp \
     src/logic/ytv.cpp \
     src/logic/routepointgenerator.cpp \
     src/logic/routepoint.cpp \
@@ -21,15 +15,10 @@ SOURCES += \
     src/gui/routeresultwidget.cpp \
     src/gui/searchdisplay.cpp \
     src/gui/routeoneitemwidget.cpp \
-    src/gui/locationsdisplaywindow.cpp
+    src/gui/locationsdisplaywindow.cpp \
+    src/logic/gpslocation.cpp
 
 HEADERS += \
-    src/route.h \
-    src/route_p.h \
-    src/uicontroller.h \
-    src/ui.h \
-    src/locationbutton.h \
-    src/addressdialog.h \
     src/logic/ytv.h \
     src/logic/routepointgenerator.h \
     src/logic/routepoint.h \
@@ -44,7 +33,8 @@ HEADERS += \
     src/gui/routeresultwidget.h \
     src/gui/searchdisplay.h \
     src/gui/routeoneitemwidget.h \
-    src/gui/locationsdisplaywindow.h
+    src/gui/locationsdisplaywindow.h \
+    src/logic/gpslocation.h
 
 FORMS       += \
     src/gui/locationsdisplaywindow.ui \
@@ -79,10 +69,8 @@ QT=core gui network
 
 linux-g++-maemo5 {
 SOURCES += \
-    gpscontroller.cpp \
     src/gui/favoriteselectiondialog.cpp
 HEADERS += \
-    gpscontroller.h \
     src/gui/favoriteselectiondialog.h
 FORMS += \
     src/gui/favoriteselectiondialog.ui
