@@ -26,7 +26,7 @@ private slots:
 private:    
     Ui::RouteResultWidget *ui;
 
-    QList<RouteOneItemWidget*> routes; // May be unnecessary
+    QList<RouteNew*> routes;
 };
 
 #endif // ROUTERESULTWIDGET_H

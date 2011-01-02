@@ -198,7 +198,7 @@ Area/transport types are:
 
 QDateTime parseArrivalDeparture(QXmlStreamReader &reader)
 {
-    qDebug() << "Parsing ARRIVAL or DEPARTURE";
+    //qDebug() << "Parsing ARRIVAL or DEPARTURE";
 
     QXmlStreamAttributes attributes(reader.attributes());
     QString date = attributes.value("date").toString();
@@ -207,14 +207,14 @@ QDateTime parseArrivalDeparture(QXmlStreamReader &reader)
 
     reader.readNext();
 
-    qDebug() << "ARRIVAL or DEPARTURE parsed";
+    //qDebug() << "ARRIVAL or DEPARTURE parsed";
 
     return arrdep;
 }
 
 RoutePoint* parsePoint(QXmlStreamReader &reader)
 {
-    qDebug() << "Parsing POINT";
+    //qDebug() << "Parsing POINT";
 
     QDateTime arrival, departure;
     QString x, y;
@@ -239,14 +239,14 @@ RoutePoint* parsePoint(QXmlStreamReader &reader)
 
     RoutePoint *point = RoutePointGenerator::createPointPoint(arrival, departure, x, y);
 
-    qDebug() << "POINT parsed";
+    //qDebug() << "POINT parsed";
 
     return point;
 }
 
 RoutePoint* parseMapLoc(QXmlStreamReader &reader)
 {
-    qDebug() << "Parsing MAPLOC";
+    //qDebug() << "Parsing MAPLOC";
 
     QDateTime arrival, departure;
     QString x, y, name;
@@ -279,14 +279,14 @@ RoutePoint* parseMapLoc(QXmlStreamReader &reader)
 
     RoutePoint* point = RoutePointGenerator::createPointMapLocation(arrival, departure, x, y, name);
 
-    qDebug() << "MAPLOC parsed";
+    //qDebug() << "MAPLOC parsed";
 
     return point;
 }
 
 RoutePoint* parseStop(QXmlStreamReader &reader)
 {
-    qDebug() << "Parsing STOP";
+    //qDebug() << "Parsing STOP";
 
     QDateTime arrival, departure;
     QString x, y, name;
@@ -319,28 +319,28 @@ RoutePoint* parseStop(QXmlStreamReader &reader)
 
     RoutePoint* point = RoutePointGenerator::createPointStop(arrival, departure, x, y, name);
 
-    qDebug() << "STOP parsed";
+    //qDebug() << "STOP parsed";
 
     return point;
 }
 
 void parseLength(QXmlStreamReader &reader, QTime &time, double &distance)
 {
-    qDebug() << "Parsing LENGTH";
+    //qDebug() << "Parsing LENGTH";
     QXmlStreamAttributes attributes(reader.attributes());
     time = RouteLegGenerator::parseTime(attributes.value("time").toString());
     distance = attributes.value("dist").toString().toDouble();
 
     reader.readNext();
 
-    qDebug() << "LENGTH parsed";
+    //qDebug() << "LENGTH parsed";
 
     return;
 }
 
 RouteLeg* parseWalk(QXmlStreamReader &reader)
 {
-    qDebug() << "Parsing WALK";
+    //qDebug() << "Parsing WALK";
 
     double distance;
     QTime time;
@@ -423,14 +423,14 @@ RouteLeg* parseWalk(QXmlStreamReader &reader)
 
     RouteLeg *walk = RouteLegGenerator::createLegWalk(distance, time, startPoint, endPoint, midpoints);
 
-    qDebug() << "WALK parsed.";
+    //qDebug() << "WALK parsed.";
 
     return walk;
 }
 
 RouteLeg* parseLine(QXmlStreamReader &reader)
 {
-    qDebug() << "Parsing LINE";
+    //qDebug() << "Parsing LINE";
 
     double distance;
     QTime time;
@@ -533,7 +533,7 @@ RouteLeg* parseLine(QXmlStreamReader &reader)
     else
         qDebug() << "Type mismatch (" << type << "!!!! Returning NULL!!!!";
 
-    qDebug() << "LINE parsed.";
+    //qDebug() << "LINE parsed.";
 
     return line;
 }
@@ -548,7 +548,7 @@ RouteNew* parseRoute(QXmlStreamReader &reader)
     double routeDistance;
     QList<RouteLeg*> routeSubRoute;
 
-    qDebug() << "Parsing route";
+    //qDebug() << "Parsing route";
     while (!reader.atEnd() && !(reader.name() == "ROUTE" && reader.tokenType() == QXmlStreamReader::EndElement))
     {
         // No attributes
@@ -583,14 +583,14 @@ RouteNew* parseRoute(QXmlStreamReader &reader)
     routeEndTime = routeEndPoint->arrival_time;
     RouteNew *route = new RouteNew(routeStartTime, routeEndTime, routeStartPoint, routeEndPoint, routeWalkingDistance, routeDistance, routeSubRoute);
 
-    qDebug() << "Route parsed.";
+    //qDebug() << "Route parsed.";
 
     return route;
 }
 
 void RouteFinder::requestFinished()
 {
-    qDebug() << "Route response received from Ytv.";
+    //qDebug() << "Route response received from Ytv.";
 
     QXmlStreamReader xml(this->reply->readAll());
 
@@ -612,7 +612,7 @@ void RouteFinder::requestFinished()
         }
     }
 
-    qDebug() << "Finished processing RouteFinder";
+    //qDebug() << "Finished processing RouteFinder";
     emit(finished());
     return;
 }

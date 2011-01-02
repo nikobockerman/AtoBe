@@ -33,20 +33,13 @@ LocationFinder::~LocationFinder()
         this->reply->deleteLater();
 
     while (!this->places.isEmpty())
-    {
-        Location *loc = this->places.takeLast();
-        delete loc;
-    }
+        delete this->places.takeLast();
+
     while (!this->roadNames.isEmpty())
-    {
-        Location *loc = this->roadNames.takeLast();
-        delete loc;
-    }
+        delete this->roadNames.takeLast();
+
     while (!this->stops.isEmpty())
-    {
-        Location *loc = this->stops.takeLast();
-        delete loc;
-    }
+        delete this->stops.takeLast();
 }
 
 
@@ -55,10 +48,11 @@ void LocationFinder::processReply()
     qDebug() << "Processing reply from Reittiopas in LocationFinder";
     QXmlStreamReader xml(this->reply->readAll());
 
-    this->reply->disconnect(this, SLOT(searchFinished()));
+    this->reply->disconnect(this);
     this->reply->deleteLater();
     this->reply = NULL;
 
+    int resultNumber = 0;
     while (!xml.atEnd())
     {
         qDebug() << "Reading next element";
@@ -76,30 +70,32 @@ void LocationFinder::processReply()
                 QString newX( xAttribute.toString() );
                 QString newY( yAttribute.toString() );
                 QString category(attributes.value("category").toString());
-                QString name(attributes.value("name1").toString());
+                QString address(attributes.value("name1").toString());
                 QString number(attributes.value("number").toString());
                 if (!number.isEmpty())
                 {
-                    name.append(" ");
-                    name.append(number);
+                    address.append(" ");
+                    address.append(number);
                 }
-                name.append(", ");
-                name.append(attributes.value("city").toString());
+                address.append(", ");
+                address.append(attributes.value("city").toString());
 
+                QString name("Result" + resultNumber++);
                 if (category == "poi")
                 {
-                    this->places.append(new Location(newX, newY, name));
+                    this->places.append(new Location(newX, newY, name, address));
                 }
                 else if (category == "street")
                 {
-                    this->roadNames.append(new Location(newX, newY, name));
+                    this->roadNames.append(new Location(newX, newY, name, address));
                 }
                 else if (category == "stop")
                 {
-                    this->stops.append(new Location(newX, newY, name));
+                    this->stops.append(new Location(newX, newY, name, address));
                 }
                 else
                 {
+                    resultNumber--;
                     QString errorMessage("Unknown category: ");
                     errorMessage.append(category);
                     qDebug() << errorMessage;

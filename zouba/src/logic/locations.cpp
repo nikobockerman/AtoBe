@@ -28,8 +28,12 @@ Locations* Locations::GetInstance()
 
 Locations::Locations() :
         m_locationStorage(QHash<QString,Location *>()),
+#ifdef Q_WS_MAEMO_5
         m_indexStorage(QList<QString>()),
         m_gpsLocation(new GpsLocation())
+#else
+        m_indexStorage(QList<QString>())
+#endif
 {
     this->restoreLocations();
     qDebug() << "Size of index storage:" << this->m_indexStorage.size();
@@ -298,12 +302,6 @@ Location *Locations::getLocation(const int &index) const
     return this->m_locationStorage;
 }*/
 
-GpsLocation *Locations::getGpsLocation() const
-{
-    qDebug() << "GPS location requested.";
-    return this->m_gpsLocation;
-}
-
 bool Locations::increaseLocationIndex(const QString &label)
 {
     if (!this->m_indexStorage.contains(label))
@@ -360,3 +358,11 @@ int Locations::size() const
 {
     return this->m_locationStorage.size();
 }
+
+#ifdef Q_WS_MAEMO_5
+GpsLocation *Locations::getGpsLocation() const
+{
+    qDebug() << "GPS location requested.";
+    return this->m_gpsLocation;
+}
+#endif

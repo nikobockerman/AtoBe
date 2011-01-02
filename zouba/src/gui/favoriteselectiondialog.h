@@ -32,6 +32,8 @@ private slots:
     void on_locations_itemClicked(QListWidgetItem* item);
     void gps_updating_changed(bool isActive);
     void gps_location_retrieved();
+
+    void orientationChanged();
 };
 
 #endif // FAVORITESELECTIONDIALOG_H

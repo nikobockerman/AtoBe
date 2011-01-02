@@ -18,7 +18,7 @@
 #endif
 
 #include "logic/location.h"
-#include "gui/locationsdisplaywindow.h"
+#include "gui/locationsdisplaywidget.h"
 
 /*class QMainWindow;
 class QWidget;
@@ -66,7 +66,7 @@ public:
   QAction     *m_UseGpsAction;
   QStandardItemModel *m_locationsModel;
   QPushButton *m_routeButton;
-  LocationsDisplayWindow *m_locDisp;
+  LocationsDisplayWidget *m_locDisp;
 
 public slots:
   void setLocations();

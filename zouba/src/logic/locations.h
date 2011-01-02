@@ -25,7 +25,7 @@ public:
 
     Location *getLocation(const QString &label) const;
     Location *getLocation(const int&) const;
-    GpsLocation *getGpsLocation() const;
+
     int size() const;
 
     //const QHash<QString, Location *>& getLocations() const;
@@ -46,8 +46,15 @@ private:
 
     QHash<QString, Location*> m_locationStorage;
     QList<QString> m_indexStorage;
-    GpsLocation* m_gpsLocation;
+
 
     static Locations *m_instance;
+
+#ifdef Q_WS_MAEMO_5
+public:
+    GpsLocation *getGpsLocation() const;
+private:
+    GpsLocation* m_gpsLocation;
+#endif
 };
 #endif // LOCATIONS_H

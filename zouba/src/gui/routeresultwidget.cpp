@@ -24,7 +24,7 @@ RouteResultWidget::RouteResultWidget(QWidget *parent) :
     ui->setupUi(this);
 #ifdef Q_WS_MAEMO_5
     this->setAttribute(Qt::WA_Maemo5StackedWindow);
-    connect(QApplication::desktop(), SIGNAL(resized(int)), SLOT(rotationEvent()));
+    //connect(QApplication::desktop(), SIGNAL(resized(int)), SLOT(rotationEvent()));
     //this->setObjectName(this->parent()->objectName());
     //this->resize(800, 480);
 #endif
@@ -34,6 +34,8 @@ RouteResultWidget::RouteResultWidget(QWidget *parent) :
 RouteResultWidget::~RouteResultWidget()
 {
     delete ui;
+    while (this->routes.size() > 0)
+        delete this->routes.takeLast();
 }
 
 void RouteResultWidget::addRoute(RouteNew *route)
@@ -77,8 +79,6 @@ void RouteResultWidget::addRoute(RouteNew *route)
 
     item->setItemsWidget(layout);
 
-    this->routes.append(item); // Might be unnecessary
-
     QListWidgetItem *listItem = new QListWidgetItem("");
     item->adjustSize();
 
@@ -90,6 +90,8 @@ void RouteResultWidget::addRoute(RouteNew *route)
     listItem->setSizeHint(item->sizeHint());
     this->ui->routesArea->addItem(listItem);
     this->ui->routesArea->setItemWidget(listItem, item);
+
+    this->routes.append(new RouteNew(*route));
 
     //this->ui->routesArea->setMinimumWidth(this->ui->routesArea->sizeHint().width());
 }

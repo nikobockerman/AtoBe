@@ -15,8 +15,8 @@ SOURCES += \
     src/gui/routeresultwidget.cpp \
     src/gui/searchdisplay.cpp \
     src/gui/routeoneitemwidget.cpp \
-    src/gui/locationsdisplaywindow.cpp \
-    src/logic/gpslocation.cpp
+    src/gui/locationsdisplaywidget.cpp \
+    src/gui/locationmodifydialog.cpp
 
 HEADERS += \
     src/logic/ytv.h \
@@ -33,15 +33,16 @@ HEADERS += \
     src/gui/routeresultwidget.h \
     src/gui/searchdisplay.h \
     src/gui/routeoneitemwidget.h \
-    src/gui/locationsdisplaywindow.h \
-    src/logic/gpslocation.h
+    src/gui/locationsdisplaywidget.h \
+    src/gui/locationmodifydialog.h
 
 FORMS       += \
-    src/gui/locationsdisplaywindow.ui \
     src/gui/routelegwidget.ui \
     src/gui/routeresultwidget.ui \
     src/gui/searchdisplay.ui \
-    src/gui/routeoneitemwidget.ui
+    src/gui/routeoneitemwidget.ui \
+    src/gui/locationsdisplaywidget.ui \
+    src/gui/locationmodifydialog.ui
 
 LEXSOURCES  += #LEXS#
 YACCSOURCES += #YACCS#
@@ -69,9 +70,11 @@ QT=core gui network
 
 linux-g++-maemo5 {
 SOURCES += \
-    src/gui/favoriteselectiondialog.cpp
+    src/gui/favoriteselectiondialog.cpp \
+    src/logic/gpslocation.cpp
 HEADERS += \
-    src/gui/favoriteselectiondialog.h
+    src/gui/favoriteselectiondialog.h \
+    src/logic/gpslocation.h
 FORMS += \
     src/gui/favoriteselectiondialog.ui
 

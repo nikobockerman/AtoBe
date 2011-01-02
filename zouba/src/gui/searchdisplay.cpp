@@ -3,7 +3,7 @@
 
 #include "routeresultwidget.h"
 #include "favoriteselectiondialog.h"
-#include "locationsdisplaywindow.h"
+#include "locationsdisplaywidget.h"
 
 #include "src/logic/locations.h"
 #include "src/logic/routefinder.h"
@@ -13,7 +13,10 @@
 SearchDisplay::SearchDisplay(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SearchDisplay),
-    route_finder(NULL)
+    route_finder(NULL),
+    one_search(),
+    search_restarted(false),
+    edit_window(NULL)
 {
     qDebug() << "Start constructor";
     ui->setupUi(this);
@@ -22,6 +25,8 @@ SearchDisplay::SearchDisplay(QWidget *parent) :
 
     Locations *locations = Locations::GetInstance();
     this->connect(locations, SIGNAL(locationsChanged()), SLOT(locations_changed()));
+
+    QMenuBar *menu = this->ui->menubar;
 
 #ifdef Q_WS_MAEMO_5
     this->setAttribute(Qt::WA_Maemo5StackedWindow);
@@ -37,7 +42,6 @@ SearchDisplay::SearchDisplay(QWidget *parent) :
     //this->ui->from_favorites->setIcon(QIcon::fromTheme("edit-copy"));
     //this->ui->dest_favorites->setText("Fav");
 
-    QMenuBar *menu = this->ui->menubar;
     QAction *use_gps = new QAction("Use GPS", this);
     use_gps->setCheckable(true);
     use_gps->setChecked(false);
@@ -47,7 +51,6 @@ SearchDisplay::SearchDisplay(QWidget *parent) :
 
     this->from_selected = NULL;
     this->dest_selected = NULL;
-    this->edit_window = NULL;
 
 #else
     QWidget *widget = new QWidget();
@@ -73,6 +76,10 @@ SearchDisplay::SearchDisplay(QWidget *parent) :
 
     this->on_from_combo_currentIndexChanged(this->ui->from_combo->currentText());
     this->ui->dest_combo->setCurrentIndex(1);
+
+    QAction *modify_locations = new QAction("Modify locations", this);
+    this->connect(modify_locations, SIGNAL(triggered()), SLOT(customize_requested()));
+    menu->addAction(modify_locations);
 
 #endif
 
@@ -131,9 +138,9 @@ void SearchDisplay::updateLocationLists()
 
 void SearchDisplay::locations_changed()
 {
+#ifndef Q_WS_MAEMO_5
     qDebug() << "Start locations_changed";
 
-#ifndef Q_WS_MAEMO_5
     QString from_old = this->ui->from_combo->currentText();
     QString dest_old = this->ui->dest_combo->currentText();
 
@@ -151,31 +158,42 @@ void SearchDisplay::locations_changed()
         this->ui->dest_combo->setCurrentIndex(dest_id);
     else
         this->on_dest_combo_currentIndexChanged(this->ui->dest_combo->currentText());
-#endif
+
     qDebug() << "Finish locations_changed";
+#endif
 }
 
 void SearchDisplay::on_searchButton_clicked()
 {
     qDebug() << "Start on_search_button_clicked";
-    if (this->route_finder != NULL)
+    if (!this->one_search.tryLock())
+        return; // If mutex is locked ie. the results are being processed, do nothing.
+    if (this->route_finder)
     {
 #ifdef Q_WS_MAEMO_5
         this->setAttribute(Qt::WA_Maemo5ShowProgressIndicator, false);
 #endif
-        this->route_finder->disconnect(this, SLOT(route_finder_finished()));
-        delete this->route_finder;
+        this->route_finder->disconnect(this);
+        this->route_finder->deleteLater();
+        this->route_finder = NULL;
+        this->search_restarted = true;
+        qDebug() << "Tried to start new search. Restart set to true.";
     }
+
     // Check for empty search fields.
     QString empty;
     if (this->ui->from_edit->text() == empty)
     {
         qDebug() << "From field is empty. No search is made.";
+        this->one_search.unlock();
+        this->search_restarted = false;
         return;
     }
     if (this->ui->dest_edit->text() == empty)
     {
         qDebug() << "Dest field is empty. No search is made.";
+        this->one_search.unlock();
+        this->search_restarted = false;
         return;
     }
 
@@ -213,28 +231,47 @@ void SearchDisplay::on_searchButton_clicked()
 #ifdef Q_WS_MAEMO_5
     this->setAttribute(Qt::WA_Maemo5ShowProgressIndicator, true);
 #endif
+    this->one_search.unlock();
     qDebug() << "Finished on_search_button_clicked.";
 }
 
 void SearchDisplay::route_finder_finished()
 {
     qDebug() << "Received signal from successful route finder";
+    if (!this->one_search.tryLock())
+        return;
+    if (this->search_restarted)
+    {
+        qDebug() << "Restart had been requested.";
+        this->search_restarted = false;
+        this->one_search.unlock();
+        return;
+    }
+    if(!this->route_finder)
+    {
+        qDebug() << "Route finder is NULL.";
+        this->one_search.unlock();
+        return;
+    }
+
 #ifdef Q_WS_MAEMO_5
     RouteResultWidget *results = new RouteResultWidget(this);
+    this->setAttribute(Qt::WA_Maemo5ShowProgressIndicator, false);
+    results->show();
 #else
     RouteResultWidget *results = new RouteResultWidget();
+    int cur = this->tabs->addTab(results, "Route" + QString::number(this->tabs->count()));
+    this->tabs->setCurrentIndex(cur);
 #endif
 
     for (int i = 0; i < this->route_finder->getNumberOfRoutes(); i++)
         results->addRoute(this->route_finder->getRoute(i));
 
-#ifdef Q_WS_MAEMO_5
-    this->setAttribute(Qt::WA_Maemo5ShowProgressIndicator, false);
-    results->show();
-#else
-    int cur = this->tabs->addTab(results, "Route" + QString::number(this->tabs->count()));
-    this->tabs->setCurrentIndex(cur);
-#endif
+    this->route_finder->disconnect(this);
+    this->route_finder->deleteLater();
+    this->route_finder = NULL;
+
+    this->one_search.unlock();
     qDebug() << "Finish route_finder_finished";
 }
 
@@ -278,7 +315,11 @@ void SearchDisplay::tabclosed(int index)
         qDebug() << "First tab requested to be closed.";
         return;
     }
+    QWidget *widget = this->tabs->widget(index);
     this->tabs->removeTab(index);
+    if (widget == this->edit_window)
+        this->edit_window = NULL;
+    widget->deleteLater();
 }
 #endif //Q_WS_MAEMO_5
 
@@ -327,14 +368,22 @@ void SearchDisplay::dest_selection_selected(Location *location)
     this->dest_selected = location;
     this->ui->dest_edit->setText(this->dest_selected->address());
 }
+#endif
 
 void SearchDisplay::customize_requested()
 {
     qDebug() << "Customizing favorites requested.";
 
+#ifdef Q_WS_MAEMO_5
     if (!this->edit_window)
-        this->edit_window = new LocationsDisplayWindow(this);
-    this->edit_window->show();
-}
-
+        this->edit_window = new LocationsDisplayWidget(this);
+    this->edit_window->showWidget();
+#else
+    if (!this->edit_window)
+    {
+        this->edit_window = new LocationsDisplayWidget();
+        this->tabs->addTab(this->edit_window, "Modify locations");
+    }
+    this->tabs->setCurrentWidget(this->edit_window);
 #endif
+}

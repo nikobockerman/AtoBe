@@ -4,6 +4,8 @@
 #include "src/logic/locations.h"
 
 #include <QDebug>
+#include <QApplication>
+#include <QDesktopWidget>
 
 static const QString CUSTOMIZE = "Customize";
 
@@ -14,6 +16,7 @@ FavoriteSelectionDialog::FavoriteSelectionDialog(QWidget *parent) :
     ui->setupUi(this);
 
     this->setAttribute(Qt::WA_Maemo5AutoOrientation);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 
     Locations* locations = Locations::GetInstance();
 
@@ -39,6 +42,9 @@ FavoriteSelectionDialog::FavoriteSelectionDialog(QWidget *parent) :
         this->ui->gps_button->setText(this->m_text + " (Searching...)");
         this->connect(locations->getGpsLocation(), SIGNAL(gpsLocationChanged(GpsLocation*)), SLOT(gps_location_retrieved()));
     }
+
+    connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(orientationChanged()));
+    this->setFixedHeight(QApplication::desktop()->screenGeometry().height());
 
     //this->connect(locations->getGpsLocation(), SIGNAL(gpsLocationUpdatingChanged(bool)), SLOT(gps_updating_changed(bool)));
 
@@ -66,18 +72,23 @@ void FavoriteSelectionDialog::on_locations_itemClicked(QListWidgetItem* item)
     Locations *locations = Locations::GetInstance();
     Location* selected = locations->getLocation(item->text());
     emit(this->selectedLocation(selected));
-    this->deleteLater();
+    this->close();
 }
 
 void FavoriteSelectionDialog::on_modify_button_clicked()
 {
     emit(this->customizeRequested());
-    this->deleteLater();
+    this->close();
 }
 
 void FavoriteSelectionDialog::on_gps_button_clicked()
 {
     Locations *locations = Locations::GetInstance();
     emit(this->selectedLocation(locations->getGpsLocation()));
-    this->deleteLater();
+    this->close();
+}
+
+void FavoriteSelectionDialog::orientationChanged()
+{
+    this->setFixedHeight(QApplication::desktop()->screenGeometry().height());
 }
