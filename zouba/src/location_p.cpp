@@ -18,8 +18,8 @@ LocationPrivate::LocationPrivate( const QString &x, const QString &y, const QStr
 LocationPrivate::LocationPrivate( const QString &label ) :
   m_label(label),
   m_address(),
-  m_x(0),
-  m_y(0),
+  m_x(QString()),
+  m_y(QString()),
   m_valid(false)
 {
 }

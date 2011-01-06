@@ -31,7 +31,7 @@ INCLUDEPATH += include
 DEPENDSPATH += INCLUDEPATH
 #QMAKE_LIBDIR_QT = qt4-maemo5/lib
 #QMAKE_INCDIR_QT = qt4-maemo5/include
-LIBS        += -Llib -lQtBearer -lQtLocation
+LIBS        += -lQtLocation -lQtBearer 
 DEFINES     += Q_WS_MAEMO_5
 
 # All generated files goes same directory
