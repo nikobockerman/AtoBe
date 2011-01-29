@@ -20,12 +20,12 @@ manpage.1: manpage.sgml
   <!ENTITY dhfirstname "<firstname>FIRSTNAME</firstname>">
   <!ENTITY dhsurname   "<surname>SURNAME</surname>">
   <!-- Please adjust the date whenever revising the manpage. -->
-  <!ENTITY dhdate      "<date>March 23, 2010</date>">
+  <!ENTITY dhdate      "<date>September 18, 2010</date>">
   <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
        allowed: see man(7), man(1). -->
   <!ENTITY dhsection   "<manvolnum>SECTION</manvolnum>">
-  <!ENTITY dhemail     "<email>davidmaxwaterman@jeeves</email>">
-  <!ENTITY dhusername  "Max Waterman">
+  <!ENTITY dhemail     "<email>niko.bockerman@gmail.com</email>">
+  <!ENTITY dhusername  "Niko Böckerman">
   <!ENTITY dhucpackage "<refentrytitle>ZOUBA</refentrytitle>">
   <!ENTITY dhpackage   "zouba">
 

@@ -68,7 +68,7 @@ CONFIG      += debug qt
 #MOBILITY    += location bearer
 QT=core gui network
 
-linux-g++-maemo5 {
+unix {
 SOURCES += \
     src/gui/favoriteselectiondialog.cpp \
     src/logic/gpslocation.cpp
@@ -85,19 +85,23 @@ CONFIG += mobility
 }
 
 INSTALLS    += target
-target.path  = /usr/bin/
+target.path  = /usr/bin
 
 INSTALLS    += desktop
 desktop.path  = /usr/share/applications/hildon
-desktop.files  = data/zouba.desktop
+desktop.files += data/zouba.desktop
 
-INSTALLS    += service
-service.path  = /usr/share/dbus-1/services
-service.files  = data/zouba.service
+#INSTALLS    += service
+#service.path  = /usr/share/dbus-1/services
+#service.files  = data/zouba.service
+
+INSTALLS    += icon48
+icon48.path = /usr/share/icons/hicolor/48x48/apps
+icon48.files += data/icons/48x48/zouba.png
 
 INSTALLS    += icon64
 icon64.path  = /usr/share/icons/hicolor/64x64/apps
-icon64.files  = data/64x64/zouba.png
+icon64.files += data/icons/64x64/zouba.png
 
 #
 # Targets for debian source and binary package creation
@@ -117,4 +121,4 @@ OTHER_FILES += \
     data/TODO.txt
 
 RESOURCES += \
-    ReittiopasImages.qrc
+    data/ReittiopasImages.qrc

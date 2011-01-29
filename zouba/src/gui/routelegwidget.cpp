@@ -18,7 +18,7 @@ void RouteLegWidget::setDisplay(RouteLeg *leg)
 #ifdef Q_WS_MAEMO_5
     int picSize = 40;
 #else
-    int picSize = 20;
+    int picSize = 40;
 #endif
     if (leg->type == WALK)
     {
