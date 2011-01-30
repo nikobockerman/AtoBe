@@ -1,29 +1,49 @@
 TARGET      = zouba
 SOURCES += \
-    main.cpp \
-    route.cpp \
-    route_p.cpp \
-    uicontroller.cpp \
-    location.cpp \
-    location_p.cpp \
-    locations.cpp \
-    gpscontroller.cpp \
-    gpscontroller_p.cpp \
-    ui.cpp \
+    src/main.cpp \
+    src/logic/ytv.cpp \
+    src/logic/routepointgenerator.cpp \
+    src/logic/routepoint.cpp \
+    src/logic/routenew.cpp \
+    src/logic/routeleggenerator.cpp \
+    src/logic/routeleg.cpp \
+    src/logic/routefinder.cpp \
+    src/logic/locations.cpp \
+    src/logic/locationfinder.cpp \
+    src/logic/location.cpp \
+    src/gui/routelegwidget.cpp \
+    src/gui/routeresultwidget.cpp \
+    src/gui/searchdisplay.cpp \
+    src/gui/routeoneitemwidget.cpp \
+    src/gui/locationsdisplaywidget.cpp \
+    src/gui/locationmodifydialog.cpp
 
 HEADERS += \
-    route.h \
-    route_p.h \
-    uicontroller.h \
-    location.h \
-    location_p.h \
-    locations.h \
-    ytv.h \
-    gpscontroller.h \
-    gpscontroller_p.h \
-    ui.h \
+    src/logic/ytv.h \
+    src/logic/routepointgenerator.h \
+    src/logic/routepoint.h \
+    src/logic/routenew.h \
+    src/logic/routeleggenerator.h \
+    src/logic/routeleg.h \
+    src/logic/routefinder.h \
+    src/logic/locations.h \
+    src/logic/locationfinder.h \
+    src/logic/location.h \
+    src/gui/routelegwidget.h \
+    src/gui/routeresultwidget.h \
+    src/gui/searchdisplay.h \
+    src/gui/routeoneitemwidget.h \
+    src/gui/locationsdisplaywidget.h \
+    src/gui/locationmodifydialog.h
 
-FORMS       +=
+FORMS       += \
+    src/gui/routelegwidget.ui \
+    src/gui/routeresultwidget.ui \
+    src/gui/searchdisplay.ui \
+    src/gui/routeoneitemwidget.ui \
+    src/gui/locationsdisplaywidget.ui \
+    src/gui/locationmodifydialog.ui
+
 LEXSOURCES  += #LEXS#
 YACCSOURCES += #YACCS#
 
@@ -31,8 +51,8 @@ INCLUDEPATH += include
 DEPENDSPATH += INCLUDEPATH
 #QMAKE_LIBDIR_QT = qt4-maemo5/lib
 #QMAKE_INCDIR_QT = qt4-maemo5/include
-LIBS        += -lQtLocation -lQtBearer 
-DEFINES     += Q_WS_MAEMO_5
+LIBS        += -Llib
+#DEFINES     += Q_WS_MAEMO_5
 
 # All generated files goes same directory
 OBJECTS_DIR = build
@@ -44,24 +64,44 @@ TEMPLATE    = app
 DEPENDPATH  +=
 VPATH       += src uis
 CONFIG      -=
-CONFIG      += debug qt mobility
-MOBILITY    += location bearer
-QT=core gui network maemo5
+CONFIG      += debug qt
+#MOBILITY    += location bearer
+QT=core gui network
+
+unix {
+SOURCES += \
+    src/gui/favoriteselectiondialog.cpp \
+    src/logic/gpslocation.cpp
+HEADERS += \
+    src/gui/favoriteselectiondialog.h \
+    src/logic/gpslocation.h
+FORMS += \
+    src/gui/favoriteselectiondialog.ui
+
+QT += maemo5
+LIBS += -lQtBearer -lQtLocation
+MOBILITY += location bearer
+CONFIG += mobility
+}
 
 INSTALLS    += target
-target.path  = /usr/bin/
+target.path  = /usr/bin
 
 INSTALLS    += desktop
 desktop.path  = /usr/share/applications/hildon
-desktop.files  = data/zouba.desktop
+desktop.files += data/zouba.desktop
 
-INSTALLS    += service
-service.path  = /usr/share/dbus-1/services
-service.files  = data/zouba.service
+#INSTALLS    += service
+#service.path  = /usr/share/dbus-1/services
+#service.files  = data/zouba.service
+
+INSTALLS    += icon48
+icon48.path = /usr/share/icons/hicolor/48x48/apps
+icon48.files += data/icons/48x48/zouba.png
 
 INSTALLS    += icon64
 icon64.path  = /usr/share/icons/hicolor/64x64/apps
-icon64.files  = data/64x64/zouba.png
+icon64.files += data/icons/64x64/zouba.png
 
 #
 # Targets for debian source and binary package creation
@@ -76,3 +116,9 @@ debian-all.depends = debian-src debian-bin
 compiler_clean.commands = -$(DEL_FILE) $(TARGET)
 
 QMAKE_EXTRA_TARGETS += debian-all debian-src debian-bin compiler_clean
+
+OTHER_FILES += \
+    data/TODO.txt
+
+RESOURCES += \
+    data/ReittiopasImages.qrc

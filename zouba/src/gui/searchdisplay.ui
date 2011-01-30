@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchDisplay</class>
+ <widget class="QMainWindow" name="SearchDisplay">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>697</width>
+    <height>369</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="fromHorizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="from_edit">
+        <property name="placeholderText">
+         <string>From</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="from_combo"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="from_favorites">
+        <property name="text">
+         <string>Fav</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="destHorizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="dest_edit">
+        <property name="placeholderText">
+         <string>Destination</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="dest_combo"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="dest_favorites">
+        <property name="text">
+         <string>Fav</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="searchButton">
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>697</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>from_edit</tabstop>
+  <tabstop>from_combo</tabstop>
+  <tabstop>from_favorites</tabstop>
+  <tabstop>dest_edit</tabstop>
+  <tabstop>dest_combo</tabstop>
+  <tabstop>dest_favorites</tabstop>
+  <tabstop>searchButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

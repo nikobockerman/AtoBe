@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH ZOUBA SECTION "March 23, 2010"
+.TH ZOUBA SECTION "September 18, 2010"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -55,5 +55,5 @@ available via the Info system.
 .SH AUTHOR
 zouba was written by <upstream author>.
 .PP
-This manual page was written by Max Waterman <davidmaxwaterman@jeeves>,
+This manual page was written by Niko Böckerman <niko.bockerman@gmail.com>,
 for the Debian project (but may be used by others).

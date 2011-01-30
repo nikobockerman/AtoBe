@@ -2,63 +2,98 @@
 #include "route.h"
 #include "ui.h"
 #include "uicontroller.h"
-#include "location.h"
+#include "logic/location.h"
 #include "gpscontroller.h"
-#include "ytv.h"
+#include "logic/ytv.h"
+#include "logic/locations.h"
+
+#include "gui/searchdisplay.h"
 
 #include <QDebug>
 #include <QObject>
 #include <QApplication>
 #include <QMainWindow>
+#include <QLabel>
+
+//#define BUILD_TWO_GUIS 1
 
 int main(int argc, char *argv[] )
 {
-  QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-  QMainWindow *mainWindow = new QMainWindow;
-  Ui *ui = new Ui;;
-  ui->setupUi(mainWindow);
+    QCoreApplication::setOrganizationName("ZouBa");
+    QCoreApplication::setOrganizationDomain("zouba.yi.org");
+    QCoreApplication::setApplicationName("ZouBa");
 
-  UiController  *uiController  = new UiController( ui );
-  Route         *route         = new Route();
-  GpsController *gpsController = new GpsController();
+    Locations* locations = Locations::GetInstance();
+    Locations *other_locations = Locations::GetInstance();
+    if (locations->size() == 0)
+    {
+        locations->addEditLocation(new Location("2558542", "6676458", "Home"));
+        locations->addEditLocation(new Location("2540835", "6672773", "Work"));
+    }
 
-  QObject::connect(
-      route, SIGNAL( routeReady( QList<RouteData> ) ),
-      uiController, SLOT( displayRoute( QList<RouteData> ) )
-      );
+#ifdef Q_WS_MAEMO_5
+    SearchDisplay *mainWindow = new SearchDisplay();
+    //layout->addWidget(win);
+#else
+    //DesktopWindow* mainWindow = new DesktopWindow();
+    SearchDisplay *mainWindow = new SearchDisplay();
+#endif
+    mainWindow->show();
 
-  QObject::connect(
-      gpsController, SIGNAL( locationChanged( Location* ) ),
-      route, SLOT( setFromLocation( Location* ) )
-      );
+    if (locations == other_locations)
+        qDebug() << "Same instance";
+    else
+        qDebug() << "!!NOT SAME INSTANCE!!";
 
-  QObject::connect(
-      uiController, SIGNAL( destinationChanged( Location* ) ),
-      route, SLOT( setToLocation( Location* ) )
-    );
+#ifdef BUILD_TWO_GUIS
+#ifdef Q_WS_MAEMO_5
+    QMainWindow *oldMainWindow = new QMainWindow;
+    UiClass *ui = new UiClass;;
+    ui->setupUi(oldMainWindow);
 
-  QObject::connect(
-      uiController, SIGNAL( buttonClicked() ),
-      gpsController, SLOT( getGps() )
-    );
+    UiController  *uiController  = new UiController( ui );
+    Route         *route         = new Route();
+//#ifdef Q_WS_MAEMO_5
+    GpsController *gpsController = new GpsController();
+//#endif
 
-  QObject::connect(
-      ui, SIGNAL( fakeGpsPressed( const QString & ) ),
-      gpsController, SLOT( useFakeGps( const QString & ) )
-    );
+    QObject::connect(
+            route, SIGNAL( routeReady( QList<RouteData> ) ),
+            uiController, SLOT( displayRoute( QList<RouteData> ) )
+            );
 
-  QObject::connect(
-      ui, SIGNAL( liveGpsPressed() ),
-      gpsController, SLOT( useLiveGps() )
-    );
+    /*QObject::connect(
+      gpsController, SIGNAL( gpsLocationChanged( Location* ) ),
+      uiController, SLOT()
+      );*/
 
-  QObject::connect(
-      route, SIGNAL( busy( bool ) ),
-      ui, SLOT( setBusy( bool ) )
-    );
+    QObject::connect(
+            uiController, SIGNAL(fromChanged(Location*)),
+            route, SLOT(setFromLocation(Location*)));
 
-  mainWindow->show();
+    QObject::connect(
+            uiController, SIGNAL(toChanged(Location*)),
+            route, SLOT(setToLocation(Location*)));
 
-  return app.exec();
+    QObject::connect(
+            uiController, SIGNAL(routeSearchRequested()),
+            route, SLOT(searchRoute()));
+
+    QObject::connect(
+            route, SIGNAL(busy(bool)),
+            ui, SLOT(setBusy(bool)));
+
+//#ifdef Q_WS_MAEMO_5
+    QObject::connect(
+            ui->m_UseGpsAction, SIGNAL(toggled(bool)), gpsController, SLOT(useGPS(bool)));
+//#endif
+
+    oldMainWindow->show();
+#endif // Q_WS_MAEMO_5
+#endif // BUILD_TWO_GUIS
+    //Locations::destroyLocations();
+
+    return app.exec();
 }
