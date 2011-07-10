@@ -1,0 +1,78 @@
+zouba (0.10.0-1) unstable; urgency=low
+
+  * Fixed icon in debian/control.
+
+ -- Niko Böckerman <niko.bockerman@gmail.com>  Sat, 18 Sep 2010 23:03:59 +0300
+
+zouba (0.10.0) unstable; urgency=low
+
+  * Ui completely redone.
+  * Saving locations is possible.
+
+ -- Niko Böckerman <niko.bockerman@gmail.com>  Sat, 18 Sep 2010 23:03:59 +0300
+
+zouba (0.9) unstable; urgency=low
+
+  * added notification for address resolution failure and no route
+  * fixed issue with multiple route requests for a single button click 
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Sun, 25 Apr 2010 06:12:00 +0200
+
+zouba (0.8) unstable; urgency=low
+
+  * Fixed problem when changing the address of a location to something invalid.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Sat, 24 Apr 2010 03:39:00 +0200
+
+zouba (0.7) unstable; urgency=low
+
+  * Changed gps controller to use labels for fake gps instead of a new Location instance.
+  * Added route detail table and general associated shuffle of api.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Tue, 20 Apr 2010 06:27:00 +0200
+
+zouba (0.6) unstable; urgency=low
+
+  * Changed layout in preparation for multiple routes
+  * Changed the selection mode for the tables
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 19 Apr 2010 17:38:00 +0200
+
+zouba (0.5) unstable; urgency=low
+
+  * Changed package description
+  * Changed 'fakegps' button from two actions to a single toggle one
+  * Fixed core dump in gpscontroller caused by deleting the fakelocation
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 19 Apr 2010 11:18:00 +0200
+
+zouba (0.4) unstable; urgency=low
+
+  * Fix for routes with bus changes (only displays first bus)
+  * Added and cleaned up ut_route
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Fri, 16 Apr 2010 11:28:00 +0200
+
+zouba (0.3) unstable; urgency=low
+
+  * Fix for app manager icon
+  * Changes: cleanup and corrections for autobuilder
+  * Added new settings button to set a fake current location ('work' in the first instance).
+  * Added 'optimize' parameter set to 'leastwalking' to route server to give same results as web server early in the morning.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Mon, 12 Apr 2010 12:13:13 +0200
+
+zouba (0.2) unstable; urgency=low
+
+  * Better xml error string.
+  * Better message table width resizing, though visually the same.
+  * Added missing message when work button becomes valid.
+  * First upload to extras-devel.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Wed, 24 Mar 2010 21:29:00 +0200
+
+zouba (0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Max Waterman <davidmaxwaterman@fastmail.co.uk>  Tue, 23 Mar 2010 20:11:34 +0200

@@ -1,0 +1,7 @@
+*.o
+moc_*
+*.la
+*.lo
+*~
+gmock/*
+*.pro.user

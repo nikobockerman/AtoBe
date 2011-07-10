@@ -1,0 +1,12 @@
+Source: hildon-timeout-home-widget-example
+Section: user/desktop
+Priority: optional
+Maintainer: Maemo Team <xxxx@maemo.org>
+Build-Depends: debhelper (>= 5), autotools-dev, libhildondesktop1-dev (>= 2.1.16)
+Standards-Version: 3.7.2
+
+Package: hildon-timeout-home-widget-example
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Example home widget
+ An example home widget for Maemo.
